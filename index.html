@@ -1,23 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>TradingView Economic Calendar</title>
   <meta charset="UTF-8">
+  <title>Goldzilla Command Center</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #e6c360;
+      text-align: center;
+    }
+
+    .ticker-bar {
+      width: 100%;
+      height: 60px;
+      border: none;
+    }
+
+    .main {
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #e6c360;
+    }
+
+    a {
+      color: #66ccff;
+      text-decoration: none;
+      font-size: 18px;
+      display: inline-block;
+      margin: 10px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-    {
-      "colorTheme": "light",
-      "isTransparent": false,
-      "width": "100%",
-      "height": "600",
-      "locale": "en",
-      "importanceFilter": "-1,0,1",
-      "countryFilter": "us,eu,cn"
-    }
-    </script>
+
+  <!-- 🔁 Ticker at the top -->
+  <iframe class="ticker-bar" src="https://buddclan.github.io/Market-Dashboard/ticker.html"></iframe>
+
+  <div class="main">
+    <h1>Welcome to Goldzilla Command Center</h1>
+
+    <!-- Add links below -->
+    <a href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID" target="_blank">📊 Live Google Sheet</a><br>
+    <a href="https://buddclan.github.io/Market-Dashboard/ticker.html" target="_blank">📈 Standalone Ticker</a>
   </div>
+
 </body>
 </html>
