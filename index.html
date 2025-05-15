@@ -27,6 +27,25 @@
       margin: 0;
       color: #e6c360;
     }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 12px 24px;
+      background: #fuchsia;
+      color: #111;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 0 12px #fuchsia;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px #fuchsia;
+    }
   </style>
 </head>
 <body>
@@ -36,6 +55,9 @@
 
   <div class="main">
     <h1>Welcome to Goldzilla Command Center</h1>
+
+    <!-- ✅ Glowing Dashboard Button -->
+    <a href="dashboard.html" class="cta-button">🧠 Enter the Dashboard</a>
   </div>
 
 </body>
