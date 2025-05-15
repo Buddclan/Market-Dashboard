@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Heatmap</title>
+</head>
+<body style="margin:0;background:#000;">
+<section style="background-color: #111; padding: 2rem; margin: 2rem; border-radius: 16px; box-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">
+  <h2 style="color: #fuchsia; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 2rem; text-align: center; margin-bottom: 1rem;">
+    🔥 Crypto Market Heatmap
+  </h2>
+  <div class="tradingview-widget-container" style="height: 600px;">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
+    {
+      "dataSource": "Crypto",
+      "blockSize": "market_cap_calc",
+      "blockColor": "24h_close_change|5",
+      "locale": "en",
+      "symbolUrl": "",
+      "colorTheme": "dark",
+      "hasTopBar": false,
+      "isDataSetEnabled": false,
+      "isZoomEnabled": true,
+      "hasSymbolTooltip": true,
+      "isMonoSize": false,
+      "width": "100%",
+      "height": "600"
+    }
+    </script>
+  </div>
+</section>
+</body>
+</html>
