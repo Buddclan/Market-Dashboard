@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goldzilla Bonds & Crypto</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+      gap: 2rem;
+    }
+
+    .left-panel {
+      width: 420px;
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .panel-box {
+      background-color: #111;
+      border: 2px solid #fuchsia;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 12px rgba(255, 0, 255, 0.3);
+    }
+
+    .panel-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #fuchsia;
+    }
+
+    .stat-line {
+      margin: 0.4rem 0;
+      font-size: 1.1rem;
+    }
+
+    .gain {
+      color: #00ff88;
+    }
+
+    .loss {
+      color: #ff4444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT PANEL: Market Overview Widget -->
+  <div class="left-panel">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "dark",
+        "dateRange": "12M",
+        "showChart": true,
+        "locale": "en",
+        "isTransparent": false,
+        "showSymbolLogo": true,
+        "width": "400",
+        "height": "550",
+        "tabs": [
+          {
+            "title": "📈 U.S. Indices",
+            "symbols": [
+              { "s": "SP:SPX", "d": "S&P 500" },
+              { "s": "BLACKBULL:US30", "d": "Dow" },
+              { "s": "NASDAQ:IXIC", "d": "Nasdaq Comp" },
+              { "s": "CAPITALCOM:US100", "d": "Nasdaq 100" },
+              { "s": "CAPITALCOM:RTY", "d": "Russell 2000" },
+              { "s": "AMEX:IWB", "d": "Russell 1000 (ETF)" },
+              { "s": "AMEX:IWV", "d": "Russell 3000 (ETF)" }
+            ]
+          }
+        ]
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- Bonds Panel -->
+    <div class="panel-box">
+      <div class="panel-title">💵 Bonds – Treasury Yields</div>
+      <div class="stat-line">10-Year: 4.21% | YTD: <span class="gain">+0.36%</span></div>
+      <div class="stat-line">20-Year: 4.52% | YTD: <span class="gain">+0.42%</span></div>
+      <div class="stat-line">30-Year: 4.63% | YTD: <span class="gain">+0.51%</span></div>
+    </div>
+
+    <!-- Crypto Panel -->
+    <div class="panel-box">
+      <div class="panel-title">🪙 Crypto Market (Static)</div>
+      <div class="stat-line">BTC/USD: $63,212 | YTD: <span class="gain">+47.2%</span></div>
+      <div class="stat-line">ETH/USD: $3,122 | YTD: <span class="gain">+29.8%</span></div>
+      <div class="stat-line">SOL/USD: $142.20 | YTD: <span class="gain">+61.5%</span></div>
+      <div class="stat-line">XRP/USD: $0.52 | YTD: <span class="loss">-3.2%</span></div>
+    </div>
+
+  </div>
+
+</body>
+</html>
