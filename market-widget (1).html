@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Market Widget</title>
+</head>
+<body style="margin:0; background:#000;">
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright">
+    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+      <span class="blue-text">Track all markets on TradingView</span>
+    </a>
+  </div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+  {
+    "colorTheme": "dark",
+    "dateRange": "12M",
+    "showChart": true,
+    "locale": "en",
+    "largeChartUrl": "",
+    "isTransparent": false,
+    "showSymbolLogo": true,
+    "showFloatingTooltip": false,
+    "width": "400",
+    "height": "550",
+    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+    "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+    "gridLineColor": "rgba(42, 46, 57, 0)",
+    "scaleFontColor": "rgba(219, 219, 219, 1)",
+    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+    "tabs": [
+      {
+        "title": "📈 U.S. Indices",
+        "symbols": [
+          { "s": "SP:SPX", "d": "S&P 500" },
+          { "s": "BLACKBULL:US30", "d": "Dow" },
+          { "s": "NASDAQ:IXIC", "d": "Nasdaq Comp" },
+          { "s": "CAPITALCOM:US100", "d": "Nasdaq 100" },
+          { "s": "CAPITALCOM:RTY", "d": "Russell 2000" },
+          { "s": "AMEX:IWB", "d": "Russell 1000 (ETF)" },
+          { "s": "AMEX:IWV", "d": "Russell 3000 (ETF)" }
+        ]
+      },
+      {
+        "title": "🌍 Major Forex",
+        "symbols": [
+          { "s": "FX:EURUSD", "d": "EUR/USD" },
+          { "s": "FX:GBPUSD", "d": "GBP/USD" },
+          { "s": "FX:USDJPY", "d": "USD/JPY" },
+          { "s": "FX:USDCHF", "d": "USD/CHF" },
+          { "s": "FX:AUDUSD", "d": "AUD/USD" },
+          { "s": "FX:USDCAD", "d": "USD/CAD" }
+        ]
+      },
+      {
+        "title": "🔮 Futures",
+        "symbols": [
+          { "s": "BMFBOVESPA:ISP1!", "d": "S&P Futures" },
+          { "s": "BMFBOVESPA:EUR1!", "d": "Euro Futures" },
+          { "s": "PYTH:WTI3!", "d": "WTI Crude Oil" },
+          { "s": "BMFBOVESPA:ETH1!", "d": "Hydrous Ethanol" },
+          { "s": "BMFBOVESPA:CCM1!", "d": "Corn" }
+        ]
+      },
+      {
+        "title": "📉 Global Bonds",
+        "symbols": [
+          { "s": "EUREX:FGBL1!", "d": "Euro Bund" },
+          { "s": "EUREX:FBTP1!", "d": "Euro BTP" },
+          { "s": "EUREX:FGBM1!", "d": "Euro BOBL" }
+        ]
+      }
+    ]
+  }
+  </script>
+</div>
+<!-- TradingView Widget END -->
+</body>
+</html>
