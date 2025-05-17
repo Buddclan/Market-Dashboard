@@ -1,53 +1,96 @@
-<div style="display: flex; gap: 20px; flex-wrap: wrap;">
-  
-  <!-- 📊 Market Overview Panel (LEFT) -->
-  <div style="flex: 1; min-width: 400px;">
-    <h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 10px;">📊 Market Overview</h2>
-    <!-- Your existing Market Overview content goes here -->
-    <div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goldzilla Dashboard</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .dashboard-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 400px;
+      background-color: #1b1b1b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+
+    .panel p {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-row">
+
+    <!-- 📊 Market Overview Panel (LEFT) -->
+    <div class="panel">
+      <h2>📊 Market Overview</h2>
       <p>S&P 500: 5,312.20</p>
       <p>Dow Jones: 39,000.45</p>
       <p>Gold: $2,345.67</p>
       <p>Silver: $27.89</p>
       <p>10-Year Yield: 4.58%</p>
-      <!-- Replace with your actual dashboard data if you already had something live -->
     </div>
+
+    <!-- 🌍 Currency Watch Panel (RIGHT) -->
+    <div class="panel">
+      <h2>🌍 Global Currency Watch</h2>
+      <div class="tradingview-widget-container">
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js">
+        {
+          "width": "100%",
+          "height": "500",
+          "symbolsGroups": [{
+            "name": "Currencies",
+            "symbols": [
+              { "name": "CURRENCYCOM:DXY", "displayName": "US Dollar Index (DXY)" },
+              { "name": "FX:EURUSD", "displayName": "EUR/USD" },
+              { "name": "FX:USDJPY", "displayName": "USD/JPY" },
+              { "name": "FX:GBPUSD", "displayName": "GBP/USD" },
+              { "name": "FX:USDCHF", "displayName": "USD/CHF" },
+              { "name": "FX:AUDUSD", "displayName": "AUD/USD" },
+              { "name": "FX:USDCAD", "displayName": "USD/CAD" },
+              { "name": "FX:USDNOK", "displayName": "USD/NOK" },
+              { "name": "FX:USDZAR", "displayName": "USD/ZAR" },
+              { "name": "FX:USDINR", "displayName": "USD/INR" },
+              { "name": "FX:USDBRL", "displayName": "USD/BRL" },
+              { "name": "FX:USDRUB", "displayName": "USD/RUB" },
+              { "name": "FX:USDMXN", "displayName": "USD/MXN" },
+              { "name": "FX:USDTRY", "displayName": "USD/TRY" },
+              { "name": "FX:USDCNY", "displayName": "USD/CNY" }
+            ]
+          }],
+          "showSymbolLogo": true,
+          "colorTheme": "dark",
+          "isTransparent": false,
+          "locale": "en"
+        }
+        </script>
+      </div>
+    </div>
+
   </div>
 
-  <!-- 🌍 Currency Watch Panel (RIGHT) -->
-  <div style="flex: 1; min-width: 400px;">
-    <h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 10px;">🌍 Global Currency Watch</h2>
-    <div class="tradingview-widget-container">
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js">
-      {
-        "width": "100%",
-        "height": "500",
-        "symbolsGroups": [{
-          "name": "Currencies",
-          "symbols": [
-            { "name": "CURRENCYCOM:DXY", "displayName": "US Dollar Index (DXY)" },
-            { "name": "FX:EURUSD", "displayName": "EUR/USD" },
-            { "name": "FX:USDJPY", "displayName": "USD/JPY" },
-            { "name": "FX:GBPUSD", "displayName": "GBP/USD" },
-            { "name": "FX:USDCHF", "displayName": "USD/CHF" },
-            { "name": "FX:AUDUSD", "displayName": "AUD/USD" },
-            { "name": "FX:USDCAD", "displayName": "USD/CAD" },
-            { "name": "FX:USDNOK", "displayName": "USD/NOK" },
-            { "name": "FX:USDZAR", "displayName": "USD/ZAR" },
-            { "name": "FX:USDINR", "displayName": "USD/INR" },
-            { "name": "FX:USDBRL", "displayName": "USD/BRL" },
-            { "name": "FX:USDRUB", "displayName": "USD/RUB" },
-            { "name": "FX:USDMXN", "displayName": "USD/MXN" },
-            { "name": "FX:USDTRY", "displayName": "USD/TRY" },
-            { "name": "FX:USDCNY", "displayName": "USD/CNY" }
-          ]
-        }],
-        "showSymbolLogo": true,
-        "colorTheme": "dark",
-        "isTransparent": false,
-        "locale": "en"
-      }
-      </script>
-    </div>
-  </div>
-</div>
+</body>
+</html>
