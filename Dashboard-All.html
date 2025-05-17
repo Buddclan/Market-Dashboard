@@ -45,8 +45,8 @@
       font-size: 1.25rem;
     }
 
-    .panel p {
-      margin: 6px 0;
+    .widget-block {
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -55,24 +55,32 @@
   <!-- 🔄 Scrolling Ticker -->
   <div class="ticker">
     <marquee behavior="scroll" direction="left" scrollamount="6">
-      📈 S&P 500: 5,312.20 | 📉 Dow: 39,000.45 | 🪙 Gold: $2,345.67 | 🥈 Silver: $27.89 | 📊 10Y Yield: 4.58% | 💵 USD Index: 104.30
+      📈 Live Market Data | S&P 500 | Dow | Gold | Silver | 10Y Yield | USD Index | Bonds | Commodities
     </marquee>
   </div>
 
-  <!-- 📊 Market Overview + 🌍 Currency Watch -->
+  <!-- 📊 Market Overview Widgets -->
   <div class="dashboard-row">
-
-    <!-- 📊 Market Overview -->
     <div class="panel">
       <h2>📊 Market Overview</h2>
-      <p>S&P 500: 5,312.20</p>
-      <p>Dow Jones: 39,000.45</p>
-      <p>Gold: $2,345.67</p>
-      <p>Silver: $27.89</p>
-      <p>10-Year Yield: 4.58%</p>
+      <div class="tradingview-widget-container widget-block">
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js">
+        {
+          "symbols": [["NASDAQ:SPX", "S&P 500"], ["TVC:GOLD", "Gold"], ["TVC:SILVER", "Silver"]],
+          "chartOnly": false,
+          "width": "100%",
+          "height": "300",
+          "locale": "en",
+          "colorTheme": "dark",
+          "autosize": false,
+          "showVolume": false,
+          "showMA": false
+        }
+        </script>
+      </div>
     </div>
 
-    <!-- 🌍 Global Currency Watch -->
+    <!-- 🌍 Currency Watch -->
     <div class="panel">
       <h2>🌍 Global Currency Watch</h2>
       <div class="tradingview-widget-container">
@@ -86,54 +94,4 @@
               { "name": "CURRENCYCOM:DXY", "displayName": "US Dollar Index (DXY)" },
               { "name": "FX:EURUSD", "displayName": "EUR/USD" },
               { "name": "FX:USDJPY", "displayName": "USD/JPY" },
-              { "name": "FX:GBPUSD", "displayName": "GBP/USD" },
-              { "name": "FX:USDCHF", "displayName": "USD/CHF" },
-              { "name": "FX:AUDUSD", "displayName": "AUD/USD" },
-              { "name": "FX:USDCAD", "displayName": "USD/CAD" },
-              { "name": "FX:USDNOK", "displayName": "USD/NOK" },
-              { "name": "FX:USDZAR", "displayName": "USD/ZAR" },
-              { "name": "FX:USDINR", "displayName": "USD/INR" },
-              { "name": "FX:USDBRL", "displayName": "USD/BRL" },
-              { "name": "FX:USDRUB", "displayName": "USD/RUB" },
-              { "name": "FX:USDMXN", "displayName": "USD/MXN" },
-              { "name": "FX:USDTRY", "displayName": "USD/TRY" },
-              { "name": "FX:USDCNY", "displayName": "USD/CNY" }
-            ]
-          }],
-          "showSymbolLogo": true,
-          "colorTheme": "dark",
-          "isTransparent": false,
-          "locale": "en"
-        }
-        </script>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- 💣 Bond Market + 🪙 Gold Watch -->
-  <div class="dashboard-row">
-
-    <!-- 💣 Bond Market -->
-    <div class="panel">
-      <h2>💣 Bond Market Watch</h2>
-      <p>30-Year Yield: 4.85%</p>
-      <p>Bid-to-Cover Ratio: 2.3x</p>
-      <p>Next Treasury Auction: May 20, 2025</p>
-      <p>Fed Remittance Deficit: $-144B</p>
-    </div>
-
-    <!-- 🪙 Gold Market Stress -->
-    <div class="panel">
-      <h2>🪙 Physical Gold Metrics</h2>
-      <p>Gold to Paper Ratio: 51.8:1</p>
-      <p>Registered COMEX: 899,482 oz</p>
-      <p>Open Interest: 46.6M oz</p>
-      <p>SPX/Gold Ratio: 1.652</p>
-      <p>Velocity Stress: Green ✅</p>
-    </div>
-
-  </div>
-
-</body>
-</html>
+              { "name": "FX:GBPUSD
