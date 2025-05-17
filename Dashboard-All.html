@@ -1,24 +1,39 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+# Updated layout: left-right grid with stacked left column for market overview, bonds, crypto, gold/silver
+# Right column will have placeholders for upcoming content blocks
+html_grid_layout = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Goldzilla Command Center – All Panels</title>
+  <title>Goldzilla Terminal Grid</title>
   <style>
     html, body {
-      overflow-x: hidden;
-    }
-
-    body {
       margin: 0;
-      background-color: #000;
+      padding: 0;
+      overflow-x: hidden;
       font-family: Arial, sans-serif;
+      background-color: #000;
       color: #fff;
     }
 
-    .content {
+    .ticker-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .container {
       max-width: 1440px;
       margin: 0 auto;
       padding: 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .column {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -46,55 +61,37 @@
 
     .gain { color: #00ff88; }
     .loss { color: #ff4444; }
-
-    .row {
-      display: flex;
-      flex-direction: row;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .column {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .ticker-wrapper {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
   </style>
 </head>
 <body>
 
-  <!-- 🔝 Fixed Scrolling Ticker at Top -->
-  <div class="ticker-wrapper">
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
-          { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
-          { "proName": "TVC:US10Y", "title": "10Y Yield" },
-          { "proName": "TVC:VIX", "title": "VIX" },
-          { "proName": "TVC:DXY", "title": "Dollar Index" },
-          { "proName": "CAPITALCOM:US100", "title": "NASDAQ 100" }
-        ],
-        "showSymbolLogo": true,
-        "colorTheme": "dark",
-        "isTransparent": false,
-        "displayMode": "adaptive",
-        "locale": "en"
-      }
-      </script>
-    </div>
+<!-- 🔝 Scrolling Ticker -->
+<div class="ticker-wrapper">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+        { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+        { "proName": "TVC:US10Y", "title": "10Y Yield" },
+        { "proName": "TVC:VIX", "title": "VIX" },
+        { "proName": "TVC:DXY", "title": "Dollar Index" },
+        { "proName": "CAPITALCOM:US100", "title": "NASDAQ 100" }
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "dark",
+      "isTransparent": false,
+      "displayMode": "adaptive",
+      "locale": "en"
+    }
+    </script>
   </div>
+</div>
 
-  <div class="content">
-
-    <!-- 📈 Market Overview Widget -->
+<div class="container">
+  <!-- LEFT COLUMN -->
+  <div class="column">
     <div class="panel-box">
       <div class="panel-title">📈 Market Overview</div>
       <div class="tradingview-widget-container">
@@ -130,16 +127,63 @@
       </div>
     </div>
 
-    <!-- 💵 Bonds + 🪙 Crypto Side-by-Side -->
-    <div class="row">
-      <div class="column panel-box">
-        <div class="panel-title">💵 Bonds – Treasury Yields</div>
-        <div class="stat-line">10-Year: 4.21% | YTD: <span class="gain">+0.36%</span></div>
-        <div class="stat-line">20-Year: 4.52% | YTD: <span class="gain">+0.42%</span></div>
-        <div class="stat-line">30-Year: 4.63% | YTD: <span class="gain">+0.51%</span></div>
+    <div class="panel-box">
+      <div class="panel-title">💵 Bonds – Treasury Yields</div>
+      <div class="stat-line">10-Year: 4.21% | YTD: <span class="gain">+0.36%</span></div>
+      <div class="stat-line">20-Year: 4.52% | YTD: <span class="gain">+0.42%</span></div>
+      <div class="stat-line">30-Year: 4.63% | YTD: <span class="gain">+0.51%</span></div>
+    </div>
+
+    <div class="panel-box">
+      <div class="panel-title">🪙 Crypto Market (Static)</div>
+      <div class="stat-line">BTC/USD: $63,212 | YTD: <span class="gain">+47.2%</span></div>
+      <div class="stat-line">ETH/USD: $3,122 | YTD: <span class="gain">+29.8%</span></div>
+      <div class="stat-line">SOL/USD: $142.20 | YTD: <span class="gain">+61.5%</span></div>
+      <div class="stat-line">XRP/USD: $0.52 | YTD: <span class="loss">-3.2%</span></div>
+    </div>
+
+    <div class="panel-box">
+      <div class="panel-title">🟡 Gold / Silver Ratio & Prices</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+        {
+          "width": "100%",
+          "height": 300,
+          "symbolsGroups": [
+            {
+              "name": "Metals",
+              "symbols": [
+                { "name": "TVC:GOLDSILVER", "displayName": "G/S Ratio" },
+                { "name": "TVC:GOLD", "displayName": "Gold (US$/oz)" },
+                { "name": "TVC:SILVER", "displayName": "Silver (US$/oz)" }
+              ]
+            }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": false,
+          "colorTheme": "dark",
+          "locale": "en",
+          "backgroundColor": "#131722"
+        }
+        </script>
       </div>
-      <div class="column panel-box">
-        <div class="panel-title">🪙 Crypto Market (Static)</div>
-        <div class="stat-line">BTC/USD: $63,212 | YTD: <span class="gain">+47.2%</span></div>
-        <div class="stat-line">ETH/USD: $3,122 | YTD: <span class="gain">+29.8%</span></div>
-        <div class
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="column">
+    <div class="panel-box">
+      <div class="panel-title">🧩 Placeholder</div>
+      <p>Right side content coming soon: SPX/Gold, Calendar, BRICS...</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+"""
+
+# Save to HTML file
+grid_file = Path("/mnt/data/Dashboard-All.html")
+grid_file.write_text(html_grid_layout)
+grid_file
