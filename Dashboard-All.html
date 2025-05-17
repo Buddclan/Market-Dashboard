@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>Goldzilla Command Center – All Panels</title>
   <style>
+    html, body {
+      overflow-x: hidden;
+    }
+
     body {
       margin: 0;
       background-color: #000;
@@ -12,6 +16,8 @@
     }
 
     .content {
+      max-width: 1440px;
+      margin: 0 auto;
       padding: 1rem;
       display: flex;
       flex-direction: column;
@@ -111,4 +117,29 @@
               "symbols": [
                 { "s": "SP:SPX", "d": "S&P 500" },
                 { "s": "BLACKBULL:US30", "d": "Dow" },
-                { "s": "NASDAQ:IX
+                { "s": "NASDAQ:IXIC", "d": "Nasdaq Comp" },
+                { "s": "CAPITALCOM:US100", "d": "Nasdaq 100" },
+                { "s": "CAPITALCOM:RTY", "d": "Russell 2000" },
+                { "s": "AMEX:IWB", "d": "Russell 1000 (ETF)" },
+                { "s": "AMEX:IWV", "d": "Russell 3000 (ETF)" }
+              ]
+            }
+          ]
+        }
+        </script>
+      </div>
+    </div>
+
+    <!-- 💵 Bonds + 🪙 Crypto Side-by-Side -->
+    <div class="row">
+      <div class="column panel-box">
+        <div class="panel-title">💵 Bonds – Treasury Yields</div>
+        <div class="stat-line">10-Year: 4.21% | YTD: <span class="gain">+0.36%</span></div>
+        <div class="stat-line">20-Year: 4.52% | YTD: <span class="gain">+0.42%</span></div>
+        <div class="stat-line">30-Year: 4.63% | YTD: <span class="gain">+0.51%</span></div>
+      </div>
+      <div class="column panel-box">
+        <div class="panel-title">🪙 Crypto Market (Static)</div>
+        <div class="stat-line">BTC/USD: $63,212 | YTD: <span class="gain">+47.2%</span></div>
+        <div class="stat-line">ETH/USD: $3,122 | YTD: <span class="gain">+29.8%</span></div>
+        <div class
