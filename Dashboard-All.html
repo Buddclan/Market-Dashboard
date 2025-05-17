@@ -44,37 +44,53 @@
       margin-top: 0;
       font-size: 1.25rem;
     }
-
-    .widget-block {
-      margin-bottom: 20px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- 🔄 Scrolling Ticker -->
+  <!-- ✅ Scrolling Ticker FIXED -->
   <div class="ticker">
     <marquee behavior="scroll" direction="left" scrollamount="6">
-      📈 Live Market Data | S&P 500 | Dow | Gold | Silver | 10Y Yield | USD Index | Bonds | Commodities
+      📈 S&P 500: 5,312.20 | 📉 Dow: 39,000.45 | 🪙 Gold: $2,345.67 | 🥈 Silver: $27.89 | 📊 10Y Yield: 4.58% | 💵 USD Index: 104.30
     </marquee>
   </div>
 
-  <!-- 📊 Market Overview Widgets -->
+  <!-- ✅ MARKET + CURRENCY -->
   <div class="dashboard-row">
+
+    <!-- 📊 Market Overview -->
     <div class="panel">
       <h2>📊 Market Overview</h2>
-      <div class="tradingview-widget-container widget-block">
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js">
+      <div class="tradingview-widget-container">
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
         {
-          "symbols": [["NASDAQ:SPX", "S&P 500"], ["TVC:GOLD", "Gold"], ["TVC:SILVER", "Silver"]],
-          "chartOnly": false,
-          "width": "100%",
-          "height": "300",
-          "locale": "en",
           "colorTheme": "dark",
-          "autosize": false,
-          "showVolume": false,
-          "showMA": false
+          "dateRange": "12M",
+          "showChart": true,
+          "locale": "en",
+          "largeChartUrl": "",
+          "isTransparent": false,
+          "width": "100%",
+          "height": "400",
+          "showSymbolLogo": true,
+          "plotLineColorGrowing": "rgba(0, 255, 0, 1)",
+          "plotLineColorFalling": "rgba(255, 0, 0, 1)",
+          "gridLineColor": "rgba(42, 46, 57, 1)",
+          "scaleFontColor": "rgba(134, 137, 147, 1)",
+          "belowLineFillColorGrowing": "rgba(0, 255, 0, 0.1)",
+          "belowLineFillColorFalling": "rgba(255, 0, 0, 0.1)",
+          "symbolActiveColor": "rgba(255, 255, 255, 0.3)",
+          "tabs": [{
+            "title": "US Markets",
+            "symbols": [
+              { "s": "INDEX:SPX", "d": "S&P 500" },
+              { "s": "DJ:DJI", "d": "Dow Jones" },
+              { "s": "NASDAQ:NDX", "d": "Nasdaq 100" },
+              { "s": "TVC:GOLD", "d": "Gold" },
+              { "s": "TVC:SILVER", "d": "Silver" },
+              { "s": "TVC:US10Y", "d": "10-Year Yield" }
+            ]
+          }]
         }
         </script>
       </div>
@@ -94,4 +110,26 @@
               { "name": "CURRENCYCOM:DXY", "displayName": "US Dollar Index (DXY)" },
               { "name": "FX:EURUSD", "displayName": "EUR/USD" },
               { "name": "FX:USDJPY", "displayName": "USD/JPY" },
-              { "name": "FX:GBPUSD
+              { "name": "FX:GBPUSD", "displayName": "GBP/USD" },
+              { "name": "FX:USDCHF", "displayName": "USD/CHF" },
+              { "name": "FX:AUDUSD", "displayName": "AUD/USD" },
+              { "name": "FX:USDCAD", "displayName": "USD/CAD" },
+              { "name": "FX:USDNOK", "displayName": "USD/NOK" },
+              { "name": "FX:USDZAR", "displayName": "USD/ZAR" },
+              { "name": "FX:USDINR", "displayName": "USD/INR" },
+              { "name": "FX:USDBRL", "displayName": "USD/BRL" },
+              { "name": "FX:USDRUB", "displayName": "USD/RUB" }
+            ]
+          }],
+          "showSymbolLogo": true,
+          "colorTheme": "dark",
+          "isTransparent": false,
+          "locale": "en"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
