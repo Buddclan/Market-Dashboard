@@ -1,4 +1,4 @@
-<!DOCTYP<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -90,143 +90,55 @@
     </div>
   </div>
 
-</body>
-</html>E html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Goldzilla Dashboard – ALL</title>
-  <style>
-    body {
-      background-color: #0f0f0f;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      padding: 20px;
+<!-- Investing.com Single Currency Crosses -->
+<div class="section">
+  <h2>💱 Single Currency Crosses</h2>
+  <iframe src="https://www.widgets.investing.com/single-currency-crosses?theme=darkTheme&currency=12" width="100%" height="400" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+  <div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; margin-top: 5px;">
+    Powered by <a href="https://www.investing.com?utm_source=WMT&amp;utm_medium=referral&amp;utm_campaign=SINGLE_CROSSES&amp;utm_content=Footer%20Link" target="_blank" rel="nofollow">Investing.com</a>
+  </div>
+</div>
+
+<!-- TradingView Currency Cross Quotes -->
+<div class="section">
+  <h2>🌐 Currency Crosses</h2>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+    {
+      "width": 550,
+      "height": 550,
+      "symbolsGroups": [
+        {
+          "name": "Forex",
+          "originalName": "Forex",
+          "symbols": [
+            {"name": "FX:EURUSD", "displayName": "EUR to USD"},
+            {"name": "FX:GBPUSD", "displayName": "GBP to USD"},
+            {"name": "FX:USDJPY", "displayName": "USD to JPY"},
+            {"name": "FX:USDCHF", "displayName": "USD to CHF"},
+            {"name": "BMFBOVESPA:CNY1!", "displayName": "Chinese Yuan (Renminbi)"},
+            {"name": "BMFBOVESPA:RUB1!", "displayName": "Russian Ruble"},
+            {"name": "BMFBOVESPA:ZAR1!", "displayName": "South African Rand"},
+            {"name": "BMFBOVESPA:AUD1!", "displayName": "Australian Dollar"},
+            {"name": "CME:NOK1!", "displayName": "Norwegian Krone"},
+            {"name": "BMFBOVESPA:TRY1!", "displayName": "Turkish Lira"},
+            {"name": "BMFBOVESPA:ARS1!", "displayName": "Argentine Peso"},
+            {"name": "BMFBOVESPA:MXN1!", "displayName": "Mexican Peso"},
+            {"name": "CME:KRW1!", "displayName": "South Korean Won"},
+            {"name": "FX_IDC:HKDUSD", "displayName": "Hong Kong/USD"}
+          ]
+        }
+      ],
+      "showSymbolLogo": true,
+      "isTransparent": false,
+      "colorTheme": "dark",
+      "locale": "en",
+      "backgroundColor": "#131722"
     }
-    h2, h3 {
-      color: #FFD700;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    th, td {
-      border: 1px solid #555;
-      padding: 8px;
-      text-align: center;
-    }
-    thead {
-      background-color: #333;
-      color: #00FFFF;
-    }
-    .section {
-      margin-bottom: 40px;
-    }
-    .highlight {
-      color: #FFD700;
-    }
-    .signal-good { color: lime; }
-    .signal-warn { color: orange; }
-    .signal-bad { color: red; }
-  </style>
-</head>
-<body>
-  <h1 class="highlight">📊 Goldzilla Macro Dashboard – Full View</h1>
-
-  <!-- Section 1: Gold to Paper Stress -->
-  <div class="section">
-    <h2>🪙 Gold to Paper Stress Table</h2>
-    <table>
-      <thead>
-        <tr><th>Date</th><th>Open Interest (oz)</th><th>Registered Gold (oz)</th><th>Ratio</th><th>Velocity</th><th>Signal</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>5/14/2025</td><td>441,736</td><td>21,540,214</td><td>2.05</td><td>+0.31%</td><td class="signal-warn">🟡</td></tr>
-        <tr><td>5/13/2025</td><td>440,360</td><td>21,540,214</td><td>2.04</td><td>+0.59%</td><td class="signal-warn">🟡</td></tr>
-        <tr><td>5/12/2025</td><td>440,560</td><td>21,676,072</td><td>2.03</td><td>+0.02%</td><td class="signal-good">🟢</td></tr>
-      </tbody>
-    </table>
+    </script>
   </div>
-
-  <!-- Section 2: Stagflation Monitor -->
-  <div class="section">
-    <h2>📉 Stagflation Monitor</h2>
-    <table>
-      <thead>
-        <tr><th>Date</th><th>CPI</th><th>Gold</th><th>SPY</th><th>RSP</th><th>10Y Yield</th><th>SPY/RSP</th><th>Alert</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>5/17/2025</td><td>3.19%</td><td>$3,201.07</td><td>594.2</td><td>168.12</td><td>4.44%</td><td>3.53</td><td class="signal-warn">🟠 Risk Building</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Section 3: Labor Market Panel -->
-  <div class="section">
-    <h2>👷 Labor Market Pressure</h2>
-    <table>
-      <thead>
-        <tr><th>Metric</th><th>Value</th><th>Signal</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Initial Jobless Claims</td><td>251,000</td><td class="signal-warn">🟠</td></tr>
-        <tr><td>Net Labor Market Standing</td><td>-253,000</td><td class="signal-bad">☠️</td></tr>
-        <tr><td>Unemployment Rate</td><td>4.2%</td><td class="signal-warn">🟡</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Section 4: Treasury & Bond Tracker -->
-  <div class="section">
-    <h2>🏛️ Treasury & Bond Pressure Monitor</h2>
-    <table>
-      <thead>
-        <tr><th>Metric</th><th>Value</th><th>Trend</th><th>Status</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>China Treasury Holdings</td><td>$767.4B</td><td>➡️</td><td class="signal-good">🟢</td></tr>
-        <tr><td>10-Year Yield</td><td>4.44%</td><td>🔺</td><td class="signal-good">🟢</td></tr>
-        <tr><td>Interest Payments FYTD</td><td>$1.1T</td><td>🔺</td><td>⚠️ Monitor</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Section 5: Market Breadth + Macro Risk -->
-  <div class="section">
-    <h2>🧠 Market Breadth & Macro Risk Engine</h2>
-    <table>
-      <thead>
-        <tr><th>Metric</th><th>Value</th><th>Score</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>VIX</td><td>17.45</td><td>0</td></tr>
-        <tr><td>SPY/RSP Ratio</td><td>3.53</td><td>2</td></tr>
-        <tr><td>% Above 200MA</td><td>34.05%</td><td>1</td></tr>
-        <tr><td>NH-NL 10-Day Avg</td><td>0.875</td><td>2</td></tr>
-        <tr><td>Total Score</td><td>—</td><td class="signal-warn">8 🟠 Risk Building</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Section 6: SPY/RSP Tracker -->
-  <div class="section">
-    <h2>📈 SPY vs RSP Ratio Indicator</h2>
-    <p><strong>Current Ratio:</strong> 3.53<br><strong>Status:</strong> <span class="signal-bad">🔴 Narrow Leadership</span></p>
-  </div>
-
-  <!-- Section 7: Real Inflation Dashboard -->
-  <div class="section">
-    <h2>🛍️ Cost of Living – Real Inflation</h2>
-    <p>Example: Eggs +141.99%, Chicken +33%, Rent +27.8%, Butter +35.49%</p>
-  </div>
-
-  <!-- Section 8: Government Receipts & Spending -->
-  <div class="section">
-    <h2>🧾 Federal Tax Receipts vs Spending</h2>
-    <p>Total FYTD Receipts: $1.97T<br>Total FYTD Deficit: -$113.5B<br>Status: <span class="signal-warn">🟠 Rising Deficit Pressure</span></p>
-  </div>
+</div>
 
 </body>
 </html>
