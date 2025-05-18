@@ -1,134 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Goldzilla Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goldzilla Dashboard – ALL</title>
   <style>
     body {
-      background-color: #111;
-      color: #eee;
+      background-color: #0f0f0f;
+      color: #ffffff;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .ticker {
-      background: #000;
-      color: #fff;
-      padding: 10px;
-      font-family: monospace;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .dashboard-row {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: 40px auto 0;
-      padding: 0 20px;
-    }
-
-    .panel {
-      flex: 1;
-      min-width: 400px;
-      background-color: #1b1b1b;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
     }
-
-    .panel h2 {
-      margin-top: 0;
-      font-size: 1.25rem;
+    h2, h3 {
+      color: #FFD700;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    thead {
+      background-color: #333;
+      color: #00FFFF;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .highlight {
+      color: #FFD700;
+    }
+    .signal-good { color: lime; }
+    .signal-warn { color: orange; }
+    .signal-bad { color: red; }
   </style>
 </head>
 <body>
+  <h1 class="highlight">📊 Goldzilla Macro Dashboard – Full View</h1>
 
-  <!-- ✅ Scrolling Ticker FIXED -->
-  <div class="ticker">
-    <marquee behavior="scroll" direction="left" scrollamount="6">
-      📈 S&P 500: 5,312.20 | 📉 Dow: 39,000.45 | 🪙 Gold: $2,345.67 | 🥈 Silver: $27.89 | 📊 10Y Yield: 4.58% | 💵 USD Index: 104.30
-    </marquee>
+  <!-- Section 1: Gold to Paper Stress -->
+  <div class="section">
+    <h2>🪙 Gold to Paper Stress Table</h2>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Open Interest (oz)</th><th>Registered Gold (oz)</th><th>Ratio</th><th>Velocity</th><th>Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5/14/2025</td><td>441,736</td><td>21,540,214</td><td>2.05</td><td>+0.31%</td><td class="signal-warn">🟡</td></tr>
+        <tr><td>5/13/2025</td><td>440,360</td><td>21,540,214</td><td>2.04</td><td>+0.59%</td><td class="signal-warn">🟡</td></tr>
+        <tr><td>5/12/2025</td><td>440,560</td><td>21,676,072</td><td>2.03</td><td>+0.02%</td><td class="signal-good">🟢</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- ✅ MARKET + CURRENCY -->
-  <div class="dashboard-row">
+  <!-- Section 2: Stagflation Monitor -->
+  <div class="section">
+    <h2>📉 Stagflation Monitor</h2>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>CPI</th><th>Gold</th><th>SPY</th><th>RSP</th><th>10Y Yield</th><th>SPY/RSP</th><th>Alert</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5/17/2025</td><td>3.19%</td><td>$3,201.07</td><td>594.2</td><td>168.12</td><td>4.44%</td><td>3.53</td><td class="signal-warn">🟠 Risk Building</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- 📊 Market Overview -->
-    <div class="panel">
-      <h2>📊 Market Overview</h2>
-      <div class="tradingview-widget-container">
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
-        {
-          "colorTheme": "dark",
-          "dateRange": "12M",
-          "showChart": true,
-          "locale": "en",
-          "largeChartUrl": "",
-          "isTransparent": false,
-          "width": "100%",
-          "height": "400",
-          "showSymbolLogo": true,
-          "plotLineColorGrowing": "rgba(0, 255, 0, 1)",
-          "plotLineColorFalling": "rgba(255, 0, 0, 1)",
-          "gridLineColor": "rgba(42, 46, 57, 1)",
-          "scaleFontColor": "rgba(134, 137, 147, 1)",
-          "belowLineFillColorGrowing": "rgba(0, 255, 0, 0.1)",
-          "belowLineFillColorFalling": "rgba(255, 0, 0, 0.1)",
-          "symbolActiveColor": "rgba(255, 255, 255, 0.3)",
-          "tabs": [{
-            "title": "US Markets",
-            "symbols": [
-              { "s": "INDEX:SPX", "d": "S&P 500" },
-              { "s": "DJ:DJI", "d": "Dow Jones" },
-              { "s": "NASDAQ:NDX", "d": "Nasdaq 100" },
-              { "s": "TVC:GOLD", "d": "Gold" },
-              { "s": "TVC:SILVER", "d": "Silver" },
-              { "s": "TVC:US10Y", "d": "10-Year Yield" }
-            ]
-          }]
-        }
-        </script>
-      </div>
-    </div>
+  <!-- Section 3: Labor Market Panel -->
+  <div class="section">
+    <h2>👷 Labor Market Pressure</h2>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Value</th><th>Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Initial Jobless Claims</td><td>251,000</td><td class="signal-warn">🟠</td></tr>
+        <tr><td>Net Labor Market Standing</td><td>-253,000</td><td class="signal-bad">☠️</td></tr>
+        <tr><td>Unemployment Rate</td><td>4.2%</td><td class="signal-warn">🟡</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- 🌍 Currency Watch -->
-    <div class="panel">
-      <h2>🌍 Global Currency Watch</h2>
-      <div class="tradingview-widget-container">
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js">
-        {
-          "width": "100%",
-          "height": "500",
-          "symbolsGroups": [{
-            "name": "Currencies",
-            "symbols": [
-              { "name": "CURRENCYCOM:DXY", "displayName": "US Dollar Index (DXY)" },
-              { "name": "FX:EURUSD", "displayName": "EUR/USD" },
-              { "name": "FX:USDJPY", "displayName": "USD/JPY" },
-              { "name": "FX:GBPUSD", "displayName": "GBP/USD" },
-              { "name": "FX:USDCHF", "displayName": "USD/CHF" },
-              { "name": "FX:AUDUSD", "displayName": "AUD/USD" },
-              { "name": "FX:USDCAD", "displayName": "USD/CAD" },
-              { "name": "FX:USDNOK", "displayName": "USD/NOK" },
-              { "name": "FX:USDZAR", "displayName": "USD/ZAR" },
-              { "name": "FX:USDINR", "displayName": "USD/INR" },
-              { "name": "FX:USDBRL", "displayName": "USD/BRL" },
-              { "name": "FX:USDRUB", "displayName": "USD/RUB" }
-            ]
-          }],
-          "showSymbolLogo": true,
-          "colorTheme": "dark",
-          "isTransparent": false,
-          "locale": "en"
-        }
-        </script>
-      </div>
-    </div>
+  <!-- Section 4: Treasury & Bond Tracker -->
+  <div class="section">
+    <h2>🏛️ Treasury & Bond Pressure Monitor</h2>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Value</th><th>Trend</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>China Treasury Holdings</td><td>$767.4B</td><td>➡️</td><td class="signal-good">🟢</td></tr>
+        <tr><td>10-Year Yield</td><td>4.44%</td><td>🔺</td><td class="signal-good">🟢</td></tr>
+        <tr><td>Interest Payments FYTD</td><td>$1.1T</td><td>🔺</td><td>⚠️ Monitor</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 5: Market Breadth + Macro Risk -->
+  <div class="section">
+    <h2>🧠 Market Breadth & Macro Risk Engine</h2>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Value</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>VIX</td><td>17.45</td><td>0</td></tr>
+        <tr><td>SPY/RSP Ratio</td><td>3.53</td><td>2</td></tr>
+        <tr><td>% Above 200MA</td><td>34.05%</td><td>1</td></tr>
+        <tr><td>NH-NL 10-Day Avg</td><td>0.875</td><td>2</td></tr>
+        <tr><td>Total Score</td><td>—</td><td class="signal-warn">8 🟠 Risk Building</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 6: SPY/RSP Tracker -->
+  <div class="section">
+    <h2>📈 SPY vs RSP Ratio Indicator</h2>
+    <p><strong>Current Ratio:</strong> 3.53<br><strong>Status:</strong> <span class="signal-bad">🔴 Narrow Leadership</span></p>
+  </div>
+
+  <!-- Section 7: Real Inflation Dashboard -->
+  <div class="section">
+    <h2>🛍️ Cost of Living – Real Inflation</h2>
+    <p>Example: Eggs +141.99%, Chicken +33%, Rent +27.8%, Butter +35.49%</p>
+  </div>
+
+  <!-- Section 8: Government Receipts & Spending -->
+  <div class="section">
+    <h2>🧾 Federal Tax Receipts vs Spending</h2>
+    <p>Total FYTD Receipts: $1.97T<br>Total FYTD Deficit: -$113.5B<br>Status: <span class="signal-warn">🟠 Rising Deficit Pressure</span></p>
   </div>
 
 </body>
