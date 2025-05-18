@@ -81,14 +81,56 @@
 
   <h1 class="highlight">📊 Goldzilla Macro Dashboard – Full View</h1>
 
-  <!-- TradingView Market Quotes Panel -->
-  <div class="section">
+  <!-- Combined Indices + Currency Panels -->
+<div class="section" style="display: flex; flex-wrap: wrap; gap: 20px;">
+  <div style="flex: 1; min-width: 600px;">
     <h2>🌍 Market Indices Panel</h2>
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{"width":550,"height":550,"symbolsGroups":[{"name":"Indices","originalName":"Indices","symbols":[{"name":"FOREXCOM:SPXUSD","displayName":"S&P 500 Index"},{"name":"FOREXCOM:DJI","displayName":"Dow Jones Industrial Average Index"},{"name":"PEPPERSTONE:NAS100","displayName":"100 Tech"},{"name":"CAPITALCOM:RTY","displayName":"R-2000"},{"name":"CMCMARKETS:NDAQ100","displayName":"NASDAQ"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","backgroundColor":"#131722"}</script>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{"width":700,"height":600,"symbolsGroups":[{"name":"Indices","originalName":"Indices","symbols":[{"name":"FOREXCOM:SPXUSD","displayName":"S&P 500 Index"},{"name":"FOREXCOM:DJI","displayName":"Dow Jones Industrial Average Index"},{"name":"PEPPERSTONE:NAS100","displayName":"100 Tech"},{"name":"CAPITALCOM:RTY","displayName":"R-2000"},{"name":"CMCMARKETS:NDAQ100","displayName":"NASDAQ"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","backgroundColor":"#131722"}</script>
     </div>
   </div>
+
+  <div style="flex: 1; min-width: 500px;">
+    <h2>🌐 Currency Crosses</h2>
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+      {
+        "width": 500,
+        "height": 600,
+        "symbolsGroups": [
+          {
+            "name": "Forex",
+            "originalName": "Forex",
+            "symbols": [
+              {"name": "FX:EURUSD", "displayName": "EUR to USD"},
+              {"name": "FX:GBPUSD", "displayName": "GBP to USD"},
+              {"name": "FX:USDJPY", "displayName": "USD to JPY"},
+              {"name": "FX:USDCHF", "displayName": "USD to CHF"},
+              {"name": "BMFBOVESPA:CNY1!", "displayName": "Chinese Yuan (Renminbi)"},
+              {"name": "BMFBOVESPA:RUB1!", "displayName": "Russian Ruble"},
+              {"name": "BMFBOVESPA:ZAR1!", "displayName": "South African Rand"},
+              {"name": "BMFBOVESPA:AUD1!", "displayName": "Australian Dollar"},
+              {"name": "CME:NOK1!", "displayName": "Norwegian Krone"},
+              {"name": "BMFBOVESPA:TRY1!", "displayName": "Turkish Lira"},
+              {"name": "BMFBOVESPA:ARS1!", "displayName": "Argentine Peso"},
+              {"name": "BMFBOVESPA:MXN1!", "displayName": "Mexican Peso"},
+              {"name": "CME:KRW1!", "displayName": "South Korean Won"},
+              {"name": "FX_IDC:HKDUSD", "displayName": "Hong Kong/USD"}
+            ]
+          }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": false,
+        "colorTheme": "dark",
+        "locale": "en",
+        "backgroundColor": "#131722"
+      }
+      </script>
+    </div>
+  </div>
+</div>
 
 <!-- Investing.com Single Currency Crosses -->
 <div class="section">
