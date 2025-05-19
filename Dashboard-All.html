@@ -52,7 +52,11 @@
   <div class="section">
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+      <div class="tradingview-widget-copyright">
+        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+          <span class="blue-text">Track all markets on TradingView</span>
+        </a>
+      </div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
       {
         "symbols": [
@@ -81,138 +85,34 @@
 
   <h1 class="highlight">📊 Goldzilla Macro Dashboard – Full View</h1>
 
-  <!-- Combined Indices + Currency Panels -->
-<div class="section" style="display: flex; flex-wrap: nowrap; gap: 10px; align-items: flex-start;">
-  <div style="flex: 1.4; min-width: 720px;">
-    <h2>🌍 Market Indices Panel</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{"width":700,"height":600,"symbolsGroups":[{"name":"Indices","originalName":"Indices","symbols":[{"name":"FOREXCOM:SPXUSD","displayName":"S&P 500 Index"},{"name":"FOREXCOM:DJI","displayName":"Dow Jones Industrial Average Index"},{"name":"PEPPERSTONE:NAS100","displayName":"100 Tech"},{"name":"CAPITALCOM:RTY","displayName":"R-2000"},{"name":"CMCMARKETS:NDAQ100","displayName":"NASDAQ"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","backgroundColor":"#131722"}</script>
-    </div>
-  </div>
-
-  <div style="flex: 1; min-width: 420px;">
-    <h2>🌐 Currency Crosses</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-      {
-        "width": 500,
-        "height": 600,
-        "symbolsGroups": [
-          {
-            "name": "Forex",
-            "originalName": "Forex",
-            "symbols": [
-              {"name": "FX:EURUSD", "displayName": "EUR to USD"},
-              {"name": "FX:GBPUSD", "displayName": "GBP to USD"},
-              {"name": "FX:USDJPY", "displayName": "USD to JPY"},
-              {"name": "FX:USDCHF", "displayName": "USD to CHF"},
-              {"name": "BMFBOVESPA:CNY1!", "displayName": "Chinese Yuan (Renminbi)"},
-              {"name": "BMFBOVESPA:RUB1!", "displayName": "Russian Ruble"},
-              {"name": "BMFBOVESPA:ZAR1!", "displayName": "South African Rand"},
-              {"name": "BMFBOVESPA:AUD1!", "displayName": "Australian Dollar"},
-              {"name": "CME:NOK1!", "displayName": "Norwegian Krone"},
-              {"name": "BMFBOVESPA:TRY1!", "displayName": "Turkish Lira"},
-              {"name": "BMFBOVESPA:ARS1!", "displayName": "Argentine Peso"},
-              {"name": "BMFBOVESPA:MXN1!", "displayName": "Mexican Peso"},
-              {"name": "CME:KRW1!", "displayName": "South Korean Won"},
-              {"name": "FX_IDC:HKDUSD", "displayName": "Hong Kong/USD"}
-            ]
-          }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en",
-        "backgroundColor": "#131722"
-      }
-      </script>
-    </div></div></div>
-
-<!-- Hotlist Panel: Active, Gainers, Losers -->
-<div class="section">
-  <h2>🔥 Active Gainers & Losers</h2>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
-    {
-      "colorTheme": "dark",
-      "dateRange": "12M",
-      "exchange": "US",
-      "showChart": true,
-      "locale": "en",
-      "largeChartUrl": "",
-      "isTransparent": false,
-      "showSymbolLogo": false,
-      "showFloatingTooltip": false,
-      "width": "400",
-      "height": "550",
-      "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-      "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-      "gridLineColor": "rgba(42, 46, 57, 0)",
-      "scaleFontColor": "rgba(219, 219, 219, 1)",
-      "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-      "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-      "symbolActiveColor": "rgba(41, 98, 255, 0.12)"
-    }
-    </script>
-  </div>
-</div>
-
-<!-- Investing.com Single Currency Crosses (Wider + Tighter) -->
-<div class="section" style="margin-top: 20px;">
-  <h2 style="color: #FFD700;">💱 Single Currency Crosses</h2>
-  <iframe src="https://www.widgets.investing.com/single-currency-crosses?theme=darkTheme&currency=12"
-          width="100%" height="450" style="border: none; overflow: hidden;"></iframe>
-  <div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; margin-top: 5px;">
-    Powered by <a href="https://www.investing.com?utm_source=WMT&amp;utm_medium=referral&amp;utm_campaign=SINGLE_CROSSES&amp;utm_content=Footer%20Link"
-                  target="_blank" rel="nofollow">Investing.com</a>
-  </div>
-</div>
-
-<!-- TradingView Currency Cross Quotes -->
-<div class="section">
-  <h2>🌐 Currency Crosses</h2>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-    {
-      "width": 550,
-      "height": 550,
-      "symbolsGroups": [
+  <!-- Market Indices Panel -->
+  <div class="section" style="display: flex; flex-wrap: nowrap; gap: 10px; align-items: flex-start;">
+    <div style="flex: 1.4; min-width: 720px;">
+      <h2>🌍 Market Indices Panel</h2>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
         {
-          "name": "Forex",
-          "originalName": "Forex",
-          "symbols": [
-            {"name": "FX:EURUSD", "displayName": "EUR to USD"},
-            {"name": "FX:GBPUSD", "displayName": "GBP to USD"},
-            {"name": "FX:USDJPY", "displayName": "USD to JPY"},
-            {"name": "FX:USDCHF", "displayName": "USD to CHF"},
-            {"name": "BMFBOVESPA:CNY1!", "displayName": "Chinese Yuan (Renminbi)"},
-            {"name": "BMFBOVESPA:RUB1!", "displayName": "Russian Ruble"},
-            {"name": "BMFBOVESPA:ZAR1!", "displayName": "South African Rand"},
-            {"name": "BMFBOVESPA:AUD1!", "displayName": "Australian Dollar"},
-            {"name": "CME:NOK1!", "displayName": "Norwegian Krone"},
-            {"name": "BMFBOVESPA:TRY1!", "displayName": "Turkish Lira"},
-            {"name": "BMFBOVESPA:ARS1!", "displayName": "Argentine Peso"},
-            {"name": "BMFBOVESPA:MXN1!", "displayName": "Mexican Peso"},
-            {"name": "CME:KRW1!", "displayName": "South Korean Won"},
-            {"name": "FX_IDC:HKDUSD", "displayName": "Hong Kong/USD"}
-          ]
+          "width":700,
+          "height":600,
+          "symbolsGroups":[
+            {
+              "name":"Indices",
+              "originalName":"Indices",
+              "symbols":[
+                {"name":"FOREXCOM:SPXUSD","displayName":"S&P 500 Index"},
+                {"name":"FOREXCOM:DJI","displayName":"Dow Jones Industrial Average Index"},
+                {"name":"PEPPERSTONE:NAS100","displayName":"100 Tech"},
+                {"name":"CAPITALCOM:RTY","displayName":"R-2000"},
+                {"name":"CMCMARKETS:NDAQ100","displayName":"NASDAQ"}
+              ]
+            }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": false,
+          "colorTheme": "dark",
+          "locale": "en",
+          "backgroundColor": "#131722"
         }
-      ],
-      "showSymbolLogo": true,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en",
-      "backgroundColor": "#131722"
-    }
-    </script>
-  </div>
-</div>
-
-</body>
-</html>
+        </script>
+      </div>
