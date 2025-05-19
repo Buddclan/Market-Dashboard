@@ -1,156 +1,76 @@
-# Combine and format all the widgets Greg listed into a single Indices.html file.
-indices_html = """<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
+  <title>Goldzilla Command Center</title>
   <meta charset="UTF-8">
-  <title>📈 Indices – Goldzilla Terminal</title>
   <style>
     body {
-      background-color: #000;
       margin: 0;
+      padding: 0;
+      background-color: #000;
       font-family: Arial, sans-serif;
-      color: #fff;
+      color: #fuchsia;
     }
-
-    h1 {
-      font-size: 2rem;
-      margin: 2rem;
-      color: #f9d923;
-      text-align: center;
-    }
-
-    .section {
-      padding: 1rem 2rem;
-      margin-bottom: 2rem;
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background-color: #111;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      box-shadow: 0 2px 10px rgba(255,0,100,0.3);
       border-bottom: 2px solid #fuchsia;
     }
-
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-    }
-
-    .back-link {
-      display: block;
-      margin: 2rem auto;
-      text-align: center;
-    }
-
-    .back-link a {
-      color: #fuchsia;
-      text-decoration: none;
+    nav a {
+      background: #fuchsia;
+      color: #111;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
       font-weight: bold;
+      text-decoration: none;
+    }
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .tile {
+      background: #111;
+      border: 2px solid #fuchsia;
+      color: #fuchsia;
+      padding: 2rem;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #fuchsia;
+      transition: transform 0.2s ease;
+    }
+    .tile:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
 <body>
 
-  <h1>📈 Indices Dashboard</h1>
+<nav>
+  <a href="Dashboard-All.html">🏠 Dashboard</a>
+  <a href="calendar.html">📅 Calendar</a>
+</nav>
 
-  <!-- Ticker -->
-  <div class="section">
-    <h2>🔄 Market Ticker</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500 Index" },
-          { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
-          { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" },
-          { "description": "VIX", "proName": "TVC:VIX" },
-          { "description": "Dollar", "proName": "TVC:DXY" },
-          { "description": "Gold", "proName": "TVC:GOLD" },
-          { "description": "Silver", "proName": "TVC:SILVER" },
-          { "description": "10Y", "proName": "TVC:US10Y" },
-          { "description": "NAS 100", "proName": "PEPPERSTONE:NAS100" },
-          { "description": "R-2000", "proName": "CAPITALCOM:RTY" },
-          { "description": "Apple", "proName": "NASDAQ:AAPL" },
-          { "description": "Bitcoin", "proName": "CRYPTO:BTCUSD" }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "displayMode": "adaptive",
-        "colorTheme": "dark",
-        "locale": "en"
-      }
-      </script>
-    </div>
-  </div>
+<div class="tile-grid">
+  <a href="Ticker.html" class="tile">📈 Ticker</a>
+  <a href="Sector.html" class="tile">📊 Sector Heatmap</a>
+  <a href="Cryptoheatmap.html" class="tile">🔥 Crypto Heatmap</a>
+  <a href="Gold-Silver.html" class="tile">🪙 Gold/Silver</a>
+  <a href="calendar.html" class="tile">📰 Economic Calendar</a>
+  <a href="Debt-Doom.html" class="tile">💣 Debt Doom</a>
+  <a href="SPY-RSP.html" class="tile">⚖️ SPY/RSP</a>
+  <a href="Jobs.html" class="tile">👷 Jobs</a>
+</div>
 
-  <!-- Hotlists -->
-  <div class="section">
-    <h2>🔥 Actives, Gainers & Losers</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
-      {
-        "colorTheme": "dark",
-        "dateRange": "12M",
-        "exchange": "US",
-        "showChart": true,
-        "locale": "en",
-        "largeChartUrl": "",
-        "isTransparent": false
-      }
-      </script>
-    </div>
-  </div>
-
-  <!-- Market News -->
-  <div class="section">
-    <h2>📰 Market News</h2>
-    <iframe id='st_29e05f23e8e64dfb83c52ced64f1859c' src='https://api.stockdio.com/visualization/financial/charts/v1/EconomicNews?app-key=&palette=Financial-Light&onload=st_29e05f23e8e64dfb83c52ced64f1859c'></iframe>
-  </div>
-
-  <!-- Live Economic Calendar -->
-  <div class="section">
-    <h2>📅 Live Economic Calendar</h2>
-    <div class="finlogix-container"></div>
-    <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
-    <script type="text/javascript">
-      Widget.init({
-        widgetId: "39a49488-ce68-47c5-89cd-5daf21756f2d",
-        type: "EconomicCalendar",
-        language: "en",
-        showBrand: true,
-        isShowTradeButton: true,
-        isShowBeneathLink: true,
-        isShowDataFromACYInfo: true,
-        isAdaptive: true
-      });
-    </script>
-  </div>
-
-  <!-- Symbol Info -->
-  <div class="section">
-    <h2>ℹ️ Symbol Info: Apple</h2>
-    <div class="finlogix-container"></div>
-    <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
-    <script type="text/javascript">
-      Widget.init({
-        widgetId: "39a49488-ce68-47c5-89cd-5daf21756f2d",
-        type: "SymbolInfo",
-        language: "en",
-        showBrand: true,
-        isShowTradeButton: true,
-        isShowBeneathLink: true,
-        isShowDataFromACYInfo: true,
-        symbolId: 10007,
-        symbolName: "Apple"
-      });
-    </script>
-  </div>
-
-  <div class="back-link">
-    <a href="Dashboard-All.html">← Back to Dashboard</a>
-  </div>
 </body>
 </html>
-"""
-
-# Save the file for upload
-indices_file = Path("/mnt/data/Indices.html")
-indices_file.write_text(indices_html)
-indices_file
