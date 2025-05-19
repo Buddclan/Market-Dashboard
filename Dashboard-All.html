@@ -1,33 +1,91 @@
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-      <span class="blue-text">Track all markets on TradingView</span>
-    </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Goldzilla Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ENTER Button Styling */
+    .enter-button {
+      margin-top: 25vh;
+      padding: 20px 60px;
+      font-size: 2rem;
+      border: none;
+      border-radius: 999px;
+      background-color: fuchsia;
+      color: black;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    .enter-button:hover {
+      background-color: #ff99ff;
+    }
+
+    /* Ensure TradingView widget container stays dark and full-width */
+    .tradingview-widget-container {
+      width: 100%;
+      background-color: #0f0f0f !important;
+      z-index: 1000;
+    }
+
+    .tradingview-widget-container__widget {
+      background-color: #0f0f0f !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TradingView Widget BEGIN -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright">
+      <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+        <span class="blue-text">Track all markets on TradingView</span>
+      </a>
+    </div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
+        {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
+        {"proName": "BITSTAMP:ETHUSD", "title": "Ethereum"},
+        {"proName": "TVC:VIX", "title": "VIX"},
+        {"proName": "TVC:DXY", "title": "Dollar Index"},
+        {"proName": "TVC:GOLD", "title": "Gold"},
+        {"proName": "TVC:SILVER", "title": "Silver"},
+        {"proName": "TVC:US10Y", "title": "10Y Yield"},
+        {"proName": "PEPPERSTONE:NAS100", "title": "NASDAQ 100"},
+        {"proName": "CAPITALCOM:RTY", "title": "Russell 2000"},
+        {"proName": "NASDAQ:AAPL", "title": "Apple"}
+      ],
+      "showSymbolLogo": true,
+      "isTransparent": false,
+      "displayMode": "adaptive",
+      "colorTheme": "dark",
+      "locale": "en"
+    }
+    </script>
   </div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-  {
-    "symbols": [
-      {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
-      {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
-      {"proName": "BITSTAMP:ETHUSD", "title": "Ethereum"},
-      {"proName": "TVC:VIX", "title": "VIX"},
-      {"proName": "TVC:DXY", "title": "Dollar Index"},
-      {"proName": "TVC:GOLD", "title": "Gold"},
-      {"proName": "TVC:SILVER", "title": "Silver"},
-      {"proName": "TVC:US10Y", "title": "10Y Yield"},
-      {"proName": "PEPPERSTONE:NAS100", "title": "NASDAQ 100"},
-      {"proName": "CAPITALCOM:RTY", "title": "Russell 2000"},
-      {"proName": "NASDAQ:AAPL", "title": "Apple"},
-      {"proName": "CRYPTO:BTCUSD", "title": "Bitcoin"}
-    ],
-    "showSymbolLogo": true,
-    "isTransparent": false,
-    "displayMode": "adaptive",
-    "colorTheme": "dark",
-    "locale": "en"
-  }
-  </script>
-</div>
-<!-- TradingView Widget END -->
+  <!-- TradingView Widget END -->
+
+  <!-- Oval ENTER Button -->
+  <a href="dashboard.html" class="enter-button">ENTER</a>
+
+</body>
+</html>
