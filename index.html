@@ -1,53 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Goldzilla Command Center</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Goldzilla Terminal</title>
   <style>
     body {
       margin: 0;
+      background-color: #0f0f0f;
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #e6c360;
-      text-align: center;
+      overflow: hidden;
     }
-    .ticker-bar {
+
+    .terminal-frame {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      border: 6px solid fuchsia;
+      box-shadow: 0 0 30px fuchsia;
+      overflow: hidden;
+    }
+
+    .terminal-embed {
       width: 100%;
-      height: 60px;
+      height: 100%;
       border: none;
     }
-    .main {
-      padding: 60px 20px;
-    }
-    h1 {
-      font-size: 36px;
-      margin: 0;
-      color: #e6c360;
-    }
-    .cta-button {
-      display: inline-block;
-      margin-top: 40px;
-      padding: 12px 24px;
-      background: #fuchsia;
-      color: #111;
+
+    .logo-overlay {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      z-index: 10;
+      font-size: 1.8rem;
       font-weight: bold;
-      font-size: 18px;
-      border-radius: 10px;
-      text-decoration: none;
-      box-shadow: 0 0 12px #fuchsia;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      color: fuchsia;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 6px 12px;
+      border-radius: 8px;
+      text-shadow: 1px 1px 3px black;
     }
-    .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px #fuchsia;
+
+    .enter-button {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 18px 60px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 999px;
+      background-color: fuchsia;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 0 12px fuchsia;
+      z-index: 10;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .enter-button:hover {
+      background-color: #ff99ff;
+      transform: translateX(-50%) scale(1.05);
     }
   </style>
 </head>
 <body>
-  <iframe class="ticker-bar" src="ticker.html"></iframe>
-  <div class="main">
-    <h1>Welcome to Goldzilla Command Center</h1>
-    <a href="dashboard.html" class="cta-button">🧠 Enter the Dashboard</a>
+
+  <div class="terminal-frame">
+    <!-- Goldzilla Logo -->
+    <div class="logo-overlay">🐉 Goldzilla</div>
+
+    <!-- Finviz Embed -->
+    <iframe class="terminal-embed" src="https://finviz.com/" loading="lazy"></iframe>
+
+    <!-- ENTER Button -->
+    <a href="dashboard.html" class="enter-button">ENTER TERMINAL</a>
   </div>
+
 </body>
 </html>
