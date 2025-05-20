@@ -30,15 +30,15 @@
     .logo-overlay {
       position: absolute;
       top: 20px;
-      left: 30px;
+      left: 20px;
       z-index: 10;
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: fuchsia;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 6px 12px;
-      border-radius: 8px;
-      text-shadow: 1px 1px 3px black;
+    }
+
+    .logo-overlay img {
+      height: 80px;
+      width: auto;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 6px black);
     }
 
     .enter-button {
@@ -70,7 +70,9 @@
 
   <div class="terminal-frame">
     <!-- Goldzilla Logo -->
-    <div class="logo-overlay">🐉 Goldzilla</div>
+    <div class="logo-overlay">
+      <img src="goldzilla.png" alt="Goldzilla Logo">
+    </div>
 
     <!-- Finviz Embed -->
     <iframe class="terminal-embed" src="https://finviz.com/" loading="lazy"></iframe>
