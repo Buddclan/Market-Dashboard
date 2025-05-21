@@ -44,6 +44,78 @@
 </div>
 <!-- TradingView Widget ROW END -->
 
+<!-- TradingView Multi-Market Widget BEGIN -->
+<div class="section">
+  <h2>📊 Multi-Market Overview</h2>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright">
+      <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+        <span class="blue-text">Track all markets on TradingView</span>
+      </a>
+    </div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+    {
+      "width": 550,
+      "height": 550,
+      "symbolsGroups": [
+        {
+          "name": "Indices",
+          "originalName": "Indices",
+          "symbols": [
+            { "name": "NASDAQ:MSFT", "displayName": "Microsoft" },
+            { "name": "NASDAQ:AMZN", "displayName": "Amazon" },
+            { "name": "NASDAQ:GOOGL", "displayName": "Alphabet" },
+            { "name": "NASDAQ:META", "displayName": "Meta Platforms" },
+            { "name": "NASDAQ:NVDA", "displayName": "Nvidia" },
+            { "name": "NASDAQ:TSLA", "displayName": "Tesla" },
+            { "name": "NASDAQ:AAPL", "displayName": "Apple" }
+          ]
+        },
+        {
+          "name": "Forex",
+          "originalName": "Forex",
+          "symbols": [
+            { "name": "FX:EURUSD", "displayName": "EUR to USD" },
+            { "name": "FX:GBPUSD", "displayName": "GBP to USD" },
+            { "name": "FX:USDJPY", "displayName": "USD to JPY" },
+            { "name": "FX:USDCHF", "displayName": "USD to CHF" },
+            { "name": "FX:AUDUSD", "displayName": "AUD to USD" },
+            { "name": "FX:USDCAD", "displayName": "USD to CAD" }
+          ]
+        },
+        {
+          "name": "Futures",
+          "originalName": "Futures",
+          "symbols": [
+            { "name": "BMFBOVESPA:ISP1!", "displayName": "S&P 500 Index Futures" },
+            { "name": "BMFBOVESPA:EUR1!", "displayName": "Euro Futures" },
+            { "name": "PYTH:WTI3!", "displayName": "WTI CRUDE OIL" },
+            { "name": "BMFBOVESPA:ETH1!", "displayName": "Hydrous ethanol" },
+            { "name": "BMFBOVESPA:CCM1!", "displayName": "Corn" }
+          ]
+        },
+        {
+          "name": "Bonds",
+          "originalName": "Bonds",
+          "symbols": [
+            { "name": "EUREX:FGBL1!", "displayName": "Euro Bund" },
+            { "name": "EUREX:FBTP1!", "displayName": "Euro BTP" },
+            { "name": "EUREX:FGBM1!", "displayName": "Euro BOBL" }
+          ]
+        }
+      ],
+      "showSymbolLogo": true,
+      "isTransparent": false,
+      "colorTheme": "dark",
+      "locale": "en",
+      "backgroundColor": "#131722"
+    }
+    </script>
+  </div>
+</div>
+<!-- TradingView Multi-Market Widget END -->
+
 
 
 
