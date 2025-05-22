@@ -59,444 +59,68 @@
 </head>
 <body>
 
-  
-  <h1>📊 Goldzilla Macro Dashboard – Full View</h1>
+<h1>📊 Goldzilla Macro Dashboard – Full View</h1>
 
-  <!-- TradingView Widget ROW BEGIN -->
-  <div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
-
-    <!-- GOLD Widget -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/symbols/TVC-GOLD/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Gold by TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "TVC:GOLD",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- SILVER Widget -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/symbols/TVC-SILVER/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Silver by TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "TVC:SILVER",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
+<!-- GOLD & SILVER ROW -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "TVC:GOLD",
+      "width": 350,
+      "isTransparent": false,
+      "colorTheme": "dark",
+      "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "TVC:SILVER",
+      "width": 350,
+      "isTransparent": false,
+      "colorTheme": "dark",
+      "locale": "en"
+    }</script>
   </div>
 </div>
 
-<!-- 5-BOX INFO STRIP UNDER GOLD/SILVER -->
-<div class="section" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start;">
-  $1
-
-  
-
-  <!-- BOX 1 – DXY Symbol Info -->
-  <div style="flex: 1; min-width: 300px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>📊 Box 1 – DXY (U.S. Dollar Index)</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/symbols/CAPITALCOM-DXY/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">DXY by TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>{
-        "symbol": "CAPITALCOM:DXY",
-        "width": 550,
-        "locale": "en",
-        "colorTheme": "dark",
-        "isTransparent": false
-      }</script>
-    </div>
-  </div>
-
-  
-
-<!-- BOX 3 – Global Bonds -->
-  <div style="flex: 1; min-width: 300px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2><img src="https://flagcdn.com/us.svg" alt="US Flag" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 8px;"> Global Bonds – Real-Time Yields</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track bonds on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>{
-        "colorTheme": "dark",
-        "dateRange": "12M",
-        "showChart": true,
-        "locale": "en",
-        "largeChartUrl": "",
-        "isTransparent": false,
-        "showSymbolLogo": true,
-        "showFloatingTooltip": false,
-        "width": "100%",
-        "height": "550",
-        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-        "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-        "gridLineColor": "rgba(42, 46, 57, 0)",
-        "scaleFontColor": "rgba(219, 219, 219, 1)",
-        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-        "tabs": [
-          {
-            "title": "Global Bonds",
-            "symbols": [
-              { "s": "TVC:US10Y", "d": "US 10Y" },
-              { "s": "TVC:US30Y", "d": "US 30Y" },
-              { "s": "TV:DE10Y", "d": "Germany 10Y" },
-              { "s": "TV:UK10Y", "d": "UK 10Y" },
-              { "s": "TV:JP10Y", "d": "Japan 10Y" },
-              { "s": "TV:CN10Y", "d": "China 10Y" }
-            ],
-            "originalTitle": "Bonds"
-          }
-        ]
-      }</script>
-    </div>
-  </div>
-    </div>
-  </div>
-</div>
-<!-- BONDS BOX -->
-<div class="section" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start;">
-  <div style="flex: 1; min-width: 350px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2><img src="https://flagcdn.com/us.svg" alt="US Flag" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 8px;"> U.S. Bonds – Real-Time Yields</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track bonds on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>{
-        "colorTheme": "dark",
-        "dateRange": "12M",
-        "showChart": true,
-        "locale": "en",
-        "largeChartUrl": "",
-        "isTransparent": false,
-        "showSymbolLogo": true,
-        "showFloatingTooltip": false,
-        "width": "100%",
-        "height": "550",
-        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-        "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-        "gridLineColor": "rgba(42, 46, 57, 0)",
-        "scaleFontColor": "rgba(219, 219, 219, 1)",
-        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-        "tabs": [
-          {
-            "title": "Global Bonds",
-            "symbols": [
-              { "s": "TVC:US10Y", "d": "US 10Y" },
-              { "s": "TVC:US30Y", "d": "US 30Y" },
-              { "s": "TV:DE10Y", "d": "Germany 10Y" },
-              { "s": "TV:UK10Y", "d": "UK 10Y" },
-              { "s": "TV:JP10Y", "d": "Japan 10Y" },
-              { "s": "TV:CN10Y", "d": "China 10Y" }
-            ],
-            "originalTitle": "Bonds"
-          }
-        ]
-      }</script>
-    </div>
-  </div>
-</div>
-<!-- 5-BOX INFO STRIP END -->
-
-<!-- TradingView Multi-Market Widget BEGIN -->
-<div class="section" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between;">
-
-  $1
-
-
-
-  
-
-
-  
-
-  <!-- BOX 1 – Major Indices -->
-  <div style="flex: 1; min-width: 350px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>📈 Major Indices Overview</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{
-        "width": "100%",
-        "height": 550,
-        "symbolsGroups": [
-          {
-            "name": "Indices",
-            "originalName": "Indices",
-            "symbols": [
-              { "name": "SP:SPX", "displayName": "S&P 500" },
-              { "name": "NASDAQ:IXIC", "displayName": "NASDAQ" },
-              { "name": "NASDAQ:NDXE", "displayName": "NASDAQ Equal Weighted" },
-              { "name": "ICMARKETS:USTEC", "displayName": "NAS 100 TECH" },
-              { "name": "TVC:DJI", "displayName": "DOW" },
-              { "name": "CAPITALCOM:RTY", "displayName": "RUSSELL 2000" }
-            ]
-          }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en",
-        "backgroundColor": "#131722"
-      }</script>
-    </div>
-  </div>
-
-  <!-- BOX 2 – Winners & Losers -->
-  <div style="flex: 1; min-width: 350px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>🔥 Winners & Losers – Market Movers</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track all markets on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>{
-        "colorTheme": "dark",
-        "dateRange": "12M",
-        "exchange": "US",
-        "showChart": true,
-        "locale": "en",
-        "largeChartUrl": "",
-        "isTransparent": false,
-        "showSymbolLogo": false,
-        "showFloatingTooltip": false,
-        "width": "100%",
-        "height": "550",
-        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-        "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-        "gridLineColor": "rgba(42, 46, 57, 0)",
-        "scaleFontColor": "rgba(219, 219, 219, 1)",
-        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-        "symbolActiveColor": "rgba(41, 98, 255, 0.12)"
-      }</script>
-    </div>
-  </div>
-
-  
-
-  <!-- BOX 3 – MAG 7 -->
-  <div style="flex: 1; min-width: 350px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>💡 MAG 7 – Tech Leadership</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track all markets on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{
-        "width": "100%",
-        "height": 550,
-        "symbolsGroups": [
-          {
-            "name": "MAG 7",
-            "originalName": "MAG 7",
-            "symbols": [
-              { "name": "NASDAQ:MSFT", "displayName": "Microsoft" },
-              { "name": "NASDAQ:AMZN", "displayName": "Amazon" },
-              { "name": "NASDAQ:GOOGL", "displayName": "Alphabet" },
-              { "name": "NASDAQ:META", "displayName": "Meta Platforms" },
-              { "name": "NASDAQ:NVDA", "displayName": "Nvidia" },
-              { "name": "NASDAQ:TSLA", "displayName": "Tesla" },
-              { "name": "NASDAQ:AAPL", "displayName": "Apple" }
-            ]
-          }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en",
-        "backgroundColor": "#131722"
-      }</script>
-    </div>
-  </div>
-
-  <!-- BOX 4 – S&P 500 Heatmap -->
-  <div style="flex: 1; min-width: 300px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>📊 S&P 500 Heatmap</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track all markets on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>{
-        "exchanges": [],
-        "dataSource": "SPX500",
-        "grouping": "sector",
-        "blockSize": "market_cap_basic",
-        "blockColor": "change",
-        "locale": "en",
-        "symbolUrl": "",
-        "colorTheme": "dark",
-        "hasTopBar": false,
-        "isDataSetEnabled": false,
-        "isZoomEnabled": true,
-        "hasSymbolTooltip": true,
-        "isMonoSize": false,
-        "width": "100%",
-        "height": "550"
-      }</script>
-    </div>
-  </div>
-
-  <!-- BOX 5 – Crypto Screener -->
-  <div style="flex: 1; min-width: 300px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>💹 Crypto Screener</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track all markets on TradingView</span>
-        </a>
-      </div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>{
-        "width": "99%",
-        "height": "550",
-        "defaultColumn": "overview",
-        "screener_type": "crypto_mkt",
-        "displayCurrency": "USD",
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-  </div>
-</div>
-<!-- TradingView Multi-Market Widget END -->
-
-
-
-
-
-  
-
-  
-</div>
-
-  
-</div>
-<details open>
-<summary><h2>💀 Debt Doom Monitor</h2></summary>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr><th>Category</th><th>Metric</th><th>Latest Value</th><th>Trend</th><th>Status</th><th>Notes</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Foreign Holdings</td><td>China Holdings ($B)</td><td>767.4</td><td>➡️</td><td>🟢</td><td>TIC Report</td></tr>
-        <tr><td>Foreign Holdings</td><td>Japan Holdings ($B)</td><td>998</td><td>➡️</td><td>🟢</td><td>TIC Report</td></tr>
-        <tr><td>Foreign Holdings</td><td>Total Holdings ($T)</td><td>7.155</td><td>➡️</td><td>🟢</td><td>All Foreign Combined</td></tr>
-        <tr><td>Interest</td><td>FYTD Payments ($T)</td><td>1.1</td><td>🔺</td><td>⚠️ Monitor</td><td>Source: Treasury</td></tr>
-        <tr><td>Debt</td><td>Total Public Debt ($T)</td><td>28.8</td><td>🔺</td><td>🔴</td><td>FiscalData.gov</td></tr>
-      </tbody>
-    </table>
-</div>
-
-
+<!-- U.S. Bonds Table Section -->
 <div class="section">
-  <h2>💰 Fed Checkbook Tracker</h2>
+  <h2><img src="https://flagcdn.com/us.svg" alt="US Flag" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 8px;"> U.S. Bonds – Key Yields</h2>
   <div class="table-wrapper">
     <table>
       <thead>
-        <tr><th>Category</th><th>FYTD 2025 ($M)</th><th>FYTD 2024 ($M)</th><th>% YoY</th><th>Trend</th></tr>
+        <tr>
+          <th>Bond</th>
+          <th>Yield</th>
+          <th>Change</th>
+          <th>Trend</th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td>Income Taxes</td><td>866,562</td><td>756,131</td><td>14.6%</td><td>⬆️ Strong Growth</td></tr>
-        <tr><td>Corp Taxes</td><td>261,248</td><td>205,902</td><td>26.9%</td><td>⬆️ Strong Growth</td></tr>
-        <tr><td>Unemployment</td><td>37,710</td><td>36,026</td><td>4.7%</td><td>⬆️ Flat</td></tr>
-        <tr><td>Excise Taxes</td><td>60,019</td><td>58,298</td><td>3%</td><td>⬆️ Flat</td></tr>
-        <tr><td>Customs Duties</td><td>20,274</td><td>18,959</td><td>6.9%</td><td>⬆️ Mod Increase</td></tr>
+        <tr>
+          <td>U.S. 2-Year</td>
+          <td>4.85%</td>
+          <td>+0.03%</td>
+          <td>📈</td>
+        </tr>
+        <tr>
+          <td>U.S. 10-Year</td>
+          <td>4.44%</td>
+          <td>+0.02%</td>
+          <td>📈</td>
+        </tr>
+        <tr>
+          <td>U.S. 30-Year</td>
+          <td>4.58%</td>
+          <td>-0.01%</td>
+          <td>📉</td>
+        </tr>
       </tbody>
     </table>
+  </div>
 </div>
-
-
-<div class="section">
-  <h2>📉 Delinquencies & Household Debt</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr><th>Debt Type</th><th>Q1 2025</th><th>Trend</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Mortgage</td><td>1.22%</td><td>↑</td></tr>
-        <tr><td>Auto Loans</td><td>2.94%</td><td>↑</td></tr>
-        <tr><td>Credit Cards</td><td>7.04%</td><td>↑</td></tr>
-        <tr><td>Student Loans</td><td>8.04%</td><td>↑</td></tr>
-        <tr><td>Total Debt</td><td>$18.20T</td><td>↑</td></tr>
-      </tbody>
-    </table>
-</div>
-
-
-<div class="section">
-  <h2>🛍️ Real Cost of Living – Inflation Snapshot</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr><th>Item</th><th>2020–2025 Change</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Eggs</td><td>+141.99%</td></tr>
-        <tr><td>Chicken</td><td>+33%</td></tr>
-        <tr><td>Rent</td><td>+27.8%</td></tr>
-        <tr><td>Butter</td><td>+35.49%</td></tr>
-      </tbody>
-    </table>
-</div>
-
-
-<div class="section">
-  <h2>🧾 Tax Receipts vs Federal Spending</h2>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr><th>Category</th><th>FYTD Receipts ($T)</th><th>FYTD Deficit ($T)</th><th>Status</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Total</td><td>1.97</td><td>-0.1135</td><td>🟠 Rising Deficit Pressure</td></tr>
-      </tbody>
-    </table>
-</div>
-
 
 </body>
 </html>
