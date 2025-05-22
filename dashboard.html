@@ -113,9 +113,9 @@
   
 
 
-  <!-- BOX 1 – DXY VIX BLOCK -->
+  <!-- BOX 1 – Bonds + DXY/VIX -->
   <div style="flex: 1; min-width: 300px; background-color: #1b1b1b; padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1);">
-    <h2>📊 DXY, VIX & Rates</h2>
+    <h2>📊 Bonds, DXY & VIX</h2>
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>{
@@ -123,20 +123,32 @@
         "dateRange": "12M",
         "showChart": true,
         "locale": "en",
+        "largeChartUrl": "",
         "isTransparent": false,
+        "showSymbolLogo": true,
+        "showFloatingTooltip": false,
         "width": "100%",
         "height": "550",
-        "showSymbolLogo": true,
+        "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+        "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+        "gridLineColor": "rgba(42, 46, 57, 0)",
+        "scaleFontColor": "rgba(219, 219, 219, 1)",
+        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
         "tabs": [
           {
-            "title": "Overview",
+            "title": "Bonds",
             "symbols": [
+              { "s": "TVC:US10Y" },
+              { "s": "TVC:US20Y" },
+              { "s": "TVC:US30Y" },
               { "s": "TVC:DXY", "d": "Dollar Index" },
-              { "s": "PEPPERSTONE:VIX", "d": "VIX" },
-              { "s": "TVC:US10Y", "d": "10Y" },
-              { "s": "TVC:US30Y", "d": "30Y" },
-              { "s": "MARKETSCOM:OIL", "d": "Oil" }
-            ]
+              { "s": "PEPPERSTONE:VIX", "d": "VIX" }
+            ],
+            "originalTitle": "Bonds"
           }
         ]
       }</script>
