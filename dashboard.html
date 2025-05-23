@@ -11,74 +11,21 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
     }
     h1 {
       color: #FFD700;
-      margin-top: 60px;
-    }
-    h2 {
-      color: #CCCC66;
+      margin-top: 80px;
     }
     .section {
       margin-bottom: 40px;
-      border-top: 1px solid #333;
-      padding-top: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      font-size: 0.85rem;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 6px 10px;
-      text-align: left;
-      white-space: nowrap;
-    }
-    th {
-      background-color: #222;
-    }
-    @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
-      table {
-        font-size: 0.75rem;
-      }
-      .section {
-        padding-top: 10px;
-      }
-    }
-    .table-wrapper {
-      overflow-x: auto;
-    }
-    #ticker-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10000;
-      background-color: #111;
-      border-bottom: 1px solid #FFD700;
-    }
-    body {
-      padding-top: 55px;
     }
   </style>
 </head>
 <body>
 
-<!-- 🔁 TradingView Ticker Tape (Updated Version) -->
-<div class="tradingview-widget-container" id="ticker-bar">
+<!-- 🔁 TradingView Ticker Tape (Sticky Full Width) -->
+<div class="tradingview-widget-container" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
   <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-      <span class="blue-text">Track all markets on TradingView</span>
-    </a>
-  </div>
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
   {
     "symbols": [
@@ -87,14 +34,10 @@
       { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" },
       { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
       { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" },
-      { "description": "VIX", "proName": "PEPPERSTONE:VIX" },
       { "description": "USD", "proName": "CAPITALCOM:DXY" },
       { "description": "NVDA", "proName": "NASDAQ:NVDA" },
       { "description": "Apple", "proName": "NASDAQ:AAPL" },
-      { "description": "Yuan / USD", "proName": "FX_IDC:CNYUSD" },
-      { "description": "USD / Japan", "proName": "OANDA:USDJPY" },
-      { "description": "TOP 1% Holding Wealth", "proName": "FRED:WFRBLT01026" },
-      { "description": "Bottom 50% HW", "proName": "FRED:WFRBSB50215" }
+      { "description": "USD/JPY", "proName": "OANDA:USDJPY" }
     ],
     "showSymbolLogo": true,
     "isTransparent": false,
@@ -105,180 +48,64 @@
   </script>
 </div>
 
-<h1>📊 Goldzilla Macro Dashboard – Full View</h1>
+<!-- 📛 HEADER -->
+<h1>📊 Goldzilla Macro Dashboard</h1>
 
-<!-- GOLD & SILVER ROW -->
-<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
+<!-- 🪙 Gold & Silver -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap;">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:GOLD",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
+      "symbol": "TVC:GOLD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
     }</script>
   </div>
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:SILVER",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
+      "symbol": "TVC:SILVER", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
     }</script>
   </div>
 </div>
 
-<!-- DXY & OIL ROW -->
-<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
+<!-- 🧮 Major Index Row -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap;">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "CAPITALCOM:DXY",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
+      "symbol": "FOREXCOM:SPXUSD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
     }</script>
   </div>
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:USOIL",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
+      "symbol": "FOREXCOM:DJI", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "FOREXCOM:NSXUSD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "AMEX:IWM", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "NYSE:DIA", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "AMEX:SMH", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
     }</script>
   </div>
 </div>
 
 </body>
 </html>
-<!-- 📊 U.S. Indices Overview – Expanded -->
-<div class="section">
-  <h2>📉 U.S. Indices Overview</h2>
-  <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
-    
-    <!-- S&P 500 -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:SPXUSD",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Equal-Weighted S&P (RSP) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "AMEX:RSP",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- NASDAQ 100 -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:NSXUSD",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Russell 2000 Proxy (IWM) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "AMEX:IWM",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Dow Jones Industrial Average -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:DJI",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Semiconductors (SMH) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "NASDAQ:SMH",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-  </div>
-</div>
-<!-- 📊 Market Overview – Indices Only -->
-<div class="section" style="display: flex; justify-content: flex-end;">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-    {
-      "colorTheme": "dark",
-      "dateRange": "12M",
-      "showChart": true,
-      "locale": "en",
-      "largeChartUrl": "",
-      "isTransparent": false,
-      "showSymbolLogo": true,
-      "showFloatingTooltip": false,
-      "width": "400",
-      "height": "650",
-      "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-      "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-      "gridLineColor": "rgba(42, 46, 57, 0)",
-      "scaleFontColor": "rgba(219, 219, 219, 1)",
-      "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-      "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-      "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-      "tabs": [
-        {
-          "title": "Indices",
-          "symbols": [
-            { "s": "NASDAQ:AAPL" },
-            { "s": "NASDAQ:MSFT" },
-            { "s": "NASDAQ:NVDA" },
-            { "s": "NASDAQ:AMZN" },
-            { "s": "NASDAQ:META" },
-            { "s": "NASDAQ:GOOGL" },
-            { "s": "NASDAQ:TSLA" }
-          ],
-          "originalTitle": "Indices"
-        }
-      ]
-    }
-    </script>
-  </div>
-</div>
-
-
