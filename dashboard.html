@@ -1,3 +1,75 @@
+<!-- 🔁 TradingView Ticker Tape (Sticky Full Width) -->
+<div class="tradingview-widget-container" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+    "symbols": [
+      { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500 Index" },
+      { "proName": "FOREXCOM:NSXUSD", "title": "US 100 Cash CFD" },
+      { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" },
+      { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+      { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" },
+      { "description": "USD", "proName": "CAPITALCOM:DXY" },
+      { "description": "NVDA", "proName": "NASDAQ:NVDA" },
+      { "description": "Apple", "proName": "NASDAQ:AAPL" },
+      { "description": "USD/JPY", "proName": "OANDA:USDJPY" }
+    ],
+    "showSymbolLogo": true,
+    "isTransparent": false,
+    "displayMode": "adaptive",
+    "colorTheme": "dark",
+    "locale": "en"
+  }
+  </script>
+</div>
+
+<!-- 📛 HEADER -->
+<h1 style="margin-top: 60px; color: #FFD700; font-size: 2.2rem;">📊 Goldzilla Macro Dashboard</h1>
+
+<!-- 🪙 Gold & Silver -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap;">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "TVC:GOLD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "TVC:SILVER", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+</div>
+
+<!-- 🧮 Major Index Row: SPX / DOW / NASDAQ / IWM -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap;">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "FOREXCOM:SPXUSD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "FOREXCOM:DJI", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "FOREXCOM:NSXUSD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+      "symbol": "AMEX:IWM", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+    }</script>
+  </div>
+</div>
+
 <!-- 📊 Mag 7 (Left) + Indices (Middle, 2 Rows of 3) + Sector Overview (Right) -->
 <div class="section" style="display: flex; flex-wrap: nowrap; gap: 20px; align-items: flex-start;">
 
@@ -35,7 +107,7 @@
     </script>
   </div>
 
-  <!-- Middle: IWM / US30 / SMH -->
+  <!-- Middle: 2 Rows of 3 -->
   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 2;">
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
@@ -72,15 +144,6 @@
       "showFloatingTooltip": false,
       "width": "400",
       "height": "850",
-      "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-      "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-      "gridLineColor": "rgba(42, 46, 57, 0)",
-      "scaleFontColor": "rgba(219, 219, 219, 1)",
-      "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-      "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-      "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-      "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
       "tabs": [
         {
           "title": "Indices",
