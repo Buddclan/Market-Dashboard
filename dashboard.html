@@ -1,8 +1,12 @@
+from IPython.display import display, Markdown
+
+# Complete HTML structure with embedded widgets and styles
+dashboard_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Goldzilla Macro Dashboard</title>
   <style>
     body {
@@ -27,217 +31,27 @@
       border-top: 1px solid #333;
       padding-top: 20px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .tradingview-widget-container {
       margin-bottom: 20px;
-      font-size: 0.85rem;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 6px 10px;
-      text-align: left;
-      white-space: nowrap;
-    }
-    th {
-      background-color: #222;
     }
     @media (max-width: 768px) {
       body {
         padding: 10px;
       }
-      table {
-        font-size: 0.75rem;
-      }
       .section {
         padding-top: 10px;
       }
-    }
-    .table-wrapper {
-      overflow-x: auto;
-    }
-    #ticker-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10000;
-      background-color: #111;
-      border-bottom: 1px solid #FFD700;
-    }
-    body {
-      padding-top: 55px;
     }
   </style>
 </head>
 <body>
 
-<!-- 🔁 TradingView Ticker Tape (Updated Version) -->
-<div class="tradingview-widget-container" id="ticker-bar">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-      <span class="blue-text">Track all markets on TradingView</span>
-    </a>
-  </div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-  {
-    "symbols": [
-      { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500 Index" },
-      { "proName": "FOREXCOM:NSXUSD", "title": "US 100 Cash CFD" },
-      { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" },
-      { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
-      { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" },
-      { "description": "VIX", "proName": "PEPPERSTONE:VIX" },
-      { "description": "USD", "proName": "CAPITALCOM:DXY" },
-      { "description": "NVDA", "proName": "NASDAQ:NVDA" },
-      { "description": "Apple", "proName": "NASDAQ:AAPL" },
-      { "description": "Yuan / USD", "proName": "FX_IDC:CNYUSD" },
-      { "description": "USD / Japan", "proName": "OANDA:USDJPY" },
-      { "description": "TOP 1% Holding Wealth", "proName": "FRED:WFRBLT01026" },
-      { "description": "Bottom 50% HW", "proName": "FRED:WFRBSB50215" }
-    ],
-    "showSymbolLogo": true,
-    "isTransparent": false,
-    "displayMode": "adaptive",
-    "colorTheme": "dark",
-    "locale": "en"
-  }
-  </script>
-</div>
+<h1>📊 Goldzilla Macro Dashboard</h1>
 
-<h1>📊 Goldzilla Macro Dashboard – Full View</h1>
+<!-- 📊 U.S. Indices + Market Overview – Side-by-Side -->
+<div class="section" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
 
-<!-- GOLD & SILVER ROW -->
-<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:GOLD",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }</script>
-  </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:SILVER",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }</script>
-  </div>
-</div>
-
-<!-- DXY & OIL ROW -->
-<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "CAPITALCOM:DXY",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }</script>
-  </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-      "symbol": "TVC:USOIL",
-      "width": 350,
-      "isTransparent": false,
-      "colorTheme": "dark",
-      "locale": "en"
-    }</script>
-  </div>
-</div>
-
-</body>
-</html>
-<!-- 📊 U.S. Indices Overview – Expanded -->
-<div class="section">
-  <h2>📉 U.S. Indices Overview</h2>
-  <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
-    
-    <!-- S&P 500 -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:SPXUSD",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Equal-Weighted S&P (RSP) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "AMEX:RSP",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- NASDAQ 100 -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:NSXUSD",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Russell 2000 Proxy (IWM) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "AMEX:IWM",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Dow Jones Industrial Average -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:DJI",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-    <!-- Semiconductors (SMH) -->
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "NASDAQ:SMH",
-        "width": 350,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en"
-      }</script>
-    </div>
-
-  </div>
-</div>
-<!-- 📊 Market Overview – Indices Only -->
-<div class="section" style="display: flex; justify-content: flex-end;">
+  <!-- 🔍 Market Overview – Mag 7 (Left Panel) -->
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
@@ -263,7 +77,7 @@
       "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
       "tabs": [
         {
-          "title": "Indices",
+          "title": "Mag 7",
           "symbols": [
             { "s": "NASDAQ:AAPL" },
             { "s": "NASDAQ:MSFT" },
@@ -273,10 +87,62 @@
             { "s": "NASDAQ:GOOGL" },
             { "s": "NASDAQ:TSLA" }
           ],
-          "originalTitle": "Indices"
+          "originalTitle": "Mag 7"
         }
       ]
     }
     </script>
   </div>
+
+  <!-- 📈 Right: IWM / US30 / SMH -->
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+
+    <!-- IWM -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "AMEX:IWM",
+        "width": 350,
+        "isTransparent": false,
+        "colorTheme": "dark",
+        "locale": "en"
+      }</script>
+    </div>
+
+    <!-- US30 (Dow Jones) -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "FOREXCOM:DJI",
+        "width": 350,
+        "isTransparent": false,
+        "colorTheme": "dark",
+        "locale": "en"
+      }</script>
+    </div>
+
+    <!-- SMH (Semiconductors) -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "NASDAQ:SMH",
+        "width": 350,
+        "isTransparent": false,
+        "colorTheme": "dark",
+        "locale": "en"
+      }</script>
+    </div>
+
+  </div>
+
 </div>
+
+</body>
+</html>
+"""
+
+# Save HTML content to a file the user can copy easily
+with open("/mnt/data/dashboard-all.html", "w") as f:
+    f.write(dashboard_html)
+
+"/mnt/data/dashboard-all.html"
