@@ -85,7 +85,7 @@
   </div>
 </div>
 
-<!-- DXY, OIL ROW WITH CUSTOM VIX -->
+<!-- DXY, VIX (custom), OIL ROW -->
 <div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-start;">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
@@ -97,21 +97,12 @@
       "locale": "en"
     }</script>
   </div>
-  <div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-      <span class="blue-text">Track all markets on TradingView</span>
-    </a>
+  <div style="background-color: #1b1b1b; padding: 10px 20px; border-radius: 10px; width: 350px; height: 120px; display: flex; flex-direction: column; justify-content: center;">
+    <h3 style="color: #FFD700; font-size: 1rem; margin: 0 0 5px 0;">VIX – Volatility Index</h3>
+    <div id="vix-value" style="font-size: 1.5rem; color: #4caf50;">Loading...</div>
+    <div id="vix-change" style="font-size: 0.9rem; color: #aaa;">—</div>
+    <div id="vix-updated" style="font-size: 0.75rem; color: #777;">—</div>
   </div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-    "symbol": "CBOE:VIX",
-    "width": 350,
-    "isTransparent": false,
-    "colorTheme": "dark",
-    "locale": "en"
-  }</script>
-</div>
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
@@ -123,6 +114,32 @@
     }</script>
   </div>
 </div>
+<script>
+  async function updateVIX() {
+    try {
+      const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX');
+      const data = await res.json();
+      const vix = data.chart.result[0];
+      const lastPrice = vix.meta.regularMarketPrice;
+      const prevClose = vix.meta.chartPreviousClose;
+      if (!lastPrice || !prevClose) throw new Error("Missing VIX data");
+      const change = (lastPrice - prevClose).toFixed(2);
+      const percent = ((change / prevClose) * 100).toFixed(2);
+      const color = change >= 0 ? '#f44336' : '#4caf50';
+      const arrow = change >= 0 ? '▲' : '▼';
+      document.getElementById('vix-value').textContent = lastPrice.toFixed(2);
+      document.getElementById('vix-change').textContent = `${change} (${arrow} ${percent}%)`;
+      document.getElementById('vix-change').style.color = color;
+      document.getElementById('vix-updated').textContent = new Date().toLocaleTimeString();
+    } catch (e) {
+      document.getElementById('vix-value').textContent = 'Unavailable';
+      document.getElementById('vix-change').textContent = '--';
+      document.getElementById('vix-updated').textContent = '--';
+    }
+  }
+  updateVIX();
+  setInterval(updateVIX, 300000);
+</script>
     
 </div>
 
