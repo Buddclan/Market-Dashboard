@@ -99,9 +99,7 @@
   </div>
   <div style="background-color: #1b1b1b; padding: 12px 18px; border-radius: 10px; width: 350px; height: 130px; display: flex; flex-direction: column; justify-content: center;">
     <h3 style="color: #FFD700; font-size: 1rem; margin: 0 0 6px 0;">VIX – Volatility Index</h3>
-    <div id="vix-value" style="font-size: 1.6rem; color: #4caf50;">Loading...</div>
-    <div id="vix-change" style="font-size: 0.9rem; color: #aaa;">—</div>
-    <div id="vix-updated" style="font-size: 0.75rem; color: #777;">—</div>
+    <iframe src="https://widget.finnhub.io/widgets/quote?symbol=VIX" width="100%" height="100" frameborder="0" style="background:#1b1b1b; color: white;"></iframe>
   </div>
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
@@ -114,31 +112,6 @@
     }</script>
   </div>
 </div>
-<script>
-  async function updateVIX() {
-    try {
-      const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX');
-      const data = await res.json();
-      const vix = data.chart.result[0];
-      const lastPrice = vix.meta.regularMarketPrice;
-      const prevClose = vix.meta.chartPreviousClose;
-      if (!lastPrice || !prevClose) throw new Error("Missing VIX data");
-      const change = (lastPrice - prevClose).toFixed(2);
-      const percent = ((change / prevClose) * 100).toFixed(2);
-      const color = change >= 0 ? '#f44336' : '#4caf50';
-      const arrow = change >= 0 ? '▲' : '▼';
-      document.getElementById('vix-value').textContent = lastPrice.toFixed(2);
-      document.getElementById('vix-change').textContent = `${change} (${arrow} ${percent}%)`;
-      document.getElementById('vix-change').style.color = color;
-      document.getElementById('vix-updated').textContent = "Updated: " + new Date().toLocaleTimeString();
-    } catch (e) {
-      document.getElementById('vix-value').textContent = 'Unavailable';
-      document.getElementById('vix-change').textContent = '--';
-      document.getElementById('vix-updated').textContent = '--';
-    }
-  }
-  updateVIX();
-  setInterval(updateVIX, 300000);
-</script>
 
-<!-- remaining sections remain unchanged -->
+</body>
+</html>
