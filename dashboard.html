@@ -70,7 +70,7 @@
   </div>
 </div>
 
-<!-- 📊 Mag 7 (Left) + Indices (Middle, 2 Rows of 3) + Sector Overview (Right) -->
+<!-- 📊 Mag 7 (Left) + 2x3 Quote Grid (Middle) + Sector Overview (Right) -->
 <div class="section" style="display: flex; flex-wrap: nowrap; gap: 20px; align-items: flex-start;">
 
   <!-- Left: Mag 7 -->
@@ -107,24 +107,42 @@
     </script>
   </div>
 
-  <!-- Middle: 2 Rows of 3 -->
+  <!-- Middle: 2 Rows of 3 Unique Quotes -->
   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 2;">
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "AMEX:IWM", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+        "symbol": "AMEX:SMH", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
       }</script>
     </div>
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "FOREXCOM:DJI", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+        "symbol": "NASDAQ:SOXX", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
       }</script>
     </div>
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
-        "symbol": "NASDAQ:SMH", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+        "symbol": "NASDAQ:ARKK", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+      }</script>
+    </div>
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "NYSE:XHB", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+      }</script>
+    </div>
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "NASDAQ:QQQ", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
+      }</script>
+    </div>
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{
+        "symbol": "NYSE:TLT", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"
       }</script>
     </div>
   </div>
@@ -166,5 +184,6 @@
     }
     </script>
   </div>
+</div>
 
 </div>
