@@ -57,27 +57,41 @@
   </script>
 </div>
 
-<!-- 📛 HEADER -->
+<!-- 💼 HEADER -->
 <h1>📊 Goldzilla Macro Dashboard</h1>
 
-<!-- 🟨 Block 1: Gold & Silver -->
-<div class="section" style="display: grid; grid-template-columns: 350px 350px; gap: 8px; justify-content: start;">
+<!-- 🟨 Block 1: Gold, Silver, DXY, Oil, 10Y, 30Y -->
+<div class="section" style="display: grid; grid-template-columns: repeat(4, 350px); gap: 8px; justify-content: start;">
+  <!-- Gold -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol": "TVC:GOLD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}
+    </script>
+  </div>
 
+  <!-- Silver -->
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "TVC:GOLD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol": "TVC:SILVER", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}
+    </script>
   </div>
+
+  <!-- US 10Y -->
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "TVC:SILVER", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol": "TVC:US10Y", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}
+    </script>
   </div>
+
+  <!-- US 30Y -->
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "CAPITALCOM:DXY", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
-  </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "TVC:USOIL", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol": "TVC:US30Y", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}
+    </script>
   </div>
 </div>
 
