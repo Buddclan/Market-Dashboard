@@ -1,34 +1,66 @@
-<!-- 🟨 Block 3: Finlogix Widget -->
-<div class="section">
-  <!-- Finlogix Widget BEGIN -->
-  <div class="finlogix-container"></div>
-  <script type="text/javascript" src="https://widget.finlogix.com/Widget.js"></script>
-  <script type="text/javascript">
-    Widget.init({
-      widgetId: "39a49488-ce68-47c5-89cd-5daf21756f2d",
-      type: "SymbolList",
-      language: "en",
-      showBrand: true,
-      isShowTradeButton: true,
-      isShowBeneathLink: true,
-      isShowDataFromACYInfo: true,
-      showColumns: [
-        "SYMBOL", "BID", "ASK", "SPREAD", "CHANGE", "CHANGE %", "OPEN", "LOW", "HIGH", "PREVIOUS"
-      ],
-      categoryList: [
-        {
-          type: "Indices",
-          symbols: [
-            { symbolId: "50", symbolName: "NAS100" },
-            { symbolId: "52", symbolName: "SP500" }
-          ]
-        }
-      ],
-      isAdaptive: true
-    });
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "FOREXCOM:SPXUSD",
+      "title": "S&P 500 Index"
+    },
+    {
+      "proName": "BITSTAMP:BTCUSD",
+      "title": "Bitcoin"
+    },
+    {
+      "proName": "BITSTAMP:ETHUSD",
+      "title": "Ethereum"
+    },
+    {
+      "description": "VIX",
+      "proName": "TVC:VIX"
+    },
+    {
+      "description": "Dollar",
+      "proName": "TVC:DXY"
+    },
+    {
+      "description": "Gold",
+      "proName": "TVC:GOLD"
+    },
+    {
+      "description": "Silver",
+      "proName": "TVC:SILVER"
+    },
+    {
+      "description": "10Y",
+      "proName": "TVC:US10Y"
+    },
+    {
+      "description": "NAS 100",
+      "proName": "PEPPERSTONE:NAS100"
+    },
+    {
+      "description": "R-2000",
+      "proName": "CAPITALCOM:RTY"
+    },
+    {
+      "description": "Apple",
+      "proName": "NASDAQ:AAPL"
+    },
+    {
+      "description": "Bitcoin",
+      "proName": "CRYPTO:BTCUSD"
+    }
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "colorTheme": "dark",
+  "locale": "en"
+}
   </script>
-  <!-- Finlogix Widget END -->
 </div>
+<!-- TradingView Widget END -->
 
-</body>
-</html>
