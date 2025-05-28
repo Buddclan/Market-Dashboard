@@ -94,18 +94,6 @@
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "FOREXCOM:NSXUSD", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
   </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "AMEX:IWM", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
-  </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "NYSE:DIA", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
-  </div>
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>{"symbol": "AMEX:SMH", "width": 350, "isTransparent": false, "colorTheme": "dark", "locale": "en"}</script>
-  </div>
 </div>
 
 <!-- 🟨 Block 4: Mag 7 | Sector Overview -->
@@ -125,6 +113,36 @@
   <div class="tradingview-widget-container" style="min-width: 400px;">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>{"colorTheme":"dark","dateRange":"12M","exchange":"US","showChart":true,"locale":"en","isTransparent":false,"showSymbolLogo":false,"showFloatingTooltip":false,"width":"400","height":"550"}</script>
+  </div>
+  <!-- 🔽 INSERTED FOREX WIDGET -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+    {
+      "width": 550,
+      "height": 550,
+      "symbolsGroups": [
+        {
+          "name": "Forex",
+          "originalName": "Forex",
+          "symbols": [
+            { "name": "FX:EURUSD", "displayName": "EUR to USD" },
+            { "name": "FX:USDJPY", "displayName": "USD to JPY" },
+            { "name": "FX:USDCAD", "displayName": "USD to CAD" },
+            { "name": "SGX:CYN2025", "displayName": "Chinese Yuan v USD" },
+            { "name": "FX:USDCHF", "displayName": "USD v Swissy" },
+            { "name": "FX:USDMXN", "displayName": "USD to MXN" }
+          ]
+        }
+      ],
+      "showSymbolLogo": true,
+      "isTransparent": false,
+      "colorTheme": "dark",
+      "locale": "en",
+      "backgroundColor": "#131722"
+    }
+    </script>
   </div>
   <div class="tradingview-widget-container" style="min-width: 400px;">
     <div class="tradingview-widget-container__widget"></div>
