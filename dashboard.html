@@ -130,25 +130,35 @@
 
 </body>
 </html>
-<!-- 📊 Two-Column Block for Workforce + Debt -->
-<div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 40px;">
-  
-  <!-- 🧱 LEFT: Existing DEFCON / Workforce Warning System -->
-  <div style="flex: 1;">
-    <!-- KEEP your existing content here -->
-    <h2 style="color:#FFD700;">⚠️ Workforce Warning System</h2>
-    <div><!-- Your DEFCON or labor stress data --></div>
-  </div>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-container");
+    let html = `
+      <table style="width:100%; border-collapse: collapse; color:#eee; font-family: Arial, sans-serif;">
+        <tr style="background-color:#222;">
+          <th style="border: 1px solid #444; padding: 8px;">Category</th>
+          <th style="border: 1px solid #444; padding: 8px;">Q4 2023</th>
+          <th style="border: 1px solid #444; padding: 8px;">Q4 2024</th>
+          <th style="border: 1px solid #444; padding: 8px;">Q1 2025</th>
+        </tr>
+    `;
 
-  <!-- 📉 RIGHT: Delinquency & Household Debt -->
-  <div style="flex: 1;">
-    <h2 style="color:#FFD700;">📉 Delinquency & Household Debt</h2>
-    <div id="debt-container" style="color:#eee; font-family:Arial, sans-serif;">Loading data...</div>
-  </div>
+    data.forEach(row => {
+      html += `
+        <tr>
+          <td style="border: 1px solid #444; padding: 8px;">${row.Category}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q4 2023"]}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q4 2024"]}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q1 2025"]}</td>
+        </tr>
+      `;
+    });
 
-</div>
-
-<!-- 🚀 Fetch live delinquency data -->
-<script src="debt-fetch.js"></script>
-
-
+    html += "</table>";
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+    document.getElementById("debt-container").textContent = "⚠️ Failed to load data.";
+  });
