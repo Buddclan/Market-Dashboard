@@ -130,6 +130,25 @@
 
 </body>
 </html>
+<!-- 📊 Two-Column Block for Workforce + Debt -->
+<div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 40px;">
+  
+  <!-- 🧱 LEFT: Existing DEFCON / Workforce Warning System -->
+  <div style="flex: 1;">
+    <!-- KEEP your existing content here -->
+    <h2 style="color:#FFD700;">⚠️ Workforce Warning System</h2>
+    <div><!-- Your DEFCON or labor stress data --></div>
+  </div>
 
+  <!-- 📉 RIGHT: Delinquency & Household Debt -->
+  <div style="flex: 1;">
+    <h2 style="color:#FFD700;">📉 Delinquency & Household Debt</h2>
+    <div id="debt-container" style="color:#eee; font-family:Arial, sans-serif;">Loading data...</div>
+  </div>
+
+</div>
+
+<!-- 🚀 Fetch live delinquency data -->
+<script src="debt-fetch.js"></script>
 
 
