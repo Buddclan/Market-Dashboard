@@ -156,32 +156,35 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 <div id="debt-container" style="color: white;"></div>
 
 <script>
-fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
+<div id="debt-container">Loading household debt data...</div>
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
   .then(response => response.json())
   .then(data => {
     const container = document.getElementById("debt-container");
-
     if (!data || !Array.isArray(data)) {
       container.innerHTML = "⚠️ No data received.";
       return;
     }
 
-    let html = `<table border="1" cellpadding="5" style="border-collapse: collapse; color: white;">
-                  <tr>
-                    <th>Category</th>
-                    <th>Q4 2023</th>
-                    <th>Q4 2024</th>
-                    <th>Q1 2025</th>
-                  </tr>`;
+    let html = `<table border="1" style="width:100%; color:white; border-collapse: collapse;">
+      <tr>
+        <th>Category</th>
+        <th>Q4 2023</th>
+        <th>Q4 2024</th>
+        <th>Q1 2025</th>
+      </tr>`;
 
     data.forEach(row => {
       if (row["Category"]) {
-        html += `<tr>
-                  <td>${row["Category"]}</td>
-                  <td>${row["Q4 2023"]}</td>
-                  <td>${row["Q4 2024"]}</td>
-                  <td>${row["Q1 2025"]}</td>
-                </tr>`;
+        html += `
+          <tr>
+            <td>${row["Category"]}</td>
+            <td>${row["Q4 2023"]}</td>
+            <td>${row["Q4 2024"]}</td>
+            <td>${row["Q1 2025"]}</td>
+          </tr>`;
       }
     });
 
@@ -190,15 +193,6 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
   })
   .catch(error => {
     console.error("Error fetching data:", error);
-    document.getElementById("debt-container").innerHTML = "⚠️ Failed to load data.";
+    document.getElementById("debt-container").textContent = "⚠️ Failed to load data.";
   });
 </script>
-
-
-
-
-
-
-
-
-  
