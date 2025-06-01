@@ -31,6 +31,17 @@
       <span class="blue-text">Track all markets on TradingView</span>
     </a>
   </div>
+  <div id="debt-container"></div>
+
+<script>
+fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-container");
+    // ...[rest of the JS from previous message]
+  });
+</script>
+
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
   {
     "symbols": [
