@@ -149,57 +149,47 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{"width":550,"height":550,"symbolsGroups":[{"name":"Forex","originalName":"Forex","symbols":[{"name":"FX:EURUSD","displayName":"EUR to USD"},{"name":"FX:USDJPY","displayName":"USD to JPY"},{"name":"FX:USDCAD","displayName":"USD to CAD"},{"name":"SGX:CYN2025","displayName":"Chinese Yuan v USD"},{"name":"FX:USDCHF","displayName":"USD v Swissy"},{"name":"FX:USDMXN","displayName":"USD to MXN"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","backgroundColor":"#131722"}</script>
   </div>
 </div>
-<div id="debt-container"></div>
-
-<script>
-<h2 style="color: gold;">Delinquency & Household Debt</h2>
-<div id="debt-container" style="color: white;"></div>
-
-<script>
-<div id="debt-container">Loading household debt data...</div>
-
-<script>
 <div class="section">
   <h2 style="color:#FF69B4;">💳 Household Debt Stress</h2>
   <div id="debt-data" style="color:white;">Loading data...</div>
-
-  <script>
-    fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById("debt-data");
-        if (!Array.isArray(data)) {
-          container.innerHTML = "<span style='color:red;'>⚠️ No data received.</span>";
-          return;
-        }
-
-        let html = `<table style="width:100%; border-collapse:collapse; color:white;">
-                      <thead>
-                        <tr style="border-bottom:1px solid #555;">
-                          <th style="text-align:left;">Category</th>
-                          <th>Q4 2023</th>
-                          <th>Q4 2024</th>
-                          <th>Q1 2025</th>
-                        </tr>
-                      </thead><tbody>`;
-
-        data.forEach(row => {
-          if (row["Category"]) {
-            html += `<tr>
-                       <td>${row["Category"]}</td>
-                       <td>${row["Q4 2023"] ?? ""}</td>
-                       <td>${row["Q4 2024"] ?? ""}</td>
-                       <td>${row["Q1 2025"] ?? ""}</td>
-                     </tr>`;
-          }
-        });
-
-        html += "</tbody></table>";
-        container.innerHTML = html;
-      })
-      .catch(error => {
-        console.error(error);
-        document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
-      });
-  </script>
 </div>
+
+<script>
+  fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("debt-data");
+      if (!Array.isArray(data)) {
+        container.innerHTML = "<span style='color:red;'>⚠️ No data received.</span>";
+        return;
+      }
+
+      let html = `<table style="width:100%; border-collapse:collapse; color:white;">
+                    <thead>
+                      <tr style="border-bottom:1px solid #555;">
+                        <th style="text-align:left;">Category</th>
+                        <th>Q4 2023</th>
+                        <th>Q4 2024</th>
+                        <th>Q1 2025</th>
+                      </tr>
+                    </thead><tbody>`;
+
+      data.forEach(row => {
+        if (row["Category"]) {
+          html += `<tr>
+                     <td>${row["Category"]}</td>
+                     <td>${row["Q4 2023"] ?? ""}</td>
+                     <td>${row["Q4 2024"] ?? ""}</td>
+                     <td>${row["Q1 2025"] ?? ""}</td>
+                   </tr>`;
+        }
+      });
+
+      html += "</tbody></table>";
+      container.innerHTML = html;
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
+    });
+</script>
