@@ -1,0 +1,45 @@
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-container");
+
+    if (!data || !Array.isArray(data)) {
+      container.innerHTML = "⚠️ No data received.";
+      return;
+    }
+
+    let html = `
+      <table style="width:100%; border-collapse: collapse; color:#eee; font-family: Arial, sans-serif;">
+        <thead style="background-color:#222;">
+          <tr>
+            <th style="border: 1px solid #444; padding: 8px;">Category</th>
+            <th style="border: 1px solid #444; padding: 8px;">Q4 2023</th>
+            <th style="border: 1px solid #444; padding: 8px;">Q4 2024</th>
+            <th style="border: 1px solid #444; padding: 8px;">Q1 2025</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    data.forEach(row => {
+      html += `
+        <tr>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Category"]}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q4 2023"]}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q4 2024"]}</td>
+          <td style="border: 1px solid #444; padding: 8px;">${row["Q1 2025"]}</td>
+        </tr>
+      `;
+    });
+
+    html += `
+        </tbody>
+      </table>
+    `;
+
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+    document.getElementById("debt-container").textContent = "⚠️ Failed to load data.";
+  });
