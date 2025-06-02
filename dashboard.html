@@ -155,111 +155,70 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 </div>
 
 <script>
-  fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById("debt-data");
+  <script>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-data");
 
-      // Filter valid rows with real data
-      const filtered = data.filter(row =>
-        row["Category"] &&
-        (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== "")
-      );
+    // Filter valid rows with real data
+    const filtered = data.filter(row =>
+      row["Category"] &&
+      (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== "")
+    );
 
-      let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
-        <thead>
-          <tr style="border-bottom:1px solid #666;">
-            <th style="text-align:left;">Category</th>
-            <th>Q4 2023</th>
-            <th>Q4 2024</th>
-            <th>Q1 2025</th>
-            <th>↗️ Trend</th>
-            <th>⚠️ Signal</th>
-          </tr>
-        </thead>
-        <tbody>`;
+    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
+      <thead>
+        <tr style="border-bottom:1px solid #666;">
+          <th style="text-align:left;">Category</th>
+          <th>Q4 2023</th>
+          <th>Q4 2024</th>
+          <th>Q1 2025</th>
+          <th>↗️ Trend</th>
+          <th>⚠️ Signal</th>
+        </tr>
+      </thead>
+      <tbody>`;
 
-      filtered.forEach(row => {
-        const cat = row["Category"];
-        const q4 = parseFloat(row["Q4 2024"]);
-        const q1 = parseFloat(row["Q1 2025"]);
+    filtered.forEach(row => {
+      const cat = row["Category"];
+      const q4 = parseFloat(row["Q4 2024"]);
+      const q1 = parseFloat(row["Q1 2025"]);
 
-        // Determine trend
-        let trend = "";
-        if (!isNaN(q4) && !isNaN(q1)) {
-          if (q1 > q4) trend = "🔺";
-          else if (q1 < q4) trend = "🔻";
-          else trend = "➡️";
-        }
+      // Determine trend
+      let trend = "";
+      if (!isNaN(q4) && !isNaN(q1)) {
+        if (q1 > q4) trend = "🔺";
+        else if (q1 < q4) trend = "🔻";
+        else trend = "➡️";
+      }
 
-        // Determine signal
-        let signal = "";
-        if (q1 >= 7) signal = "🔴";      // High stress
-        else if (q1 >= 3) signal = "🟠"; // Caution
-        else if (q1 > 0)  signal = "🟢"; // Normal
-        else signal = "";
+      // Determine signal
+      let signal = "";
+      if (q1 >= 7) signal = "🔴";      // High stress
+      else if (q1 >= 3) signal = "🟠"; // Caution
+      else if (q1 > 0)  signal = "🟢"; // Normal
+      else signal = "";
 
-        html += `
-          <tr style="border-bottom: 1px solid #333;">
-            <td style="text-align:left;">${cat}</td>
-            <td>${row["Q4 2023"] ?? ""}</td>
-            <td>${row["Q4 2024"] ?? ""}</td>
-            <td>${row["Q1 2025"] ?? ""}</td>
-            <td>${trend}</td>
-            <td>${signal}</td>
-          </tr>`;
-      });
-
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-    })
-    .catch(error => {
-      console.error(error);
-      document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
+      html += `
+        <tr style="border-bottom: 1px solid #333;">
+          <td style="text-align:left;">${cat}</td>
+          <td>${row["Q4 2023"] ?? ""}</td>
+          <td>${row["Q4 2024"] ?? ""}</td>
+          <td>${row["Q1 2025"] ?? ""}</td>
+          <td>${trend}</td>
+          <td>${signal}</td>
+        </tr>`;
     });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error(error);
+    document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
+  });
 </script>
-<div style="background-color: #111; color: #FFD700; padding: 20px; margin: 20px 0; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
-  <h2 style="margin-top: 0;">📦 COMEX Gold Inventory Update</h2>
-  <table style="width:100%; border-collapse: collapse; color: white; margin-top: 10px;">
-    <thead>
-      <tr style="border-bottom: 1px solid #FFD700;">
-        <th style="text-align: left;">Metric</th>
-        <th>Latest</th>
-        <th>Change</th>
-        <th>Signal</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>🔐 Registered</td>
-        <td>21,319,411 oz</td>
-        <td style="color: #0f0;">+62,011 oz</td>
-        <td>🟠 Rising Delivery Demand</td>
-      </tr>
-      <tr>
-        <td>🪙 Eligible</td>
-        <td>17,469,782 oz</td>
-        <td style="color: #f00;">−62,011 oz</td>
-        <td>🟠 Physical Outflow</td>
-      </tr>
-      <tr>
-        <td>📊 Combined Total</td>
-        <td>38,789,194 oz</td>
-        <td>0</td>
-        <td>🟡 No Inventory Growth</td>
-      </tr>
-    </tbody>
-  </table>
-  <p style="margin-top: 15px; color: #ccc; font-size: 0.9em;">
-    *Inventory shift from Eligible to Registered may indicate increased demand for physical delivery.
-  </p>
-</div>
-<h2 style="color:gold; margin-top: 40px;">📉 Gold-to-Paper Ratio Stress Signal</h2>
-import pandas as pd
-
-import pandas as pd
-
-import pandas as pd
 
 <!-- 🏦 COMEX Gold Inventory -->
 <div style="background-color:#111; color:white; padding:20px; margin-bottom:30px; font-family:Arial;">
