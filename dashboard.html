@@ -254,3 +254,51 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
     *Inventory shift from Eligible to Registered may indicate increased demand for physical delivery.
   </p>
 </div>
+
+  
+  <h2 style="color:gold; margin-top: 40px;">📉 Gold-to-Paper Ratio Stress Signal</h2>
+import pandas as pd
+
+# COMEX data from 5/14/2025 to 5/30/2025
+data = [
+    {"Date": "2025-05-14", "OI": 441565, "RegisteredGold_oz": None},
+    {"Date": "2025-05-15", "OI": 440192, "RegisteredGold_oz": None},
+    {"Date": "2025-05-16", "OI": 441666, "RegisteredGold_oz": None},
+    {"Date": "2025-05-19", "OI": 442943, "RegisteredGold_oz": None},
+    {"Date": "2025-05-20", "OI": 448688, "RegisteredGold_oz": None},
+    {"Date": "2025-05-21", "OI": 453813, "RegisteredGold_oz": None},
+    {"Date": "2025-05-22", "OI": 459353, "RegisteredGold_oz": None},
+    {"Date": "2025-05-23", "OI": 458101, "RegisteredGold_oz": None},
+    {"Date": "2025-05-27", "OI": 440621, "RegisteredGold_oz": 21380763.98},
+    {"Date": "2025-05-28", "OI": 431409, "RegisteredGold_oz": None},
+    {"Date": "2025-05-29", "OI": 422605, "RegisteredGold_oz": None},
+    {"Date": "2025-05-30", "OI": 410976, "RegisteredGold_oz": 21319411.78},
+]
+
+# Assume 100 oz per futures contract
+contract_size_oz = 100
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Forward fill registered gold where missing
+df["RegisteredGold_oz"] = df["RegisteredGold_oz"].ffill()
+
+# Calculate Gold-to-Paper Ratio
+df["OpenInterest_oz"] = df["OI"] * contract_size_oz
+df["GoldToPaperRatio"] = df["OpenInterest_oz"] / df["RegisteredGold_oz"]
+
+# Assign signal
+def classify_ratio(ratio):
+    if ratio < 2:
+        return "🟢 Stable"
+    elif 2 <= ratio < 2.5:
+        return "🟠 Elevated"
+    elif 2.5 <= ratio < 3:
+        return "🔴 High Stress"
+    else:
+        return "☠️ Critical"
+
+df["Signal"] = df["GoldToPaperRatio"].apply(classify_ratio)
+
+import ace_tools as tools; tools.display_dataframe_to_user(name="Gold-to-Paper Stress Signal", dataframe=df[["Date", "OI", "RegisteredGold_oz", "GoldToPaperRatio", "Signal"]])
