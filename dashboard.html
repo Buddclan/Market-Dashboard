@@ -307,30 +307,4 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </script>
 
 
-    filtered.forEach(row => {
-      const q4 = parseFloat(row["Q4 2024"]);
-      const q1 = parseFloat(row["Q1 2025"]);
-      let trend = "", signal = "";
-
-      if (!isNaN(q4) && !isNaN(q1)) {
-        trend = q1 > q4 ? "🔺" : q1 < q4 ? "🔻" : "➡️";
-        if (q1 >= 7) signal = "🔴";
-        else if (q1 >= 3) signal = "🟠";
-        else if (q1 > 0) signal = "🟢";
-      }
-
-      html += `
-        <tr style="border-bottom: 1px solid #333;">
-          <td style="text-align:left;">${row["Category"]}</td>
-          <td>${row["Q4 2023"] ?? ""}</td>
-          <td>${row["Q4 2024"] ?? ""}</td>
-          <td>${row["Q1 2025"] ?? ""}</td>
-          <td>${trend}</td>
-          <td>${signal}</td>
-        </tr>`;
-    });
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-  })
- 
+    
