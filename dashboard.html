@@ -227,49 +227,46 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 <div style="display: flex; justify-content: space-between; background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
   <div style="flex: 1; padding-right: 20px;">
     <h2 style="color:gold;">COMEX</h2>
-    
 
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">COMEX Inventory</h3>
-    <p style="color:white;"><strong>Registered:</strong> 21,417,118 oz <span style="color: #66FF66;">(+97,707 oz)</span> – 🟠 Rising Delivery Demand</p>
-    <p style="color:white;"><strong>Eligible:</strong> 16,932,486 oz <span style="color: #FF6666;">(−537,296 oz)</span> – 🟠 Physical Outflow</p>
-    <p style="color:white;"><strong>Combined:</strong> 38,349,604 oz <span style="color: #FF6666;">(−439,589 oz)</span> – 🟡 No Inventory Growth</p>
+    <p style="color:white;"><strong>Registered:</strong> <span id="regVal">...</span> oz <span id="regChange"></span> – <span id="regSignal"></span></p>
+    <p style="color:white;"><strong>Eligible:</strong> <span id="eligVal">...</span> oz <span id="eligChange"></span> – <span id="eligSignal"></span></p>
+    <p style="color:white;"><strong>Combined:</strong> <span id="combVal">...</span> oz <span id="combChange"></span> – <span id="combSignal"></span></p>
 
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">EFP 5-Day Avg</h3>
-    <p style="color:white;"><strong>Value:</strong> 2,475 contracts – 🟠 Elevated Conversions</p>
+    <p style="color:white;"><strong>Value:</strong> <span id="efp5dma">...</span> contracts – <span id="efpSignal"></span></p>
     <p style="color:white;">Rising physical conversion activity from futures</p>
 
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Gold-to-Paper Ratio</h3>
-    <p style="color:white;"><strong>Ratio:</strong> 1.93 (June 2)</p>
+    <p style="color:white;"><strong>Ratio:</strong> <span id="gprRatio">...</span> (<span id="gprDate">...</span>)</p>
     <p style="color:white;">Each physical ounce backs nearly 2 contracts – stress remains elevated</p>
 
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total EFP Since May 14</h3>
-    <p style="color:white;"><strong>Total:</strong> 23,630 contracts</p>
-    <p style="color:white;"><strong>Converted to Physical:</strong> 73.50 Metric Tons</p>
+    <p style="color:white;"><strong>Total:</strong> <span id="efpTotal">...</span> contracts</p>
+    <p style="color:white;"><strong>Converted to Physical:</strong> <span id="efpMT">...</span> Metric Tons</p>
     <p style="color:white;">Consistent delivery demand reflects off-exchange pressure</p>
 
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Volume Activity</h3>
-    <p style="color:white;"><strong>Latest Volume:</strong> 193,512 contracts (June 2)</p>
-    <p style="color:white;"><strong>At-Close Volume:</strong> 1,585 contracts</p>
+    <p style="color:white;"><strong>Latest Volume:</strong> <span id="volTotal">...</span> contracts (<span id="volDate">...</span>)</p>
+    <p style="color:white;"><strong>At-Close Volume:</strong> <span id="volClose">...</span> contracts</p>
     <p style="color:white;">Settlement-hour activity hints at strategic unwinding or exposure management</p>
 
     <hr style="border-color: #FFD700; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total Stress Alert</h3>
-    <p style="font-size: 14px; color:white;"><strong>Status:</strong> <span style="color: #FFD700; font-weight: bold;">🟡 MODERATE RISK</span></p>
+    <p style="font-size: 14px; color:white;"><strong>Status:</strong> <span id="stressSignal" style="color: #FFD700; font-weight: bold;">...</span></p>
     <p style="color: #bbb; font-size: 13px;">Stress is present but below DEFCON thresholds. Continue monitoring EFP levels and combined drawdowns.</p>
   </div>
-
-  
 </div>
 
 <div style="margin-top: 30px; background-color: #111; padding: 12px; border-top: 2px solid #FFD700; text-align: center; font-size: 13px; color: #999;">
@@ -277,4 +274,8 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </div>
 
 <style>
+@keyframes pulseGoldFrame {
+  0% { box-shadow: 0 0 10px gold; }
+  100% { box-shadow: 0 0 25px gold; }
+}
 </style>
