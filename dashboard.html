@@ -281,3 +281,41 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 <div style="margin-top: 40px; background-color: #111; padding: 15px; border-top: 2px solid #FFD700; text-align: center; font-size: 14px; color: #999;">
   Historical COMEX stress trends and signal charts coming soon...
 </div>
+
+
+  <div style="margin-top: 40px; background-color: #1a1a1a; padding: 20px; border: 2px dashed gold; border-radius: 8px;">
+  <h3 style="color: #FFD700;">📉 Trend Explorer (Beta)</h3>
+
+  <!-- Embedded Sheet Chart Placeholder -->
+  <iframe 
+    src="https://docs.google.com/spreadsheets/d/e/YOUR_PUBLISHED_CHART_LINK/pubchart?oid=12345678&amp;format=interactive"
+    width="100%" 
+    height="350"
+    style="border: none; border-radius: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.4);">
+  </iframe>
+
+  <p style="color: #bbb; font-size: 13px; margin-top: 10px;">Above: 14-day trend in Registered Gold. Use chart menu (⋮) to export or toggle view.</p>
+
+  <div style="margin-top: 20px;">
+    <button onclick="toggleDetail()" style="background-color: gold; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+      🔍 Show More Insights
+    </button>
+  </div>
+
+  <div id="comexDetailPanel" style="display: none; margin-top: 15px; color: #ccc; font-size: 14px;">
+    <p>📌 <strong>Why This Matters:</strong> Shrinking registered gold while EFP volumes rise can signal paper-to-physical pressure — a key sign of stress.</p>
+    <p>📈 We monitor both inventory and conversion behavior. This tool will soon allow side-by-side view of:</p>
+    <ul style="padding-left: 20px;">
+      <li>📦 Registered vs Combined inventory</li>
+      <li>📊 EFP conversion intensity over time</li>
+      <li>📉 Open Interest vs Physical backing</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+function toggleDetail() {
+  const panel = document.getElementById('comexDetailPanel');
+  panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
+}
+</script>
