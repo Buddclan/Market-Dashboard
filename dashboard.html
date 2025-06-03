@@ -279,3 +279,38 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   100% { box-shadow: 0 0 25px gold; }
 }
 </style>
+<script>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("regVal").textContent = data.regVal;
+    document.getElementById("regChange").textContent = data.regChange;
+    document.getElementById("regSignal").textContent = data.regSignal;
+
+    document.getElementById("eligVal").textContent = data.eligVal;
+    document.getElementById("eligChange").textContent = data.eligChange;
+    document.getElementById("eligSignal").textContent = data.eligSignal;
+
+    document.getElementById("combVal").textContent = data.combVal;
+    document.getElementById("combChange").textContent = data.combChange;
+    document.getElementById("combSignal").textContent = data.combSignal;
+
+    document.getElementById("efp5dma").textContent = data.efp5dma;
+    document.getElementById("efpSignal").textContent = data.efpSignal;
+
+    document.getElementById("gprRatio").textContent = data.gprRatio;
+    document.getElementById("gprDate").textContent = data.gprDate;
+
+    document.getElementById("efpTotal").textContent = data.efpTotal;
+    document.getElementById("efpMT").textContent = data.efpMT;
+
+    document.getElementById("volTotal").textContent = data.volTotal;
+    document.getElementById("volDate").textContent = data.volDate;
+    document.getElementById("volClose").textContent = data.volClose;
+
+    document.getElementById("stressSignal").textContent = data.stressSignal;
+  })
+  .catch(err => {
+    console.error("Error loading COMEX data:", err);
+  });
+</script>
