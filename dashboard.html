@@ -272,3 +272,51 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   100% { box-shadow: 0 0 25px gold; }
 }
 </style>
+
+
+  
+<!-- 🧠 Workforce Warning System Block -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
+  <h2 style="color:#00ffff;">🧠 Workforce Warning System</h2>
+  <div id="workforce-data" style="color:white;">Loading labor data...</div>
+</div>
+
+<script>
+fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("workforce-data");
+
+    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
+      <thead>
+        <tr style="border-bottom:1px solid #666;">
+          <th style="text-align:left;">Indicator</th>
+          <th>Latest</th>
+          <th>Release Date</th>
+          <th>Signal</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    data.forEach(row => {
+      if (row["Category"] && row["Category"].toLowerCase() !== "defcon status") {
+        html += `
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="text-align:left;">${row["Category"]}</td>
+            <td>${row["DATA"] ?? ""}</td>
+            <td>${row["RELEASE DATES"] ?? ""}</td>
+            <td>${row["SIGNAL"] ?? ""}</td>
+            <td>${row["1. 🧠 Tooltip Notes (Column D)"] ?? ""}</td>
+          </tr>`;
+      }
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Error loading workforce data:", error);
+    document.getElementById("workforce-data").innerHTML = "<span style='color:red;'>⚠️ Error loading labor data.</span>";
+  });
+</script>
