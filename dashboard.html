@@ -223,6 +223,79 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </script>
 
   
+<!-- 💳 Household Debt Stress -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
+  <h2 style="color:hotpink;">💳 Household Debt Stress</h2>
+  <div id="debt-data" style="color:white;">Loading data...</div>
+</div>
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-data");
+
+    const filtered = data.filter(row =>
+      row["Category"] &&
+      (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== "")
+    );
+
+    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
+      <thead>
+        <tr style="border-bottom:1px solid #666;">
+          <th style="text-align:left;">Category</th>
+          <th>Q4 2023</th>
+          <th>Q4 2024</th>
+          <th>Q1 2025</th>
+          <th>↗️ Trend</th>
+          <th>⚠️ Signal</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    filtered.forEach((row, i) => {
+      const q4 = parseFloat(row["Q4 2024"]);
+      const q1 = parseFloat(row["Q1 2025"]);
+      let trend = "", signal = "";
+
+      if (!isNaN(q4) && !isNaN(q1)) {
+        trend = q1 > q4 ? "🔺" : q1 < q4 ? "🔻" : "➡️";
+        if (q1 >= 7) signal = "🔴";
+        else if (q1 >= 3) signal = "🟠";
+        else if (q1 > 0) signal = "🟢";
+      }
+
+      html += `
+        <tr style="border-bottom: 1px solid #333;">
+          <td style="text-align:left;">${row["Category"]}</td>
+          <td>${row["Q4 2023"] ?? ""}</td>
+          <td>${row["Q4 2024"] ?? ""}</td>
+          <td>${row["Q1 2025"] ?? ""}</td>
+          <td>${trend}</td>
+          <td>${signal}</td>
+        </tr>`;
+
+      // Inject spacing and yellow line after "Total Debt"
+      if (row["Category"]?.toLowerCase().includes("total household debt")) {
+        html += `
+          <tr><td colspan="6" style="height: 20px;"></td></tr>
+          <tr>
+            <td colspan="6" style="color:gold; font-weight:bold; font-size:1.1em; text-align:left;">🟡 90+ Delinquencies</td>
+          </tr>
+          <tr><td colspan="6"><hr style="border: 1px solid gold;"></td></tr>`;
+      }
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Error fetching debt data:", error);
+    document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
+  });
+</script>
+
+  
 <div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 16px 24px; border: 2px solid gold; border-radius: 6px; box-shadow: 0 0 20px gold; max-width: 860px; margin: 20px auto; animation: pulseGoldFrame 2s infinite alternate;">
   <h2 style="color: #FFD700; font-size: 20px; margin: 0 0 8px 0;">COMEX</h2>
   <p style="font-size: 13px; color: #cccccc; margin: 0 0 10px 0;">Current COMEX stress score based on inventory and delivery dynamics: <strong style="color:#FFCC00">3</strong> – 🟡 Moderate Risk</p>
