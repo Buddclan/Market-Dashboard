@@ -276,35 +276,7 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </div>
 
 <script>
-  const goldPaperData = [
-    { date: "2025-05-27", oi: 440621, reg: 21380763.98 },
-    { date: "2025-05-28", oi: 431409, reg: 21380763.98 },
-    { date: "2025-05-29", oi: 422605, reg: 21380763.98 },
-    { date: "2025-05-30", oi: 410976, reg: 21319411.78 },
-  ];
-
-  function getSignal(ratio) {
-    if (ratio < 2) return "🟢 Stable";
-    else if (ratio < 2.5) return "🟠 Elevated";
-    else if (ratio < 3) return "🔴 High Stress";
-    else return "☠️ Critical";
-  }
-
-  const tbody = document.getElementById("gold-to-paper-body");
-  goldPaperData.forEach(entry => {
-    const ratio = ((entry.oi * 100) / entry.reg).toFixed(2);
-    const signal = getSignal(ratio);
-    tbody.innerHTML += `
-      <tr style="border-bottom:1px solid #333;">
-        <td style="text-align:left;">${entry.date}</td>
-        <td>${entry.oi.toLocaleString()}</td>
-        <td>${entry.reg.toLocaleString()} oz</td>
-        <td>${ratio}</td>
-        <td>${signal}</td>
-      </tr>
-    `;
-  });
-<div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 20px; border-radius: 16px; box-shadow: 0 0 20px #FFD700; max-width: 800px; margin: auto; animation: pulseGlow 2s infinite alternate;">
+ <div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 20px; border-radius: 16px; box-shadow: 0 0 20px #FFD700; max-width: 800px; margin: auto; animation: pulseGlow 2s infinite alternate;">
   <h2 style="color: #FFD700; margin-bottom: 10px;">🧮 COMEX Physical Stress Score: <span style="color: #FF5555;">5</span></h2>
   <h3 style="color: #FF0000; margin-top: 0; animation: blinkText 1.5s infinite;">☠️ DEFCON ALERT</h3>
   <p style="font-size: 14px; color: #cccccc;">Registered drawdown, Eligible outflow, Inventory contracting</p>
