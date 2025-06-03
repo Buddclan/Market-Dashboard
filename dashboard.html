@@ -223,123 +223,44 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </script>
 
   
-<!-- 💳 Household Debt Stress -->
-<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
-  <h2 style="color:hotpink;">💳 Household Debt Stress</h2>
-  <div id="debt-data" style="color:white;">Loading data...</div>
-</div>
-
-<script>
-fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById("debt-data");
-
-    const filtered = data.filter(row =>
-      row["Category"] &&
-      (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== "")
-    );
-
-    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
-      <thead>
-        <tr style="border-bottom:1px solid #666;">
-          <th style="text-align:left;">Category</th>
-          <th>Q4 2023</th>
-          <th>Q4 2024</th>
-          <th>Q1 2025</th>
-          <th>↗️ Trend</th>
-          <th>⚠️ Signal</th>
-        </tr>
-      </thead>
-      <tbody>`;
-
-    filtered.forEach((row, i) => {
-      const q4 = parseFloat(row["Q4 2024"]);
-      const q1 = parseFloat(row["Q1 2025"]);
-      let trend = "", signal = "";
-
-      if (!isNaN(q4) && !isNaN(q1)) {
-        trend = q1 > q4 ? "🔺" : q1 < q4 ? "🔻" : "➡️";
-        if (q1 >= 7) signal = "🔴";
-        else if (q1 >= 3) signal = "🟠";
-        else if (q1 > 0) signal = "🟢";
-      }
-
-      html += `
-        <tr style="border-bottom: 1px solid #333;">
-          <td style="text-align:left;">${row["Category"]}</td>
-          <td>${row["Q4 2023"] ?? ""}</td>
-          <td>${row["Q4 2024"] ?? ""}</td>
-          <td>${row["Q1 2025"] ?? ""}</td>
-          <td>${trend}</td>
-          <td>${signal}</td>
-        </tr>`;
-
-      // Inject spacing and yellow line after "Total Debt"
-      if (row["Category"]?.toLowerCase().includes("total household debt")) {
-        html += `
-          <tr><td colspan="6" style="height: 20px;"></td></tr>
-          <tr>
-            <td colspan="6" style="color:gold; font-weight:bold; font-size:1.1em; text-align:left;">🟡 90+ Delinquencies</td>
-          </tr>
-          <tr><td colspan="6"><hr style="border: 1px solid gold;"></td></tr>`;
-      }
-    });
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-  })
-  .catch(error => {
-    console.error("Error fetching debt data:", error);
-    document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
-  });
-</script>
-
-  
-<div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 16px 24px; border: 2px solid gold; border-radius: 6px; box-shadow: 0 0 20px gold; max-width: 860px; margin: 20px auto; animation: pulseGoldFrame 2s infinite alternate;">
-  <h2 style="color: #FFD700; font-size: 20px; margin: 0 0 8px 0;">COMEX</h2>
-  <p style="font-size: 13px; color: #cccccc; margin: 0 0 10px 0;">Current COMEX stress score based on inventory and delivery dynamics: <strong style="color:#FFCC00">3</strong> – 🟡 Moderate Risk</p>
+<!-- 🏦 COMEX Stress Module -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box;">
+  <h2 style="color:gold;">COMEX</h2>
+  <p style="color:white; font-size: 14px;">Current COMEX stress score based on inventory and delivery dynamics: <strong style="color:#FFCC00">3</strong> – 🟡 Moderate Risk</p>
 
   <hr style="border-color: #444; margin: 10px 0;">
 
-  <h3 style="color: #FFD700; font-size: 15px; margin: 8px 0;">📦 COMEX Inventory</h3>
-  <p style="margin: 2px 0;"><strong>Registered:</strong> 21,417,118 oz <span style="color: #66FF66;">(+97,707 oz)</span> – 🟠 Rising Delivery Demand</p>
-  <p style="margin: 2px 0;"><strong>Eligible:</strong> 16,932,486 oz <span style="color: #FF6666;">(−537,296 oz)</span> – 🟠 Physical Outflow</p>
-  <p style="margin: 2px 0;"><strong>Combined:</strong> 38,349,604 oz <span style="color: #FF6666;">(−439,589 oz)</span> – 🟡 No Inventory Growth</p>
+  <h3 style="color:gold; font-size: 15px; margin: 8px 0;">COMEX Inventory</h3>
+  <p style="color:white;"><strong>Registered:</strong> 21,417,118 oz <span style="color: #66FF66;">(+97,707 oz)</span> – 🟠 Rising Delivery Demand</p>
+  <p style="color:white;"><strong>Eligible:</strong> 16,932,486 oz <span style="color: #FF6666;">(−537,296 oz)</span> – 🟠 Physical Outflow</p>
+  <p style="color:white;"><strong>Combined:</strong> 38,349,604 oz <span style="color: #FF6666;">(−439,589 oz)</span> – 🟡 No Inventory Growth</p>
 
   <hr style="border-color: #444; margin: 10px 0;">
 
-  <h3 style="color: #FFD700; font-size: 15px; margin: 8px 0;">📈 EFP 5-Day Avg</h3>
-  <p style="margin: 2px 0;"><strong>Value:</strong> 2,475 contracts – 🟠 Elevated Conversions</p>
-  <p style="margin: 2px 0;">Rising physical conversion activity from futures</p>
+  <h3 style="color:gold; font-size: 15px; margin: 8px 0;">EFP 5-Day Avg</h3>
+  <p style="color:white;"><strong>Value:</strong> 2,475 contracts – 🟠 Elevated Conversions</p>
+  <p style="color:white;">Rising physical conversion activity from futures</p>
 
   <hr style="border-color: #444; margin: 10px 0;">
 
-  <h3 style="color: #FFD700; font-size: 15px; margin: 8px 0;">📦 Total EFP Since May 14</h3>
-  <p style="margin: 2px 0;"><strong>Total:</strong> 23,630 contracts</p>
-  <p style="margin: 2px 0;"><strong>Converted to Physical:</strong> 73.50 Metric Tons</p>
-  <p style="margin: 2px 0;">Consistent delivery demand reflects off-exchange pressure</p>
+  <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total EFP Since May 14</h3>
+  <p style="color:white;"><strong>Total:</strong> 23,630 contracts</p>
+  <p style="color:white;"><strong>Converted to Physical:</strong> 73.50 Metric Tons</p>
+  <p style="color:white;">Consistent delivery demand reflects off-exchange pressure</p>
 
   <hr style="border-color: #444; margin: 10px 0;">
 
-  <h3 style="color: #FFD700; font-size: 15px; margin: 8px 0;">📊 Volume Activity</h3>
-  <p style="margin: 2px 0;"><strong>Latest Volume:</strong> 193,512 contracts (June 2)</p>
-  <p style="margin: 2px 0;"><strong>At-Close Volume:</strong> 1,585 contracts</p>
-  <p style="margin: 2px 0;">Settlement-hour activity hints at strategic unwinding or exposure management</p>
+  <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Volume Activity</h3>
+  <p style="color:white;"><strong>Latest Volume:</strong> 193,512 contracts (June 2)</p>
+  <p style="color:white;"><strong>At-Close Volume:</strong> 1,585 contracts</p>
+  <p style="color:white;">Settlement-hour activity hints at strategic unwinding or exposure management</p>
 
   <hr style="border-color: #FFD700; margin: 10px 0;">
 
-  <h3 style="color: #FFD700; font-size: 15px; margin: 8px 0;">🔻 Total Stress Alert</h3>
-  <p style="font-size: 14px; margin: 2px 0;"><strong>Status:</strong> <span style="color: #FFD700; font-weight: bold;">🟡 MODERATE RISK</span></p>
+  <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total Stress Alert</h3>
+  <p style="font-size: 14px; color:white;"><strong>Status:</strong> <span style="color: #FFD700; font-weight: bold;">🟡 MODERATE RISK</span></p>
   <p style="color: #bbb; font-size: 13px;">Stress is present but below DEFCON thresholds. Continue monitoring EFP levels and combined drawdowns.</p>
 </div>
-
-<style>
-@keyframes pulseGoldFrame {
-  0% { box-shadow: 0 0 10px gold; }
-  100% { box-shadow: 0 0 25px gold; }
-}
-</style>
 
 <div style="margin-top: 30px; background-color: #111; padding: 12px; border-top: 2px solid #FFD700; text-align: center; font-size: 13px; color: #999;">
   Historical COMEX stress trends and signal charts coming soon...
