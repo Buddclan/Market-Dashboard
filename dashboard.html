@@ -150,82 +150,10 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
   </div>
 </div>
 <div class="section">
- <!-- 💳 Household Debt Stress -->
-<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
-  <h2 style="color:hotpink;">💳 Household Debt Stress</h2>
-  <div id="debt-data" style="color:white;">Loading data...</div>
-</div>
 
-<script>
-fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById("debt-data");
-
-    const filtered = data.filter(row =>
-      row["Category"] &&
-      (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== "")
-    );
-
-    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
-      <thead>
-        <tr style="border-bottom:1px solid #666;">
-          <th style="text-align:left;">Category</th>
-          <th>Q4 2023</th>
-          <th>Q4 2024</th>
-          <th>Q1 2025</th>
-          <th>↗️ Trend</th>
-          <th>⚠️ Signal</th>
-        </tr>
-      </thead>
-      <tbody>`;
-
-    filtered.forEach((row, i) => {
-      const q4 = parseFloat(row["Q4 2024"]);
-      const q1 = parseFloat(row["Q1 2025"]);
-      let trend = "", signal = "";
-
-      if (!isNaN(q4) && !isNaN(q1)) {
-        trend = q1 > q4 ? "🔺" : q1 < q4 ? "🔻" : "➡️";
-        if (q1 >= 7) signal = "🔴";
-        else if (q1 >= 3) signal = "🟠";
-        else if (q1 > 0) signal = "🟢";
-      }
-
-      html += `
-        <tr style="border-bottom: 1px solid #333;">
-          <td style="text-align:left;">${row["Category"]}</td>
-          <td>${row["Q4 2023"] ?? ""}</td>
-          <td>${row["Q4 2024"] ?? ""}</td>
-          <td>${row["Q1 2025"] ?? ""}</td>
-          <td>${trend}</td>
-          <td>${signal}</td>
-        </tr>`;
-
-      // Inject spacing and yellow line after "Total Debt"
-      if (row["Category"]?.toLowerCase().includes("total household debt")) {
-        html += `
-          <tr><td colspan="6" style="height: 20px;"></td></tr>
-          <tr>
-            <td colspan="6" style="color:gold; font-weight:bold; font-size:1.1em; text-align:left;">🟡 90+ Delinquencies</td>
-          </tr>
-          <tr><td colspan="6"><hr style="border: 1px solid gold;"></td></tr>`;
-      }
-    });
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-  })
-  .catch(error => {
-    console.error("Error fetching debt data:", error);
-    document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
-  });
-</script>
-
-  
-<!-- 🏦 COMEX Stress Module -->
-<div style="display: flex; justify-content: space-between; background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
-  <div style="flex: 1; padding-right: 20px;">
+ <!-- 🏦 COMEX Stress Module -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
+  <div style="padding-right: 20px;">
     <h2 style="color:gold;">COMEX</h2>
 
     <hr style="border-color: #444; margin: 10px 0;">
@@ -269,6 +197,71 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   </div>
 </div>
 
+<!-- 💳 Household Debt Stress -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
+  <h2 style="color:hotpink;">💳 Household Debt Stress</h2>
+  <div id="debt-data" style="color:white;">Loading data...</div>
+</div>
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById("debt-data");
+    const filtered = data.filter(row => row["Category"] && (row["Q4 2023"] !== "" || row["Q4 2024"] !== "" || row["Q1 2025"] !== ""));
+
+    let html = `<table style="width:100%; border-collapse:collapse; text-align:center; color:white;">
+      <thead>
+        <tr style="border-bottom:1px solid #666;">
+          <th style="text-align:left;">Category</th>
+          <th>Q4 2023</th>
+          <th>Q4 2024</th>
+          <th>Q1 2025</th>
+          <th>↗️ Trend</th>
+          <th>⚠️ Signal</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    filtered.forEach((row, i) => {
+      const q4 = parseFloat(row["Q4 2024"]);
+      const q1 = parseFloat(row["Q1 2025"]);
+      let trend = "", signal = "";
+
+      if (!isNaN(q4) && !isNaN(q1)) {
+        trend = q1 > q4 ? "🔺" : q1 < q4 ? "🔻" : "➡️";
+        if (q1 >= 7) signal = "🔴";
+        else if (q1 >= 3) signal = "🟠";
+        else if (q1 > 0) signal = "🟢";
+      }
+
+      html += `
+        <tr style="border-bottom: 1px solid #333;">
+          <td style="text-align:left;">${row["Category"]}</td>
+          <td>${row["Q4 2023"] ?? ""}</td>
+          <td>${row["Q4 2024"] ?? ""}</td>
+          <td>${row["Q1 2025"] ?? ""}</td>
+          <td>${trend}</td>
+          <td>${signal}</td>
+        </tr>`;
+
+      if (row["Category"]?.toLowerCase().includes("total household debt")) {
+        html += `
+          <tr><td colspan="6" style="height: 20px;"></td></tr>
+          <tr><td colspan="6" style="color:gold; font-weight:bold; font-size:1.1em; text-align:left;">🟡 90+ Delinquencies</td></tr>
+          <tr><td colspan="6"><hr style="border: 1px solid gold;"></td></tr>`;
+      }
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  })
+  .catch(error => {
+    console.error("Error fetching debt data:", error);
+    document.getElementById("debt-data").innerHTML = "<span style='color:red;'>⚠️ Failed to load data.</span>";
+  });
+</script>
+
 <div style="margin-top: 30px; background-color: #111; padding: 12px; border-top: 2px solid #FFD700; text-align: center; font-size: 13px; color: #999;">
   Historical COMEX stress trends and signal charts coming soon...
 </div>
@@ -279,38 +272,3 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   100% { box-shadow: 0 0 25px gold; }
 }
 </style>
-<script>
-fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKtN7wWjb6rTkIXHTlc1CHfANIvYVXasQAuaM/exec")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("regVal").textContent = data.regVal;
-    document.getElementById("regChange").textContent = data.regChange;
-    document.getElementById("regSignal").textContent = data.regSignal;
-
-    document.getElementById("eligVal").textContent = data.eligVal;
-    document.getElementById("eligChange").textContent = data.eligChange;
-    document.getElementById("eligSignal").textContent = data.eligSignal;
-
-    document.getElementById("combVal").textContent = data.combVal;
-    document.getElementById("combChange").textContent = data.combChange;
-    document.getElementById("combSignal").textContent = data.combSignal;
-
-    document.getElementById("efp5dma").textContent = data.efp5dma;
-    document.getElementById("efpSignal").textContent = data.efpSignal;
-
-    document.getElementById("gprRatio").textContent = data.gprRatio;
-    document.getElementById("gprDate").textContent = data.gprDate;
-
-    document.getElementById("efpTotal").textContent = data.efpTotal;
-    document.getElementById("efpMT").textContent = data.efpMT;
-
-    document.getElementById("volTotal").textContent = data.volTotal;
-    document.getElementById("volDate").textContent = data.volDate;
-    document.getElementById("volClose").textContent = data.volClose;
-
-    document.getElementById("stressSignal").textContent = data.stressSignal;
-  })
-  .catch(err => {
-    console.error("Error loading COMEX data:", err);
-  });
-</script>
