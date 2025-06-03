@@ -223,14 +223,12 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </script>
 
   
- <div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 20px; border-radius: 16px; box-shadow: 0 0 20px #FFD700; max-width: 800px; margin: auto; animation: pulseGlow 2s infinite alternate;">
-  <h2 style="color: #FFD700; margin-bottom: 10px;">🧮 COMEX Physical Stress Score: <span style="color: #FF5555;">5</span></h2>
-  <h3 style="color: #FF0000; margin-top: 0; animation: blinkText 1.5s infinite;">☠️ DEFCON ALERT</h3>
-  <p style="font-size: 14px; color: #cccccc;">Registered drawdown, Eligible outflow, Inventory contracting</p>
+<div style="background-color: #1c1c1c; color: #f0f0f0; font-family: Arial, sans-serif; padding: 20px; border: 4px solid gold; border-radius: 8px; box-shadow: 0 0 30px gold; max-width: 960px; margin: auto; animation: pulseGoldFrame 2s infinite alternate;">
+  <h2 style="color: #FFD700; margin-bottom: 10px;">🏦 COMEX</h2>
+  <p style="font-size: 14px; color: #cccccc;">Current COMEX stress score based on inventory and delivery dynamics: <strong style="color:#FFCC00">3</strong> – 🟡 Moderate Risk</p>
 
   <hr style="border-color: #444;">
 
-  <!-- Inventory Section -->
   <h3 style="color: #FFD700;">📦 COMEX Inventory</h3>
   <p><strong>Registered:</strong> 21,417,118 oz <span style="color: #66FF66;">(+97,707 oz)</span> – 🟠 Rising Delivery Demand</p>
   <p><strong>Eligible:</strong> 16,932,486 oz <span style="color: #FF6666;">(−537,296 oz)</span> – 🟠 Physical Outflow</p>
@@ -238,33 +236,29 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 
   <hr style="border-color: #444;">
 
-  <!-- EFP Section -->
   <h3 style="color: #FFD700;">📈 EFP 5-Day Avg</h3>
   <p><strong>Value:</strong> 2,475 contracts – 🟠 Elevated Conversions</p>
-  <p><strong>Interpretation:</strong> Indicates rising conversion activity from paper to physical gold</p>
+  <p><strong>Interpretation:</strong> Rising physical conversion activity from futures</p>
 
   <hr style="border-color: #444;">
 
-  <!-- Total EFP Since 5/14 -->
   <h3 style="color: #FFD700;">📦 Total EFP Since May 14</h3>
   <p><strong>Total:</strong> 23,630 contracts</p>
   <p><strong>Converted to Physical:</strong> 73.50 Metric Tons</p>
-  <p><strong>Interpretation:</strong> High physical delivery demand suggests systemic shift away from futures rollovers</p>
+  <p><strong>Interpretation:</strong> Consistent delivery demand reflects off-exchange pressure</p>
 
   <hr style="border-color: #444;">
 
-  <!-- Volume Trends -->
   <h3 style="color: #FFD700;">📊 Volume Activity</h3>
   <p><strong>Latest Volume:</strong> 193,512 contracts (June 2)</p>
   <p><strong>At-Close Volume:</strong> 1,585 contracts</p>
-  <p><strong>Interpretation:</strong> Elevated close volume implies positioning or hedging into settlement</p>
+  <p><strong>Interpretation:</strong> Settlement-hour activity hints at strategic unwinding or exposure management</p>
 
   <hr style="border-color: #FFD700;">
 
-  <!-- Total Signal Status -->
   <h3 style="color: #FFD700;">🔻 Total Stress Alert</h3>
-  <p style="font-size: 16px;"><strong>Status:</strong> <span style="color: #FF0000; font-weight: bold; animation: blinkText 1.5s infinite;">🔴 RED – DEFCON</span></p>
-  <p style="color: #bbb;">Multiple signals indicate physical pressure and withdrawal from COMEX inventories. Watch for continued drain or delivery spikes.</p>
+  <p style="font-size: 16px;"><strong>Status:</strong> <span style="color: #FFD700; font-weight: bold;">🟡 MODERATE RISK</span></p>
+  <p style="color: #bbb;">Stress is present but below DEFCON thresholds. Continue monitoring EFP levels and combined drawdowns.</p>
 </div>
 
 <style>
@@ -274,17 +268,16 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   100% { opacity: 1; }
 }
 
-@keyframes pulseGlow {
+@keyframes pulseGoldFrame {
   0% {
-    box-shadow: 0 0 20px #FFD700;
+    box-shadow: 0 0 20px gold;
   }
   100% {
-    box-shadow: 0 0 35px #FF0000;
+    box-shadow: 0 0 40px gold;
   }
 }
 </style>
 
-<!-- 🔻 Optional: Footer -->
 <div style="margin-top: 40px; background-color: #111; padding: 15px; border-top: 2px solid #FFD700; text-align: center; font-size: 14px; color: #999;">
   Historical COMEX stress trends and signal charts coming soon...
 </div>
