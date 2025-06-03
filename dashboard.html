@@ -264,7 +264,7 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
   </div>
 
   <div style="flex: 0 0 200px; position: relative;">
-    <div class="gold-coin-rain"></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Gold-bars.jpg/320px-Gold-bars.jpg" alt="Gold Bars" style="width: 100%; max-width: 150px; border-radius: 8px; animation: pulseGoldBars 2s infinite;">
   </div>
 </div>
 
@@ -273,17 +273,11 @@ fetch("https://script.google.com/macros/s/AKfycbyqOIRdD09MMUyTOrWhPVFMyhnlvcDXKt
 </div>
 
 <style>
-@keyframes dropCoins {
-  0% { transform: translateY(-100px); opacity: 0; }
+@keyframes pulseGoldBars {
+  0% { transform: scale(1); box-shadow: 0 0 10px gold; }
+  100% { transform: scale(1.05); box-shadow: 0 0 25px gold; }
+}
   100% { transform: translateY(300px); opacity: 1; }
 }
-.gold-coin-rain::before {
-  content: "💰";
-  font-size: 24px;
-  position: absolute;
-  left: 50%;
-  animation: dropCoins 2.5s infinite;
-  color: gold;
-  opacity: 0.8;
-}
+
 </style>
