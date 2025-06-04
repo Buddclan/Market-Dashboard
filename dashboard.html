@@ -151,11 +151,12 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 </div>
 <div class="section">
 
- <script>
-fetch("https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec")
-  .then(res => res.json())
-  .then(data => {
+ <script src="https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec?callback=displayData"></script>
+
+<script>
+  function displayData(data) {
     const latest = data[data.length - 1];
+    if (!latest) return;
 
     document.getElementById("regVal").textContent = latest["Registered"];
     document.getElementById("eligVal").textContent = latest["Eligible"];
@@ -169,14 +170,7 @@ fetch("https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTld
     document.getElementById("volDate").textContent = latest["Volume Date"];
     document.getElementById("volClose").textContent = latest["Volume Close"];
     document.getElementById("stressSignal").textContent = latest["Stress Signal"];
-
-    if (latest["Stress Signal"].includes("High")) {
-      document.getElementById("stressSignal").style.color = "red";
-    }
-  })
-  .catch(err => {
-    console.error("Failed to fetch COMEX data:", err);
-  });
+  }
 </script>
 
 
