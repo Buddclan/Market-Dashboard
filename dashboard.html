@@ -197,6 +197,7 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 
 <script>
  <script>
+ <script>
   function displayData(data) {
     const latest = data[data.length - 1];
     if (!latest) return;
@@ -207,19 +208,18 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
     document.getElementById("efp5dma").textContent = latest["EFP 5DMA"];
     document.getElementById("efpTotal").textContent = latest["TOTAL EFP"];
     document.getElementById("efpMT").textContent = latest["Conversion"];
-    document.getElementById("gprRatio").textContent = ""; // Not found in sheet
-    document.getElementById("gprDate").textContent = "";  // Not found in sheet
-    document.getElementById("volTotal").textContent = latest["Total\nVolume"];
-    document.getElementById("volDate").textContent = "";  // Not found in sheet
-    document.getElementById("volClose").textContent = latest["At\nClose"];
-    document.getElementById("stressSignal").textContent = latest["🔴 High"] || "No signal";
+    document.getElementById("volTotal").textContent = latest["Total Volume"];
+    document.getElementById("volClose").textContent = latest["At Close"];
+    document.getElementById("gprRatio").textContent = "–";
+    document.getElementById("gprDate").textContent = "–";
+    document.getElementById("stressSignal").textContent = latest["Signal"];
 
-    // Optional alert color
-    if ((latest["🔴 High"] || "").toLowerCase().includes("high")) {
+    if ((latest["Signal"] || "").toLowerCase().includes("high")) {
       document.getElementById("stressSignal").style.color = "red";
     }
   }
 </script>
+
 
 
 <!-- 💳 Household Debt Stress -->
