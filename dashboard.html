@@ -196,25 +196,26 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 <script src="https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec?callback=displayData"></script>
 
 <script>
+ <script>
   function displayData(data) {
     const latest = data[data.length - 1];
     if (!latest) return;
 
-    document.getElementById("regVal").textContent = latest["Registered"];
-    document.getElementById("eligVal").textContent = latest["Eligible"];
+    document.getElementById("regVal").textContent = latest["Registered Gold"];
+    document.getElementById("eligVal").textContent = latest["Total Eligible"];
     document.getElementById("combVal").textContent = latest["Combined"];
     document.getElementById("efp5dma").textContent = latest["EFP 5DMA"];
-    document.getElementById("efpTotal").textContent = latest["EFP Total"];
-    document.getElementById("efpMT").textContent = latest["EFP MT"];
-    document.getElementById("gprRatio").textContent = latest["GPR"];
-    document.getElementById("gprDate").textContent = latest["GPR Date"];
-    document.getElementById("volTotal").textContent = latest["Volume"];
-    document.getElementById("volDate").textContent = latest["Volume Date"];
-    document.getElementById("volClose").textContent = latest["Volume Close"];
-    document.getElementById("stressSignal").textContent = latest["Stress Signal"];
+    document.getElementById("efpTotal").textContent = latest["TOTAL EFP"];
+    document.getElementById("efpMT").textContent = latest["Conversion"];
+    document.getElementById("gprRatio").textContent = ""; // Not found in sheet
+    document.getElementById("gprDate").textContent = "";  // Not found in sheet
+    document.getElementById("volTotal").textContent = latest["Total\nVolume"];
+    document.getElementById("volDate").textContent = "";  // Not found in sheet
+    document.getElementById("volClose").textContent = latest["At\nClose"];
+    document.getElementById("stressSignal").textContent = latest["🔴 High"] || "No signal";
 
-    // Optional color alert
-    if (latest["Stress Signal"]?.toLowerCase().includes("high")) {
+    // Optional alert color
+    if ((latest["🔴 High"] || "").toLowerCase().includes("high")) {
       document.getElementById("stressSignal").style.color = "red";
     }
   }
