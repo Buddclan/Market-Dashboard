@@ -151,81 +151,34 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 </div>
 <div class="section">
 
- <!-- 🏦 COMEX Stress Module -->
-<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
-  <div style="padding-right: 20px;">
-    <h2 style="color:gold;">COMEX</h2>
+ <script>
+fetch("https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec")
+  .then(res => res.json())
+  .then(data => {
+    const latest = data[data.length - 1];
 
-    <hr style="border-color: #444; margin: 10px 0;">
+    document.getElementById("regVal").textContent = latest["Registered"];
+    document.getElementById("eligVal").textContent = latest["Eligible"];
+    document.getElementById("combVal").textContent = latest["Combined"];
+    document.getElementById("efp5dma").textContent = latest["EFP 5DMA"];
+    document.getElementById("efpTotal").textContent = latest["EFP Total"];
+    document.getElementById("efpMT").textContent = latest["EFP MT"];
+    document.getElementById("gprRatio").textContent = latest["GPR"];
+    document.getElementById("gprDate").textContent = latest["GPR Date"];
+    document.getElementById("volTotal").textContent = latest["Volume"];
+    document.getElementById("volDate").textContent = latest["Volume Date"];
+    document.getElementById("volClose").textContent = latest["Volume Close"];
+    document.getElementById("stressSignal").textContent = latest["Stress Signal"];
 
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">COMEX Inventory</h3>
-    <p style="color:white;"><strong>Registered:</strong> <span id="regVal">...</span> oz <span id="regChange"></span> – <span id="regSignal"></span></p>
-    <p style="color:white;"><strong>Eligible:</strong> <span id="eligVal">...</span> oz <span id="eligChange"></span> – <span id="eligSignal"></span></p>
-    <p style="color:white;"><strong>Combined:</strong> <span id="combVal">...</span> oz <span id="combChange"></span> – <span id="combSignal"></span></p>
-
-    <hr style="border-color: #444; margin: 10px 0;">
-
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">EFP 5-Day Avg</h3>
-    <p style="color:white;"><strong>Value:</strong> <span id="efp5dma">...</span> contracts – <span id="efpSignal"></span></p>
-    <p style="color:white;">Rising physical conversion activity from futures</p>
-
-    <hr style="border-color: #444; margin: 10px 0;">
-
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Gold-to-Paper Ratio</h3>
-    <p style="color:white;"><strong>Ratio:</strong> <span id="gprRatio">...</span> (<span id="gprDate">...</span>)</p>
-    <p style="color:white;">Each physical ounce backs nearly 2 contracts – stress remains elevated</p>
-
-    <hr style="border-color: #444; margin: 10px 0;">
-
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total EFP Since May 14</h3>
-    <p style="color:white;"><strong>Total:</strong> <span id="efpTotal">...</span> contracts</p>
-    <p style="color:white;"><strong>Converted to Physical:</strong> <span id="efpMT">...</span> Metric Tons</p>
-    <p style="color:white;">Consistent delivery demand reflects off-exchange pressure</p>
-
-    <hr style="border-color: #444; margin: 10px 0;">
-
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Volume Activity</h3>
-    <p style="color:white;"><strong>Latest Volume:</strong> <span id="volTotal">...</span> contracts (<span id="volDate">...</span>)</p>
-    <p style="color:white;"><strong>At-Close Volume:</strong> <span id="volClose">...</span> contracts</p>
-    <p style="color:white;">Settlement-hour activity hints at strategic unwinding or exposure management</p>
-
-    <hr style="border-color: #FFD700; margin: 10px 0;">
-
-    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total Stress Alert</h3>
-    <p style="font-size: 14px; color:white;"><strong>Status:</strong> <span id="stressSignal" style="color: #FFD700; font-weight: bold;">...</span></p>
-    <p style="color: #bbb; font-size: 13px;">Stress is present but below DEFCON thresholds. Continue monitoring EFP levels and combined drawdowns.</p>
-  </div>
-</div>
-
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec")
-
-    .then(res => res.json())
-    .then(data => {
-      const latest = data[data.length - 1];
-
-      document.getElementById("regVal").textContent = latest["Registered"];
-      document.getElementById("eligVal").textContent = latest["Eligible"];
-      document.getElementById("combVal").textContent = latest["Combined"];
-      document.getElementById("efp5dma").textContent = latest["EFP 5DMA"];
-      document.getElementById("efpTotal").textContent = latest["EFP Total"];
-      document.getElementById("efpMT").textContent = latest["EFP MT"];
-      document.getElementById("gprRatio").textContent = latest["GPR"];
-      document.getElementById("gprDate").textContent = latest["GPR Date"];
-      document.getElementById("volTotal").textContent = latest["Volume"];
-      document.getElementById("volDate").textContent = latest["Volume Date"];
-      document.getElementById("volClose").textContent = latest["Volume Close"];
-      document.getElementById("stressSignal").textContent = latest["Stress Signal"];
-
-      // Optional: Add styling logic based on stress level
-      if (latest["Stress Signal"].includes("High")) {
-        document.getElementById("stressSignal").style.color = "red";
-      }
-    })
-    .catch(err => {
-      console.error("Failed to fetch COMEX data:", err);
-    });
+    if (latest["Stress Signal"].includes("High")) {
+      document.getElementById("stressSignal").style.color = "red";
+    }
+  })
+  .catch(err => {
+    console.error("Failed to fetch COMEX data:", err);
+  });
 </script>
+
 
 <!-- 💳 Household Debt Stress -->
 <div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif;">
