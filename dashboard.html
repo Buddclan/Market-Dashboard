@@ -151,7 +151,7 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 </div>
 <div class="section">
 
- <!-- 🏦 COMEX Stress Module -->
+<!-- 🏦 COMEX Stress Module -->
 <div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
   <div style="padding-right: 20px;">
     <h2 style="color:gold;">COMEX</h2>
@@ -171,7 +171,7 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Gold-to-Paper Ratio</h3>
-    <p style="color:white;"><strong>Ratio:</strong> <span id="gprRatio">...</span> (<span id="gprDate">...</span>)</p>
+    <p style="color:white;"><strong>Ratio:</strong> <span id="gprRatio">–</span> (<span id="gprDate">–</span>)</p>
 
     <hr style="border-color: #444; margin: 10px 0;">
 
@@ -182,7 +182,7 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
     <hr style="border-color: #444; margin: 10px 0;">
 
     <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Volume Activity</h3>
-    <p style="color:white;"><strong>Latest Volume:</strong> <span id="volTotal">...</span> contracts (<span id="volDate">...</span>)</p>
+    <p style="color:white;"><strong>Latest Volume:</strong> <span id="volTotal">...</span> contracts</p>
     <p style="color:white;"><strong>At-Close Volume:</strong> <span id="volClose">...</span> contracts</p>
 
     <hr style="border-color: #FFD700; margin: 10px 0;">
@@ -192,27 +192,28 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
   </div>
 </div>
 
-<!-- ✅ LIVE DATA FROM GOOGLE SHEETS -->
+<!-- ✅ LOAD DATA FROM GOOGLE SHEETS -->
 <script src="https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec?callback=displayData"></script>
 
 <script>
- <script>
- <script>
   function displayData(data) {
     const latest = data[data.length - 1];
-    if (!latest) return;
+    if (!latest) {
+      console.error("No data returned from Google Sheet.");
+      return;
+    }
 
-    document.getElementById("regVal").textContent = latest["Registered Gold"];
-    document.getElementById("eligVal").textContent = latest["Total Eligible"];
-    document.getElementById("combVal").textContent = latest["Combined"];
-    document.getElementById("efp5dma").textContent = latest["EFP 5DMA"];
-    document.getElementById("efpTotal").textContent = latest["TOTAL EFP"];
-    document.getElementById("efpMT").textContent = latest["Conversion"];
-    document.getElementById("volTotal").textContent = latest["Total Volume"];
-    document.getElementById("volClose").textContent = latest["At Close"];
-    document.getElementById("gprRatio").textContent = "–";
-    document.getElementById("gprDate").textContent = "–";
-    document.getElementById("stressSignal").textContent = latest["Signal"];
+    console.log("Latest row from sheet:", latest); // Debug helper
+
+    document.getElementById("regVal").textContent = latest["Registered Gold"] || "–";
+    document.getElementById("eligVal").textContent = latest["Total Eligible"] || "–";
+    document.getElementById("combVal").textContent = latest["Combined"] || "–";
+    document.getElementById("efp5dma").textContent = latest["EFP 5DMA"] || "–";
+    document.getElementById("efpTotal").textContent = latest["TOTAL EFP"] || "–";
+    document.getElementById("efpMT").textContent = latest["Conversion"] || "–";
+    document.getElementById("volTotal").textContent = latest["Total Volume"] || "–";
+    document.getElementById("volClose").textContent = latest["At Close"] || "–";
+    document.getElementById("stressSignal").textContent = latest["Signal"] || "–";
 
     if ((latest["Signal"] || "").toLowerCase().includes("high")) {
       document.getElementById("stressSignal").style.color = "red";
