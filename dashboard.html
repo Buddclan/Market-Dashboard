@@ -151,19 +151,73 @@ fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec")
 </div>
 <div class="section">
 
-<!-- ✅ Load only Registered Gold -->
-<script src="https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec?callback=showRegisteredGold"></script>
+<!-- 🏦 COMEX Stress Module -->
+<div style="background-color: #111; color: #FFD700; padding: 20px; margin-top: 40px; border: 2px solid #FFD700; border-radius: 12px; font-family: Arial, sans-serif; max-width: 100%; width: 100%; box-sizing: border-box; position: relative;">
+  <div style="padding-right: 20px;">
+    <h2 style="color:gold;">COMEX</h2>
+
+    <hr style="border-color: #444; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">COMEX Inventory</h3>
+    <p style="color:white;"><strong>Registered:</strong> <span id="regVal">...</span> oz</p>
+    <p style="color:white;"><strong>Eligible:</strong> <span id="eligVal">...</span> oz</p>
+    <p style="color:white;"><strong>Combined:</strong> <span id="combVal">...</span> oz</p>
+
+    <hr style="border-color: #444; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">EFP 5-Day Avg</h3>
+    <p style="color:white;"><strong>Value:</strong> <span id="efp5dma">...</span> contracts</p>
+
+    <hr style="border-color: #444; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Gold-to-Paper Ratio</h3>
+    <p style="color:white;"><strong>Ratio:</strong> <span id="gprRatio">–</span> (<span id="gprDate">–</span>)</p>
+
+    <hr style="border-color: #444; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total EFP Since May 14</h3>
+    <p style="color:white;"><strong>Total:</strong> <span id="efpTotal">...</span> contracts</p>
+    <p style="color:white;"><strong>Converted to Physical:</strong> <span id="efpMT">...</span> Metric Tons</p>
+
+    <hr style="border-color: #444; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Volume Activity</h3>
+    <p style="color:white;"><strong>Latest Volume:</strong> <span id="volTotal">...</span> contracts</p>
+    <p style="color:white;"><strong>At-Close Volume:</strong> <span id="volClose">...</span> contracts</p>
+
+    <hr style="border-color: #FFD700; margin: 10px 0;">
+
+    <h3 style="color:gold; font-size: 15px; margin: 8px 0;">Total Stress Alert</h3>
+    <p style="font-size: 14px; color:white;"><strong>Status:</strong> <span id="stressSignal" style="color: #FFD700; font-weight: bold;">...</span></p>
+  </div>
+</div>
+
+<!-- ✅ Load Data from Google Sheets -->
+<script src="https://script.google.com/macros/s/AKfycbyOPPnuL_5OeSSGYTnShbOC0-BUNvGTldroBMjEzohbyiLWDP4cbGB2O1YSJGhf47It5Q/exec?callback=displayData"></script>
 
 <script>
-  function showRegisteredGold(data) {
+  function displayData(data) {
     const latest = data[data.length - 1];
     if (!latest) {
-      console.error("No data received.");
+      console.error("No data returned from Google Sheets.");
       return;
     }
 
-    console.log("✅ Latest row data:", latest);
-    document.getElementById("regTest").textContent = latest["Registered Gold"] || "Not found";
+    console.log("✅ Latest row from sheet:", latest);
+
+    document.getElementById("regVal").textContent = latest["Registered Gold"] || "–";
+    document.getElementById("eligVal").textContent = latest["Total Eligible"] || "–";
+    document.getElementById("combVal").textContent = latest["Combined"] || "–";
+    document.getElementById("efp5dma").textContent = latest["EFP 5DMA"] || "–";
+    document.getElementById("efpTotal").textContent = latest["TOTAL EFP"] || "–";
+    document.getElementById("efpMT").textContent = latest["Conversion"] || "–";
+    document.getElementById("volTotal").textContent = latest["Total Volume"] || "–";
+    document.getElementById("volClose").textContent = latest["At Close"] || "–";
+    document.getElementById("stressSignal").textContent = latest["Signal"] || "–";
+
+    if ((latest["Signal"] || "").toLowerCase().includes("high")) {
+      document.getElementById("stressSignal").style.color = "red";
+    }
   }
 </script>
 
