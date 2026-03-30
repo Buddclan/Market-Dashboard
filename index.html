@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Macro Dashboard</title>
 
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #f5f5f5;
+      font-family: Arial;
+      margin: 0;
+    }
+
+    .ticker {
+      background: black;
+      padding: 10px;
+      border-bottom: 2px solid #222;
+    }
+
+    .section {
+      padding: 20px;
+    }
+
+    .box {
+      background: #111;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #222;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TOP TICKER -->
+<div class="ticker">
+  <div class="te-embed" data-widget="mc-pro"></div>
+</div>
+
+<div class="section">
+
+  <div class="box">
+    <h2>📊 Stagflation Score</h2>
+    <p>Loading...</p>
+  </div>
+
+  <div class="box">
+    <h2>📉 Recession Risk</h2>
+    <p>Loading...</p>
+  </div>
+
+  <div class="box">
+    <h2>💧 Liquidity Stress</h2>
+    <p>Loading...</p>
+  </div>
+
+</div>
+
+<script src="https://widget.tradingeconomics.com/widget.js"></script>
+
+</body>
+</html>
