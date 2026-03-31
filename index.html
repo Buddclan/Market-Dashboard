@@ -25,7 +25,6 @@
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
     }
 
     h1, h2, h3 {
@@ -40,7 +39,6 @@
     .hero p {
       margin: 0;
       color: #b8b8b8;
-      font-size: 16px;
     }
 
     .summary-grid {
@@ -59,25 +57,22 @@
     .summary-box h3 {
       margin: 0 0 8px 0;
       font-size: 16px;
-      color: #f1f1f1;
     }
 
     .signal {
       font-size: 26px;
-      margin-bottom: 8px;
-      line-height: 1;
-    }
-
-    .score {
-      font-size: 24px;
-      font-weight: bold;
-      color: #f0d74c;
       margin-bottom: 6px;
     }
 
+    .score {
+      font-size: 22px;
+      font-weight: bold;
+      color: #f0d74c;
+      margin-bottom: 4px;
+    }
+
     .trend {
-      font-size: 15px;
-      color: #e6e6e6;
+      font-size: 14px;
       margin-bottom: 6px;
     }
 
@@ -85,15 +80,6 @@
       font-size: 13px;
       color: #a8a8a8;
       line-height: 1.4;
-    }
-
-    .sheet-frame {
-      width: 100%;
-      height: 1400px;
-      border: none;
-      border-radius: 10px;
-      background: #050505;
-      display: block;
     }
 
     .notes-grid {
@@ -109,12 +95,6 @@
       padding: 16px;
     }
 
-    .note-box p {
-      margin-bottom: 0;
-      color: #b0b0b0;
-      line-height: 1.5;
-    }
-
     .footer {
       text-align: center;
       color: #7f7f7f;
@@ -126,25 +106,29 @@
 
 <body>
 
+  <!-- 🔥 MARKET TICKER -->
   <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
   <tv-ticker-tape symbols="TVC:US10Y,TVC:US30Y,TVC:US02Y,TVC:VIX,IG:NASDAQ,TVC:DJI,SP:SPX,TVC:DXY,GOLD"></tv-ticker-tape>
 
   <div class="container">
 
+    <!-- HERO -->
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
-      <p>Live macro dashboard tracking labor, inflation, housing, liquidity, trade, financial stress, and gold-related market signals.</p>
+      <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
     </div>
 
+    <!-- SIGNAL SUMMARY -->
     <div class="section">
       <h2>Signal Summary</h2>
       <div class="summary-grid">
+
         <div class="summary-box">
           <h3>Labor</h3>
           <div class="signal">🟠</div>
           <div class="score">-4</div>
           <div class="trend">↘ Softening</div>
-          <div class="desc">Headline labor conditions remain stable on the surface, but underlying payroll contraction hints at early deterioration.</div>
+          <div class="desc">Labor remains stable at the surface but early deterioration is emerging beneath payroll data.</div>
         </div>
 
         <div class="summary-box">
@@ -152,7 +136,7 @@
           <div class="signal">🔴</div>
           <div class="score">-19</div>
           <div class="trend">↘ Weakening</div>
-          <div class="desc">Consumer demand is deteriorating as spending and credit conditions point to a broader slowdown in activity.</div>
+          <div class="desc">Consumer demand is slowing as credit tightens and spending momentum fades.</div>
         </div>
 
         <div class="summary-box">
@@ -160,7 +144,7 @@
           <div class="signal">🔴</div>
           <div class="score">-23</div>
           <div class="trend">↘ Weakening</div>
-          <div class="desc">Housing conditions remain under pressure, reflecting affordability strain and softer market momentum.</div>
+          <div class="desc">Housing continues to weaken under affordability pressure and slowing activity.</div>
         </div>
 
         <div class="summary-box">
@@ -168,7 +152,7 @@
           <div class="signal">🟡</div>
           <div class="score">8.5</div>
           <div class="trend">↗ Improving</div>
-          <div class="desc">Manufacturing activity is improving, supported by stronger orders, firmer production, and recovering demand.</div>
+          <div class="desc">Manufacturing is improving with stronger demand and production trends.</div>
         </div>
 
         <div class="summary-box">
@@ -176,7 +160,7 @@
           <div class="signal">☠️</div>
           <div class="score">-72</div>
           <div class="trend">↗ Rising Pressure</div>
-          <div class="desc">Inflation pressures are accelerating with broad-based price increases signaling renewed tightening risk.</div>
+          <div class="desc">Inflation pressures are accelerating and remain the primary macro risk.</div>
         </div>
 
         <div class="summary-box">
@@ -184,7 +168,7 @@
           <div class="signal">🔴</div>
           <div class="score">-3</div>
           <div class="trend">↘ Tightening</div>
-          <div class="desc">Liquidity remains available, but surface calm masks tightening conditions and reduced market support.</div>
+          <div class="desc">Liquidity is tightening beneath the surface despite appearing stable.</div>
         </div>
 
         <div class="summary-box">
@@ -192,7 +176,7 @@
           <div class="signal">☠️</div>
           <div class="score">-3</div>
           <div class="trend">↘ Weakening</div>
-          <div class="desc">Trade appears stable at a glance, but deeper imbalances suggest softness in global demand conditions.</div>
+          <div class="desc">Global trade dynamics show signs of weakening demand and imbalance.</div>
         </div>
 
         <div class="summary-box">
@@ -200,42 +184,38 @@
           <div class="signal">☠️</div>
           <div class="score">-10</div>
           <div class="trend">↘ Contracting</div>
-          <div class="desc">Borrowing conditions are tightening, stress is increasing, and overall financial flexibility is narrowing.</div>
+          <div class="desc">Financial conditions are tightening as borrowing costs rise and liquidity fades.</div>
         </div>
+
       </div>
     </div>
 
-    <div class="section">
-      <h2>Live Dashboard</h2>
-      <iframe
-        class="sheet-frame"
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pubhtml?gid=1019546511&single=true&widget=false&headers=false"
-        allowfullscreen>
-      </iframe>
-    </div>
-
+    <!-- MACRO NARRATIVE -->
     <div class="section">
       <h2>Macro Narrative</h2>
       <div class="notes-grid">
+
         <div class="note-box">
           <h3>Today’s Read</h3>
-          <p>Inflation remains the loudest alarm bell, while labor and consumer data continue to show a softening backdrop. Manufacturing has improved, but the broader macro picture still leans fragile rather than durable.</p>
+          <p>Inflation remains dominant while labor and consumer data weaken beneath the surface. The macro environment is increasingly fragile.</p>
         </div>
 
         <div class="note-box">
           <h3>What Changed</h3>
-          <p>Pressure is building through inflation, housing weakness, and tighter financial conditions. Liquidity is not broken, but it is thinning beneath the surface, which matters if volatility begins to climb.</p>
+          <p>Inflation pressure increased, housing weakened further, and liquidity conditions tightened.</p>
         </div>
 
         <div class="note-box">
           <h3>What I’m Watching</h3>
-          <p>I’m watching yields, funding conditions, inflation persistence, labor follow-through, and whether gold continues to strengthen as broader macro stress builds.</p>
+          <p>Watching yields, inflation persistence, labor follow-through, and gold strength as a signal of deeper systemic stress.</p>
         </div>
+
       </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
-      Stagflation Monitor | Live Macro Dashboard
+      Stagflation Monitor | Live Macro Signals
     </div>
 
   </div>
