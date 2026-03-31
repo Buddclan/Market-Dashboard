@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Macro Dashboard</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -14,63 +16,77 @@
       font-family: Arial, sans-serif;
     }
 
-    .ticker-wrap {
+    .page {
       width: 100%;
-      min-height: 60px;
-      border-bottom: 1px solid #1f1f1f;
-      background: #000;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 18px;
     }
 
-    .section {
-      width: 100%;
-      padding: 14px;
-      border-bottom: 1px solid #151515;
-    }
-
-    .grid-2 {
+    .hero {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 16px;
+      margin-bottom: 16px;
     }
 
     .card {
       background: #0b0b0b;
       border: 1px solid #1d1d1d;
-      border-radius: 10px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
     }
 
     .title {
-      margin: 0 0 12px 0;
-      font-size: 22px;
+      margin: 0 0 14px 0;
+      font-size: 28px;
       font-weight: 700;
-      color: #f5f5f5;
+      color: #ffffff;
     }
 
-    .sub {
-      margin: 0 0 10px 0;
-      font-size: 17px;
+    .sub-title {
+      margin: 0 0 12px 0;
+      font-size: 20px;
       font-weight: 700;
       color: #f0c040;
     }
 
-    .metric {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #1a1a1a;
-      font-size: 18px;
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .metric:last-child {
-      border-bottom: none;
+    .summary-box {
+      background: #111;
+      border: 1px solid #1f1f1f;
+      border-radius: 12px;
+      padding: 14px;
+      min-height: 92px;
+    }
+
+    .summary-label {
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
     }
 
     .narrative {
-      font-size: 17px;
-      line-height: 1.6;
-      color: #d9d9d9;
-      min-height: 180px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #d8d8d8;
+      min-height: 220px;
+    }
+
+    .section {
+      margin-bottom: 16px;
     }
 
     .yield-grid {
@@ -82,9 +98,9 @@
     .yield-list div {
       display: flex;
       justify-content: space-between;
-      padding: 7px 0;
+      padding: 10px 0;
       border-bottom: 1px solid #1a1a1a;
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .yield-list div:last-child {
@@ -92,57 +108,97 @@
     }
 
     .bond-read {
-      margin-top: 14px;
-      padding-top: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
       border-top: 1px solid #1a1a1a;
       color: #d0d0d0;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 17px;
+      line-height: 1.6;
     }
 
-    .sheet-wrap {
-      padding: 10px 0 0 0;
+    .sheet-shell {
+      background: #0b0b0b;
+      border: 1px solid #1d1d1d;
+      border-radius: 14px;
+      padding: 18px;
+      overflow: hidden;
     }
 
-    iframe {
+    .sheet-title {
+      margin: 0 0 14px 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sheet-viewport {
       width: 100%;
-      height: 950px;
+      height: 1150px;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid #1a1a1a;
+      background: #000;
+      position: relative;
+    }
+
+    .sheet-viewport iframe {
+      width: 125%;
+      height: 1250px;
       border: none;
+      transform: scale(0.8);
+      transform-origin: top left;
       background: #000;
     }
 
-    @media (max-width: 980px) {
-      .grid-2,
-      .yield-grid {
+    .note {
+      margin-top: 10px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .yield-grid,
+      .summary-grid {
         grid-template-columns: 1fr;
       }
 
-      iframe {
-        height: 820px;
+      .sheet-viewport {
+        height: 900px;
+      }
+
+      .sheet-viewport iframe {
+        width: 160%;
+        height: 1200px;
+        transform: scale(0.62);
       }
     }
   </style>
 </head>
 <body>
+  <div class="page">
 
-  <div class="ticker-wrap">
-    <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
-    <tv-ticker-tape
-      symbols="FOREXCOM:SPXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,COMEX:GOLD"
-      theme="dark">
-    </tv-ticker-tape>
-  </div>
-
-  <div class="section">
-    <div class="grid-2">
-
+    <div class="hero">
       <div class="card">
         <h2 class="title">Signal Summary</h2>
-
-        <div class="metric"><span>Stagflation Score</span><span>🟠 Building</span></div>
-        <div class="metric"><span>Recession Risk</span><span>🟡 Early Signals</span></div>
-        <div class="metric"><span>Liquidity Stress</span><span>🟠 Tightening</span></div>
-        <div class="metric"><span>Trade Stress</span><span>☠️ High Stress</span></div>
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">Stagflation Score</div>
+            <div class="summary-value">🟠 Building</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">Recession Risk</div>
+            <div class="summary-value">🟡 Early</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">Liquidity Stress</div>
+            <div class="summary-value">🟠 Tightening</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">Trade Stress</div>
+            <div class="summary-value">☠️ High</div>
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -151,18 +207,13 @@
           Mixed conditions persist, with no dominant macro trend and a fragile equilibrium across key sectors. Inflation pressure remains active while liquidity is tightening beneath the surface, suggesting rising stagflation risk without full recession confirmation.
         </div>
       </div>
-
     </div>
-  </div>
 
-  <div class="section">
-    <div class="card">
+    <div class="section card">
       <h2 class="title">Yield Monitor</h2>
-
       <div class="yield-grid">
-
         <div>
-          <div class="sub">Current Yields</div>
+          <div class="sub-title">Current Yields</div>
           <div class="yield-list">
             <div><span>10Y</span><span>4.32</span></div>
             <div><span>2Y</span><span>3.89</span></div>
@@ -172,7 +223,7 @@
         </div>
 
         <div>
-          <div class="sub">Key Spreads</div>
+          <div class="sub-title">Key Spreads</div>
           <div class="yield-list">
             <div><span>10Y - 2Y</span><span>🟡 0.43</span></div>
             <div><span>10Y - 3M</span><span>🟡 0.61</span></div>
@@ -180,23 +231,23 @@
             <div><span>10Y - 30Y</span><span>🟠 0.58</span></div>
           </div>
         </div>
-
       </div>
 
       <div class="bond-read">
         Long-end yields remain elevated while the curve stays positively sloped, suggesting the bond market is pricing persistent inflation and funding pressure rather than a clean recessionary unwind.
       </div>
     </div>
-  </div>
 
-  <div class="section">
-    <div class="card">
-      <h2 class="title">Core Dashboard</h2>
-      <div class="sheet-wrap">
-        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pubhtml?gid=1019546511&single=true&widget=true&headers=false"></iframe>
+    <div class="sheet-shell">
+      <h2 class="sheet-title">Core Dashboard</h2>
+      <div class="sheet-viewport">
+        <iframe
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pubhtml?gid=1019546511&single=true&widget=true&headers=false">
+        </iframe>
       </div>
+      <div class="note">Clean version first. Once this feels right, the live data and styling can be wired section by section.</div>
     </div>
-  </div>
 
+  </div>
 </body>
 </html>
