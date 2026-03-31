@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Macro Dashboard</title>
+  <title>Stagflation Monitor</title>
+
   <style>
     body {
       margin: 0;
@@ -12,39 +13,311 @@
       font-family: Arial, sans-serif;
     }
 
-    .ticker-wrap {
-      width: 100%;
-      min-height: 60px;
-      border-bottom: 1px solid #1f1f1f;
-      background: #000;
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-    .sheet-wrap {
-      padding: 10px;
+    .section {
+      background: #0f0f0f;
+      border: 1px solid #1f1f1f;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
-    iframe {
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+      font-size: 32px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #b8b8b8;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .summary-box {
+      background: #121212;
+      border: 1px solid #232323;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .signal {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .score {
+      font-size: 22px;
+      font-weight: bold;
+      color: #f0d74c;
+    }
+
+    .trend {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .desc {
+      font-size: 13px;
+      color: #a8a8a8;
+      line-height: 1.4;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .widget-box,
+    .narrative-box {
+      background: #121212;
+      border: 1px solid #232323;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 15px;
+    }
+
+    .note-box {
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .note-box p {
+      margin-bottom: 0;
+      color: #b0b0b0;
+      line-height: 1.5;
+    }
+
+    .tradingview-widget-container {
       width: 100%;
-      height: 1000px;
-      border: none;
-      background: #000;
+    }
+
+    .footer {
+      text-align: center;
+      color: #7f7f7f;
+      font-size: 13px;
+      padding: 10px 0 30px;
+    }
+
+    @media (max-width: 1100px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="ticker-wrap">
-    <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
-    <tv-ticker-tape
-      symbols="FOREXCOM:SPXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,COMEX:GOLD"
-      theme="dark">
-    </tv-ticker-tape>
-  </div>
+  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
+  <tv-ticker-tape
+    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:AAPL,NYSE:KO,NASDAQ:NVDA,NASDAQ:TSLA,NASDAQ:MSFT,NASDAQ:META,NASDAQ:AMZN,NASDAQ:GOOGL,NASDAQ:PLTR"
+    theme="dark">
+  </tv-ticker-tape>
 
-  <div class="sheet-wrap">
-    <iframe
-      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pubhtml?gid=1019546511&single=true&widget=true&headers=false">
-    </iframe>
+  <div class="container">
+
+    <div class="section hero">
+      <h1>📊 Stagflation Monitor</h1>
+      <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
+    </div>
+
+    <div class="section">
+      <h2>Signal Summary</h2>
+
+      <div class="summary-grid">
+        <div class="summary-box">
+          <h3>Labor</h3>
+          <div class="signal">🟠</div>
+          <div class="score">-4</div>
+          <div class="trend">↘ Softening</div>
+          <div class="desc">Early labor deterioration emerging.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Consumer</h3>
+          <div class="signal">🔴</div>
+          <div class="score">-19</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Spending and credit weakening.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Housing</h3>
+          <div class="signal">🔴</div>
+          <div class="score">-23</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Housing under pressure.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Manufacturing</h3>
+          <div class="signal">🟡</div>
+          <div class="score">8.5</div>
+          <div class="trend">↗ Improving</div>
+          <div class="desc">Manufacturing improving.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Inflation</h3>
+          <div class="signal">☠️</div>
+          <div class="score">-72</div>
+          <div class="trend">↗ Rising Pressure</div>
+          <div class="desc">Primary macro risk.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Liquidity</h3>
+          <div class="signal">🔴</div>
+          <div class="score">-3</div>
+          <div class="trend">↘ Tightening</div>
+          <div class="desc">Liquidity tightening.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Trade</h3>
+          <div class="signal">☠️</div>
+          <div class="score">-3</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Global demand weakening.</div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Financial Conditions</h3>
+          <div class="signal">☠️</div>
+          <div class="score">-10</div>
+          <div class="trend">↘ Contracting</div>
+          <div class="desc">Conditions tightening sharply.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="lower-grid">
+
+        <div class="widget-box">
+          <h2>Yield Monitor</h2>
+
+          <!-- TradingView Widget BEGIN -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright">
+              <a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank">
+                <span class="blue-text">Market summary</span>
+              </a>
+              <span class="trademark"> by TradingView</span>
+            </div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            {
+              "colorTheme": "dark",
+              "locale": "en",
+              "largeChartUrl": "",
+              "isTransparent": false,
+              "showSymbolLogo": true,
+              "backgroundColor": "#0F0F0F",
+              "support_host": "https://www.tradingview.com",
+              "width": "100%",
+              "height": 550,
+              "symbolsGroups": [
+                {
+                  "name": "Bonds",
+                  "symbols": [
+                    {
+                      "name": "TVC:US10Y",
+                      "displayName": "10Y"
+                    },
+                    {
+                      "name": "TVC:US02Y",
+                      "displayName": "2Y"
+                    },
+                    {
+                      "name": "TVC:US30Y",
+                      "displayName": "30Y"
+                    },
+                    {
+                      "name": "TVC:US20Y",
+                      "displayName": "20Y"
+                    },
+                    {
+                      "name": "TVC:US05Y",
+                      "displayName": "5Y"
+                    },
+                    {
+                      "name": "TVC:US03M",
+                      "displayName": "3M"
+                    }
+                  ]
+                }
+              ]
+            }
+            </script>
+          </div>
+          <!-- TradingView Widget END -->
+        </div>
+
+        <div class="narrative-box">
+          <h2>Macro Narrative</h2>
+
+          <div class="notes-grid">
+            <div class="note-box">
+              <h3>Today’s Read</h3>
+              <p>Inflation remains dominant while labor and consumer data weaken beneath the surface. The macro environment is increasingly fragile.</p>
+            </div>
+
+            <div class="note-box">
+              <h3>What Changed</h3>
+              <p>Inflation pressure increased, housing weakened further, and liquidity conditions tightened.</p>
+            </div>
+
+            <div class="note-box">
+              <h3>What I’m Watching</h3>
+              <p>Watching yields, inflation persistence, labor follow-through, and gold strength as a signal of deeper systemic stress.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      Stagflation Monitor | Live Macro Signals
+    </div>
+
   </div>
 
 </body>
