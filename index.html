@@ -102,6 +102,10 @@
       line-height: 1.4;
     }
 
+    .loading {
+      opacity: 0.65;
+    }
+
     .widget-section {
       margin-top: 22px;
       background: #101010;
@@ -158,6 +162,12 @@
     .widget-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .widget-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
@@ -237,6 +247,10 @@
       .summary-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .widget-grid-3 {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 900px) {
@@ -277,17 +291,17 @@
         <div class="notes-grid">
           <div class="note-box">
             <h3>Today’s Read</h3>
-            <p>Inflation remains dominant while labor and consumer data weaken beneath the surface. The macro environment is increasingly fragile.</p>
+            <p id="today_read" class="loading">Loading...</p>
           </div>
 
           <div class="note-box">
             <h3>What Changed</h3>
-            <p>Inflation pressure increased, housing weakened further, and liquidity conditions tightened.</p>
+            <p id="what_changed" class="loading">Loading...</p>
           </div>
 
           <div class="note-box">
             <h3>What I’m Watching</h3>
-            <p>Watching yields, inflation persistence, labor follow-through, and gold strength as a signal of deeper systemic stress.</p>
+            <p id="what_watching" class="loading">Loading...</p>
           </div>
         </div>
       </div>
@@ -299,66 +313,66 @@
       <div class="summary-grid">
         <div class="summary-box">
           <h3>Labor</h3>
-          <div class="signal">🟠</div>
-          <div class="score">-4</div>
-          <div class="trend">↘ Softening</div>
-          <div class="desc">Early labor deterioration emerging.</div>
+          <div class="signal loading" id="labor_signal">...</div>
+          <div class="score loading" id="labor_score">...</div>
+          <div class="trend loading" id="labor_trend">...</div>
+          <div class="desc loading" id="labor_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Consumer</h3>
-          <div class="signal">🔴</div>
-          <div class="score">-19</div>
-          <div class="trend">↘ Weakening</div>
-          <div class="desc">Spending and credit weakening.</div>
+          <div class="signal loading" id="consumer_signal">...</div>
+          <div class="score loading" id="consumer_score">...</div>
+          <div class="trend loading" id="consumer_trend">...</div>
+          <div class="desc loading" id="consumer_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Housing</h3>
-          <div class="signal">🔴</div>
-          <div class="score">-23</div>
-          <div class="trend">↘ Weakening</div>
-          <div class="desc">Housing under pressure.</div>
+          <div class="signal loading" id="housing_signal">...</div>
+          <div class="score loading" id="housing_score">...</div>
+          <div class="trend loading" id="housing_trend">...</div>
+          <div class="desc loading" id="housing_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Manufacturing</h3>
-          <div class="signal">🟡</div>
-          <div class="score">8.5</div>
-          <div class="trend">↗ Improving</div>
-          <div class="desc">Manufacturing improving.</div>
+          <div class="signal loading" id="manufacturing_signal">...</div>
+          <div class="score loading" id="manufacturing_score">...</div>
+          <div class="trend loading" id="manufacturing_trend">...</div>
+          <div class="desc loading" id="manufacturing_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Inflation</h3>
-          <div class="signal">☠️</div>
-          <div class="score">-72</div>
-          <div class="trend">↗ Rising Pressure</div>
-          <div class="desc">Primary macro risk.</div>
+          <div class="signal loading" id="inflation_signal">...</div>
+          <div class="score loading" id="inflation_score">...</div>
+          <div class="trend loading" id="inflation_trend">...</div>
+          <div class="desc loading" id="inflation_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Liquidity</h3>
-          <div class="signal">🔴</div>
-          <div class="score">-3</div>
-          <div class="trend">↘ Tightening</div>
-          <div class="desc">Liquidity tightening.</div>
+          <div class="signal loading" id="liquidity_signal">...</div>
+          <div class="score loading" id="liquidity_score">...</div>
+          <div class="trend loading" id="liquidity_trend">...</div>
+          <div class="desc loading" id="liquidity_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Trade</h3>
-          <div class="signal">☠️</div>
-          <div class="score">-3</div>
-          <div class="trend">↘ Weakening</div>
-          <div class="desc">Global demand weakening.</div>
+          <div class="signal loading" id="trade_signal">...</div>
+          <div class="score loading" id="trade_score">...</div>
+          <div class="trend loading" id="trade_trend">...</div>
+          <div class="desc loading" id="trade_desc">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Financial Conditions</h3>
-          <div class="signal">☠️</div>
-          <div class="score">-10</div>
-          <div class="trend">↘ Contracting</div>
-          <div class="desc">Conditions tightening sharply.</div>
+          <div class="signal loading" id="financial_signal">...</div>
+          <div class="score loading" id="financial_score">...</div>
+          <div class="trend loading" id="financial_trend">...</div>
+          <div class="desc loading" id="financial_desc">...</div>
         </div>
       </div>
     </div>
@@ -476,7 +490,7 @@
         <h3>Energy Pulse</h3>
         <p class="section-subtext">Live pricing for crude, Brent, and gasoline as inflation pressure gauges.</p>
 
-        <div class="widget-grid">
+        <div class="widget-grid-3">
           <div class="quote-card">
             <div class="quote-label">
               <span class="quote-dot dot-energy"></span>
@@ -554,6 +568,77 @@
     </div>
 
   </div>
+
+  <script>
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pub?gid=441516074&single=true&output=csv";
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            cell += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+          if (char === '\r' && next === '\n') i++;
+          row.push(cell);
+          if (row.some(value => value !== "")) rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
+
+      if (cell.length > 0 || row.length > 0) {
+        row.push(cell);
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    async function loadSheetData() {
+      try {
+        const response = await fetch(CSV_URL + "&t=" + Date.now(), { cache: "no-store" });
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        const data = {};
+        for (let i = 1; i < rows.length; i++) {
+          const key = (rows[i][0] || "").trim();
+          const value = (rows[i][1] || "").trim();
+          if (key) data[key] = value;
+        }
+
+        Object.keys(data).forEach(key => {
+          const el = document.getElementById(key);
+          if (el) {
+            el.textContent = data[key];
+            el.classList.remove("loading");
+          }
+        });
+      } catch (error) {
+        console.error("Failed to load sheet data:", error);
+      }
+    }
+
+    loadSheetData();
+    setInterval(loadSheetData, 60000);
+  </script>
 
 </body>
 </html>
