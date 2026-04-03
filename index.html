@@ -6,639 +6,479 @@
   <title>Stagflation Monitor</title>
 
   <style>
-    body {
-      margin: 0;
-      background: #050505;
-      color: #f5f5f5;
-      font-family: Arial, sans-serif;
+    :root {
+      --bg: #0b0b0f;
+      --panel: #121218;
+      --panel-2: #171720;
+      --border: #262633;
+      --text: #f3f4f6;
+      --muted: #a1a1aa;
+      --accent: #d4af37;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+      --radius: 16px;
     }
 
-    .container {
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.4;
+      padding: 24px;
+    }
+
+    .dashboard {
       max-width: 1500px;
       margin: 0 auto;
-      padding: 20px;
     }
 
-    .section {
-      background: #0f0f0f;
-      border: 1px solid #1f1f1f;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    h1, h2, h3 {
-      margin-top: 0;
+    .hero {
+      background: linear-gradient(180deg, #14141c 0%, #101017 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
     }
 
     .hero h1 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: .3px;
       margin-bottom: 8px;
-      font-size: 32px;
     }
 
     .hero p {
-      margin: 0;
-      color: #b8b8b8;
+      color: var(--muted);
+      font-size: 15px;
     }
 
-    .narrative-box {
-      background: #121212;
-      border: 1px solid #232323;
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 18px;
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
     }
 
-    .notes-grid {
-      display: grid;
-      gap: 15px;
-    }
-
-    .note-box {
-      background: #181818;
-      border: 1px solid #2a2a2a;
-      border-radius: 10px;
-      padding: 16px;
-    }
-
-    .note-box p {
-      margin-bottom: 0;
-      color: #b0b0b0;
-      line-height: 1.5;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
-
-    .summary-box {
-      background: #121212;
-      border: 1px solid #232323;
-      border-radius: 10px;
-      padding: 16px;
-    }
-
-    .signal {
-      font-size: 26px;
-      margin-bottom: 6px;
-    }
-
-    .score {
+    .section h2 {
       font-size: 22px;
-      font-weight: bold;
-      color: #f0d74c;
+      margin-bottom: 16px;
+      color: var(--text);
     }
 
-    .trend {
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    .desc {
+    .subnote {
+      color: var(--muted);
       font-size: 13px;
-      color: #a8a8a8;
-      line-height: 1.4;
+      margin-top: -6px;
+      margin-bottom: 16px;
     }
 
-    .loading {
-      opacity: 0.65;
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    .widget-section {
-      margin-top: 22px;
-      background: #101010;
-      border: 1px solid #232323;
+    .signal-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .widget-section::before,
-    .widget-section::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      opacity: 0.95;
-    }
-
-    .widget-section::before {
-      top: 0;
-    }
-
-    .widget-section::after {
-      bottom: 0;
-    }
-
-    .section-dollar::before,
-    .section-dollar::after {
-      background: linear-gradient(90deg, transparent, #7c4dff, transparent);
-    }
-
-    .section-metals::before,
-    .section-metals::after {
-      background: linear-gradient(90deg, transparent, #f0d74c, transparent);
-    }
-
-    .section-energy::before,
-    .section-energy::after {
-      background: linear-gradient(90deg, transparent, #d8b24a, transparent);
-    }
-
-    .widget-section h3 {
-      margin-bottom: 6px;
-    }
-
-    .section-subtext {
-      margin: 0 0 16px;
-      color: #9f9f9f;
-      font-size: 14px;
-    }
-
-    .widget-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .widget-grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .quote-card {
-      background: linear-gradient(180deg, #161616 0%, #111111 100%);
-      border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
-      min-height: 170px;
+      min-height: 120px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
     }
 
-    .quote-label {
+    .signal-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .signal-value {
+      font-size: 42px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .triple {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .mini-panel {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 180px;
+    }
+
+    .mini-panel h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .embed-shell {
+      width: 100%;
+      min-height: 110px;
+      border: 1px dashed #343445;
+      border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      color: var(--muted);
+      background: #0f0f15;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #242432;
+      gap: 14px;
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      color: var(--text);
       font-size: 15px;
       font-weight: 600;
-      margin-bottom: 12px;
-      color: #f2f2f2;
     }
 
-    .quote-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex: 0 0 10px;
+    .metric-value {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
-    .dot-dollar {
-      background: #7c4dff;
-      box-shadow: 0 0 10px rgba(124, 77, 255, 0.45);
+    .footer-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 12px;
     }
 
-    .dot-vix {
-      background: #9b6bff;
-      box-shadow: 0 0 10px rgba(155, 107, 255, 0.35);
-    }
-
-    .dot-gold {
-      background: #f0d74c;
-      box-shadow: 0 0 10px rgba(240, 215, 76, 0.45);
-    }
-
-    .dot-silver {
-      background: #b9c2cf;
-      box-shadow: 0 0 10px rgba(185, 194, 207, 0.35);
-    }
-
-    .dot-energy {
-      background: #d8b24a;
-      box-shadow: 0 0 10px rgba(216, 178, 74, 0.45);
-    }
-
-    .quote-card .tradingview-widget-container {
-      width: 100%;
-      min-height: 90px;
-    }
-
-    .quote-card .tradingview-widget-copyright {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #7f7f7f;
-    }
-
-    .footer {
-      text-align: center;
-      color: #7f7f7f;
-      font-size: 13px;
-      padding: 10px 0 30px;
-    }
-
-    @media (max-width: 1100px) {
-      .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 1200px) {
+      .signal-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-
-      .widget-grid-3 {
+      .triple {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 900px) {
-      .widget-grid {
+    @media (max-width: 800px) {
+      .two-col {
         grid-template-columns: 1fr;
       }
-    }
-
-    @media (max-width: 700px) {
-      .summary-grid {
-        grid-template-columns: 1fr;
+      body {
+        padding: 14px;
       }
-
       .hero h1 {
-        font-size: 26px;
+        font-size: 30px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .signal-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-
 <body>
+  <div class="dashboard">
 
-  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
-  <tv-ticker-tape
-    symbols="FOREXCOM:SPXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:AAPL,NYSE:KO,NASDAQ:NVDA,NASDAQ:TSLA,NASDAQ:MSFT,NASDAQ:META,NASDAQ:AMZN,NASDAQ:GOOGL,NASDAQ:PLTR"
-    theme="dark">
-  </tv-ticker-tape>
+    <!-- HEADER -->
+    <section class="hero">
+      <h1>Stagflation Monitor</h1>
+      <p>Real-time macro dashboard across labor, inflation, housing, liquidity, trade, financial conditions, and market stress.</p>
+    </section>
 
-  <div class="container">
-
-    <div class="section hero">
-      <h1>📊 Stagflation Monitor</h1>
-      <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
-
-      <div class="narrative-box">
-        <h2>Macro Narrative</h2>
-
-        <div class="notes-grid">
-          <div class="note-box">
-            <h3>Today’s Read</h3>
-            <p id="today_read" class="loading">Loading...</p>
-          </div>
-
-          <div class="note-box">
-            <h3>What Changed</h3>
-            <p id="what_changed" class="loading">Loading...</p>
-          </div>
-
-          <div class="note-box">
-            <h3>What I’m Watching</h3>
-            <p id="what_watching" class="loading">Loading...</p>
-          </div>
-        </div>
+    <!-- TICKER -->
+    <section class="section">
+      <h2>Ticker</h2>
+      <div class="subnote">Paste your TradingView ticker tape code inside this box.</div>
+      <div class="embed-shell">
+        <!-- PASTE YOUR TICKER WIDGET HERE -->
+        Ticker widget goes here
       </div>
-    </div>
+    </section>
 
-    <div class="section">
+    <!-- SIGNAL SUMMARY -->
+    <section class="section">
       <h2>Signal Summary</h2>
+      <div class="subnote">Signal only. No scores.</div>
 
-      <div class="summary-grid">
-        <div class="summary-box">
+      <div class="signal-grid">
+        <div class="signal-card">
           <h3>Labor</h3>
-          <div class="signal loading" id="labor_signal">...</div>
-          <div class="score loading" id="labor_score">...</div>
-          <div class="trend loading" id="labor_trend">...</div>
-          <div class="desc loading" id="labor_desc">...</div>
+          <div id="laborSignal" class="signal-value">🟢</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Consumer</h3>
-          <div class="signal loading" id="consumer_signal">...</div>
-          <div class="score loading" id="consumer_score">...</div>
-          <div class="trend loading" id="consumer_trend">...</div>
-          <div class="desc loading" id="consumer_desc">...</div>
+          <div id="consumerSignal" class="signal-value">🟡</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Housing</h3>
-          <div class="signal loading" id="housing_signal">...</div>
-          <div class="score loading" id="housing_score">...</div>
-          <div class="trend loading" id="housing_trend">...</div>
-          <div class="desc loading" id="housing_desc">...</div>
+          <div id="housingSignal" class="signal-value">🔴</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Manufacturing</h3>
-          <div class="signal loading" id="manufacturing_signal">...</div>
-          <div class="score loading" id="manufacturing_score">...</div>
-          <div class="trend loading" id="manufacturing_trend">...</div>
-          <div class="desc loading" id="manufacturing_desc">...</div>
+          <div id="manufacturingSignal" class="signal-value">🟠</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Inflation</h3>
-          <div class="signal loading" id="inflation_signal">...</div>
-          <div class="score loading" id="inflation_score">...</div>
-          <div class="trend loading" id="inflation_trend">...</div>
-          <div class="desc loading" id="inflation_desc">...</div>
+          <div id="inflationSignal" class="signal-value">🟠</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Liquidity</h3>
-          <div class="signal loading" id="liquidity_signal">...</div>
-          <div class="score loading" id="liquidity_score">...</div>
-          <div class="trend loading" id="liquidity_trend">...</div>
-          <div class="desc loading" id="liquidity_desc">...</div>
+          <div id="liquiditySignal" class="signal-value">🟡</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Trade</h3>
-          <div class="signal loading" id="trade_signal">...</div>
-          <div class="score loading" id="trade_score">...</div>
-          <div class="trend loading" id="trade_trend">...</div>
-          <div class="desc loading" id="trade_desc">...</div>
+          <div id="tradeSignal" class="signal-value">🔴</div>
         </div>
 
-        <div class="summary-box">
+        <div class="signal-card">
           <h3>Financial Conditions</h3>
-          <div class="signal loading" id="financial_signal">...</div>
-          <div class="score loading" id="financial_score">...</div>
-          <div class="trend loading" id="financial_trend">...</div>
-          <div class="desc loading" id="financial_desc">...</div>
+          <div id="financialConditionsSignal" class="signal-value">🟡</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="section">
+    <!-- MARKET SIGNALS -->
+    <section class="section">
       <h2>Market Signals</h2>
 
-      <div class="widget-section section-dollar">
-        <h3>Dollar & Volatility</h3>
-        <p class="section-subtext">Dollar strength and volatility as real-time pressure gauges for risk, liquidity, and macro stress.</p>
+      <div class="two-col">
+        <div class="mini-panel">
+          <h3>Dollar / VIX</h3>
 
-        <div class="widget-grid">
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-dollar"></span>
-              <span>Dollar Index</span>
-            </div>
-
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/CAPITALCOM-DXY/" rel="noopener nofollow" target="_blank"><span class="blue-text">DXY quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "CAPITALCOM:DXY",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Dollar (DXY)</div>
+            <div id="dxyValue" class="metric-value">100.36</div>
           </div>
 
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-vix"></span>
-              <span>VIX</span>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">VIX</div>
+            <div id="vixValue" class="metric-value">18.42</div>
+          </div>
 
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/PEPPERSTONE-VIX/" rel="noopener nofollow" target="_blank"><span class="blue-text">VIX quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "PEPPERSTONE:VIX",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="footer-note">Replace these values with your live inputs later.</div>
+        </div>
+
+        <div class="mini-panel">
+          <h3>Market Stress Panel</h3>
+
+          <div class="metric-row">
+            <div class="metric-label">10Y Yield</div>
+            <div id="tenYearValue" class="metric-value">4.16%</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">30Y Yield</div>
+            <div id="thirtyYearValue" class="metric-value">4.76%</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Gold Signal</div>
+            <div id="goldSignal" class="metric-value">🟡</div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="widget-section section-metals">
-        <h3>Precious Metals</h3>
-        <p class="section-subtext">Gold and silver as monetary stress gauges and confidence barometers.</p>
+    <!-- PRECIOUS METALS -->
+    <section class="section">
+      <h2>Precious Metals</h2>
 
-        <div class="widget-grid">
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-gold"></span>
-              <span>Gold</span>
-            </div>
+      <div class="triple">
+        <div class="mini-panel">
+          <h3>Gold</h3>
 
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/GOLD/?exchange=TVC" rel="noopener nofollow" target="_blank"><span class="blue-text">GOLD quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TVC:GOLD",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Price</div>
+            <div id="goldPrice" class="metric-value">$4,480</div>
           </div>
 
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-silver"></span>
-              <span>Silver</span>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Daily %</div>
+            <div id="goldDaily" class="metric-value">-0.8%</div>
+          </div>
 
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/SILVER/?exchange=TVC" rel="noopener nofollow" target="_blank"><span class="blue-text">SILVER quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TVC:SILVER",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Signal</div>
+            <div id="goldStatus" class="metric-value">🟡</div>
+          </div>
+        </div>
+
+        <div class="mini-panel">
+          <h3>Silver</h3>
+
+          <div class="metric-row">
+            <div class="metric-label">Price</div>
+            <div id="silverPrice" class="metric-value">$47.20</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Daily %</div>
+            <div id="silverDaily" class="metric-value">-1.1%</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Signal</div>
+            <div id="silverStatus" class="metric-value">🟠</div>
+          </div>
+        </div>
+
+        <div class="mini-panel">
+          <h3>COMEX / Physical Stress</h3>
+
+          <div class="metric-row">
+            <div class="metric-label">Registered Gold</div>
+            <div id="registeredGold" class="metric-value">...</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Eligible Gold</div>
+            <div id="eligibleGold" class="metric-value">...</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Stress Signal</div>
+            <div id="comexSignal" class="metric-value">🟠</div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="widget-section section-energy">
-        <h3>Energy Pulse</h3>
-        <p class="section-subtext">Live pricing for crude, Brent, and gasoline as inflation pressure gauges.</p>
+    <!-- ENERGY PULSE -->
+    <section class="section">
+      <h2>Energy Pulse</h2>
 
-        <div class="widget-grid-3">
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-energy"></span>
-              <span>Crude Oil</span>
-            </div>
+      <div class="triple">
+        <div class="mini-panel">
+          <h3>Crude Oil</h3>
 
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/USOIL/?exchange=TVC" rel="noopener nofollow" target="_blank"><span class="blue-text">USOIL quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TVC:USOIL",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Price</div>
+            <div id="crudePrice" class="metric-value">$99.70</div>
           </div>
 
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-energy"></span>
-              <span>Brent</span>
-            </div>
-
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/BRENT/?exchange=TICKMILL" rel="noopener nofollow" target="_blank"><span class="blue-text">BRENT quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TICKMILL:BRENT",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Daily %</div>
+            <div id="crudeDaily" class="metric-value">+2.4%</div>
           </div>
 
-          <div class="quote-card">
-            <div class="quote-label">
-              <span class="quote-dot dot-energy"></span>
-              <span>Gasoline Futures</span>
-            </div>
+          <div class="metric-row">
+            <div class="metric-label">Signal</div>
+            <div id="crudeSignal" class="metric-value">🔴</div>
+          </div>
+        </div>
 
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com/symbols/FX-GASOLINEF/" rel="noopener nofollow" target="_blank"><span class="blue-text">GASOLINEF quote</span></a><span class="trademark"> by TradingView</span>
-              </div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "FX:GASOLINEF",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
+        <div class="mini-panel">
+          <h3>Brent</h3>
+
+          <div class="metric-row">
+            <div class="metric-label">Price</div>
+            <div id="brentPrice" class="metric-value">$103.10</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Daily %</div>
+            <div id="brentDaily" class="metric-value">+2.1%</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Signal</div>
+            <div id="brentSignal" class="metric-value">🔴</div>
+          </div>
+        </div>
+
+        <div class="mini-panel">
+          <h3>Gasoline</h3>
+
+          <div class="metric-row">
+            <div class="metric-label">Price</div>
+            <div id="gasPrice" class="metric-value">$3.27</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Daily %</div>
+            <div id="gasDaily" class="metric-value">+1.9%</div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Signal</div>
+            <div id="gasSignal" class="metric-value">🔴</div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">
-      Stagflation Monitor | Live Macro Signals
-    </div>
+    <!-- EXTRA SECTION -->
+    <section class="section">
+      <h2>Additional Market Panel</h2>
+      <div class="subnote">Use this for bonds, auctions, liquidity, repo, RRP, or anything else you want to feature.</div>
+      <div class="embed-shell">
+        Add another widget, Google Sheet iframe, or custom panel here
+      </div>
+    </section>
 
   </div>
 
   <script>
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pub?gid=441516074&single=true&output=csv";
+    // Replace these with sheet-fed values later if you want.
+    // For now this keeps the page alive instead of blank.
 
-    function parseCSV(text) {
-      const rows = [];
-      let row = [];
-      let cell = "";
-      let inQuotes = false;
+    window.laborSignal = "🟢";
+    window.consumerSignal = "🟡";
+    window.housingSignal = "🔴";
+    window.manufacturingSignal = "🟠";
+    window.inflationSignal = "🟠";
+    window.liquiditySignal = "🟡";
+    window.tradeSignal = "🔴";
+    window.financialConditionsSignal = "🟡";
 
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const next = text[i + 1];
-
-        if (char === '"') {
-          if (inQuotes && next === '"') {
-            cell += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-        } else if (char === ',' && !inQuotes) {
-          row.push(cell);
-          cell = "";
-        } else if ((char === '\n' || char === '\r') && !inQuotes) {
-          if (char === '\r' && next === '\n') i++;
-          row.push(cell);
-          if (row.some(value => value !== "")) rows.push(row);
-          row = [];
-          cell = "";
-        } else {
-          cell += char;
-        }
-      }
-
-      if (cell.length > 0 || row.length > 0) {
-        row.push(cell);
-        rows.push(row);
-      }
-
-      return rows;
-    }
-
-    async function loadSheetData() {
-      try {
-        const response = await fetch(CSV_URL + "&t=" + Date.now(), { cache: "no-store" });
-        const text = await response.text();
-        const rows = parseCSV(text);
-
-        const data = {};
-        for (let i = 1; i < rows.length; i++) {
-          const key = (rows[i][0] || "").trim();
-          const value = (rows[i][1] || "").trim();
-          if (key) data[key] = value;
-        }
-
-        Object.keys(data).forEach(key => {
-          const el = document.getElementById(key);
-          if (el) {
-            el.textContent = data[key];
-            el.classList.remove("loading");
-          }
-        });
-      } catch (error) {
-        console.error("Failed to load sheet data:", error);
-      }
-    }
-
-    loadSheetData();
-    setInterval(loadSheetData, 60000);
+    document.getElementById("laborSignal").textContent = window.laborSignal;
+    document.getElementById("consumerSignal").textContent = window.consumerSignal;
+    document.getElementById("housingSignal").textContent = window.housingSignal;
+    document.getElementById("manufacturingSignal").textContent = window.manufacturingSignal;
+    document.getElementById("inflationSignal").textContent = window.inflationSignal;
+    document.getElementById("liquiditySignal").textContent = window.liquiditySignal;
+    document.getElementById("tradeSignal").textContent = window.tradeSignal;
+    document.getElementById("financialConditionsSignal").textContent = window.financialConditionsSignal;
   </script>
-
 </body>
 </html>
