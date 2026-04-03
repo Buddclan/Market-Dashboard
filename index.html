@@ -6,479 +6,319 @@
   <title>Stagflation Monitor</title>
 
   <style>
-    :root {
-      --bg: #0b0b0f;
-      --panel: #121218;
-      --panel-2: #171720;
-      --border: #262633;
-      --text: #f3f4f6;
-      --muted: #a1a1aa;
-      --accent: #d4af37;
-      --shadow: 0 10px 30px rgba(0,0,0,.28);
-      --radius: 16px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.4;
-      padding: 24px;
+      margin: 0;
+      background: #050505;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
     }
 
-    .dashboard {
+    .container {
       max-width: 1500px;
       margin: 0 auto;
-    }
-
-    .hero {
-      background: linear-gradient(180deg, #14141c 0%, #101017 100%);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero h1 {
-      font-size: 38px;
-      font-weight: 800;
-      letter-spacing: .3px;
-      margin-bottom: 8px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 15px;
+      padding: 20px;
     }
 
     .section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .section h2 {
-      font-size: 22px;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-
-    .subnote {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: -6px;
-      margin-bottom: 16px;
-    }
-
-    .signal-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .signal-card {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .signal-card h3 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 14px;
-    }
-
-    .signal-value {
-      font-size: 42px;
-      font-weight: 800;
-      text-align: center;
-      line-height: 1;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .triple {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .mini-panel {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      min-height: 180px;
-    }
-
-    .mini-panel h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-
-    .embed-shell {
-      width: 100%;
-      min-height: 110px;
-      border: 1px dashed #343445;
+      background: #0f0f0f;
+      border: 1px solid #1f1f1f;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      background: #0f0f15;
-      padding: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+      font-size: 32px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #b8b8b8;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .summary-box {
+      background: #121212;
+      border: 1px solid #232323;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .signal {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .score {
+      font-size: 22px;
+      font-weight: bold;
+      color: #f0d74c;
+    }
+
+    .trend {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .desc {
+      font-size: 13px;
+      color: #a8a8a8;
+      line-height: 1.4;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .widget-box,
+    .narrative-box {
+      background: #121212;
+      border: 1px solid #232323;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 15px;
+    }
+
+    .note-box {
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .note-box p {
+      margin-bottom: 0;
+      color: #b0b0b0;
+      line-height: 1.5;
+    }
+
+    .tradingview-widget-container {
+      width: 100%;
+    }
+
+    .footer {
       text-align: center;
+      color: #7f7f7f;
+      font-size: 13px;
+      padding: 10px 0 30px;
     }
 
-    .metric-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #242432;
-      gap: 14px;
-    }
-
-    .metric-row:last-child {
-      border-bottom: none;
-    }
-
-    .metric-label {
-      color: var(--text);
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .metric-value {
-      color: var(--accent);
-      font-size: 20px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .footer-note {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 1200px) {
-      .signal-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 1100px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .triple {
+
+      .lower-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 800px) {
-      .two-col {
+    @media (max-width: 700px) {
+      .summary-grid {
         grid-template-columns: 1fr;
       }
-      body {
-        padding: 14px;
-      }
+
       .hero h1 {
-        font-size: 30px;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .signal-grid {
-        grid-template-columns: 1fr;
+        font-size: 26px;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="dashboard">
 
-    <!-- HEADER -->
-    <section class="hero">
-      <h1>Stagflation Monitor</h1>
-      <p>Real-time macro dashboard across labor, inflation, housing, liquidity, trade, financial conditions, and market stress.</p>
-    </section>
+  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
+  <tv-ticker-tape
+    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:AAPL,NYSE:KO,NASDAQ:NVDA,NASDAQ:TSLA,NASDAQ:MSFT,NASDAQ:META,NASDAQ:AMZN,NASDAQ:GOOGL,NASDAQ:PLTR"
+    theme="dark">
+  </tv-ticker-tape>
 
-    <!-- TICKER -->
-    <section class="section">
-      <h2>Ticker</h2>
-      <div class="subnote">Paste your TradingView ticker tape code inside this box.</div>
-      <div class="embed-shell">
-        <!-- PASTE YOUR TICKER WIDGET HERE -->
-        Ticker widget goes here
-      </div>
-    </section>
+  <div class="container">
 
-    <!-- SIGNAL SUMMARY -->
-    <section class="section">
+    <div class="section hero">
+      <h1>📊 Stagflation Monitor</h1>
+      <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
+    </div>
+
+    <div class="section">
       <h2>Signal Summary</h2>
-      <div class="subnote">Signal only. No scores.</div>
 
-      <div class="signal-grid">
-        <div class="signal-card">
+      <div class="summary-grid">
+        <div class="summary-box">
           <h3>Labor</h3>
-          <div id="laborSignal" class="signal-value">🟢</div>
+          <div class="signal">🟠</div>
+          <div class="score">-4</div>
+          <div class="trend">↘ Softening</div>
+          <div class="desc">Early labor deterioration emerging.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Consumer</h3>
-          <div id="consumerSignal" class="signal-value">🟡</div>
+          <div class="signal">🔴</div>
+          <div class="score">-19</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Spending and credit weakening.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Housing</h3>
-          <div id="housingSignal" class="signal-value">🔴</div>
+          <div class="signal">🔴</div>
+          <div class="score">-23</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Housing under pressure.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Manufacturing</h3>
-          <div id="manufacturingSignal" class="signal-value">🟠</div>
+          <div class="signal">🟡</div>
+          <div class="score">8.5</div>
+          <div class="trend">↗ Improving</div>
+          <div class="desc">Manufacturing improving.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Inflation</h3>
-          <div id="inflationSignal" class="signal-value">🟠</div>
+          <div class="signal">☠️</div>
+          <div class="score">-72</div>
+          <div class="trend">↗ Rising Pressure</div>
+          <div class="desc">Primary macro risk.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Liquidity</h3>
-          <div id="liquiditySignal" class="signal-value">🟡</div>
+          <div class="signal">🔴</div>
+          <div class="score">-3</div>
+          <div class="trend">↘ Tightening</div>
+          <div class="desc">Liquidity tightening.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Trade</h3>
-          <div id="tradeSignal" class="signal-value">🔴</div>
+          <div class="signal">☠️</div>
+          <div class="score">-3</div>
+          <div class="trend">↘ Weakening</div>
+          <div class="desc">Global demand weakening.</div>
         </div>
 
-        <div class="signal-card">
+        <div class="summary-box">
           <h3>Financial Conditions</h3>
-          <div id="financialConditionsSignal" class="signal-value">🟡</div>
+          <div class="signal">☠️</div>
+          <div class="score">-10</div>
+          <div class="trend">↘ Contracting</div>
+          <div class="desc">Conditions tightening sharply.</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- MARKET SIGNALS -->
-    <section class="section">
-      <h2>Market Signals</h2>
+    <div class="section">
+      <div class="lower-grid">
 
-      <div class="two-col">
-        <div class="mini-panel">
-          <h3>Dollar / VIX</h3>
+        <div class="widget-box">
+          <h2>Yield Monitor</h2>
 
-          <div class="metric-row">
-            <div class="metric-label">Dollar (DXY)</div>
-            <div id="dxyValue" class="metric-value">100.36</div>
+          <!-- TradingView Widget BEGIN -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright">
+              <a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank">
+                <span class="blue-text">Market summary</span>
+              </a>
+              <span class="trademark"> by TradingView</span>
+            </div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+            {
+              "colorTheme": "dark",
+              "locale": "en",
+              "largeChartUrl": "",
+              "isTransparent": false,
+              "showSymbolLogo": true,
+              "backgroundColor": "#0F0F0F",
+              "support_host": "https://www.tradingview.com",
+              "width": "100%",
+              "height": 550,
+              "symbolsGroups": [
+                {
+                  "name": "Bonds",
+                  "symbols": [
+                    {
+                      "name": "TVC:US10Y",
+                      "displayName": "10Y"
+                    },
+                    {
+                      "name": "TVC:US02Y",
+                      "displayName": "2Y"
+                    },
+                    {
+                      "name": "TVC:US30Y",
+                      "displayName": "30Y"
+                    },
+                    {
+                      "name": "TVC:US20Y",
+                      "displayName": "20Y"
+                    },
+                    {
+                      "name": "TVC:US05Y",
+                      "displayName": "5Y"
+                    },
+                    {
+                      "name": "TVC:US03M",
+                      "displayName": "3M"
+                    }
+                  ]
+                }
+              ]
+            }
+            </script>
           </div>
-
-          <div class="metric-row">
-            <div class="metric-label">VIX</div>
-            <div id="vixValue" class="metric-value">18.42</div>
-          </div>
-
-          <div class="footer-note">Replace these values with your live inputs later.</div>
+          <!-- TradingView Widget END -->
         </div>
 
-        <div class="mini-panel">
-          <h3>Market Stress Panel</h3>
+        <div class="narrative-box">
+          <h2>Macro Narrative</h2>
 
-          <div class="metric-row">
-            <div class="metric-label">10Y Yield</div>
-            <div id="tenYearValue" class="metric-value">4.16%</div>
-          </div>
+          <div class="notes-grid">
+            <div class="note-box">
+              <h3>Today’s Read</h3>
+              <p>Inflation remains dominant while labor and consumer data weaken beneath the surface. The macro environment is increasingly fragile.</p>
+            </div>
 
-          <div class="metric-row">
-            <div class="metric-label">30Y Yield</div>
-            <div id="thirtyYearValue" class="metric-value">4.76%</div>
-          </div>
+            <div class="note-box">
+              <h3>What Changed</h3>
+              <p>Inflation pressure increased, housing weakened further, and liquidity conditions tightened.</p>
+            </div>
 
-          <div class="metric-row">
-            <div class="metric-label">Gold Signal</div>
-            <div id="goldSignal" class="metric-value">🟡</div>
+            <div class="note-box">
+              <h3>What I’m Watching</h3>
+              <p>Watching yields, inflation persistence, labor follow-through, and gold strength as a signal of deeper systemic stress.</p>
+            </div>
           </div>
         </div>
+
       </div>
-    </section>
+    </div>
 
-    <!-- PRECIOUS METALS -->
-    <section class="section">
-      <h2>Precious Metals</h2>
-
-      <div class="triple">
-        <div class="mini-panel">
-          <h3>Gold</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Price</div>
-            <div id="goldPrice" class="metric-value">$4,480</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Daily %</div>
-            <div id="goldDaily" class="metric-value">-0.8%</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Signal</div>
-            <div id="goldStatus" class="metric-value">🟡</div>
-          </div>
-        </div>
-
-        <div class="mini-panel">
-          <h3>Silver</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Price</div>
-            <div id="silverPrice" class="metric-value">$47.20</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Daily %</div>
-            <div id="silverDaily" class="metric-value">-1.1%</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Signal</div>
-            <div id="silverStatus" class="metric-value">🟠</div>
-          </div>
-        </div>
-
-        <div class="mini-panel">
-          <h3>COMEX / Physical Stress</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Registered Gold</div>
-            <div id="registeredGold" class="metric-value">...</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Eligible Gold</div>
-            <div id="eligibleGold" class="metric-value">...</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Stress Signal</div>
-            <div id="comexSignal" class="metric-value">🟠</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ENERGY PULSE -->
-    <section class="section">
-      <h2>Energy Pulse</h2>
-
-      <div class="triple">
-        <div class="mini-panel">
-          <h3>Crude Oil</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Price</div>
-            <div id="crudePrice" class="metric-value">$99.70</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Daily %</div>
-            <div id="crudeDaily" class="metric-value">+2.4%</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Signal</div>
-            <div id="crudeSignal" class="metric-value">🔴</div>
-          </div>
-        </div>
-
-        <div class="mini-panel">
-          <h3>Brent</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Price</div>
-            <div id="brentPrice" class="metric-value">$103.10</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Daily %</div>
-            <div id="brentDaily" class="metric-value">+2.1%</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Signal</div>
-            <div id="brentSignal" class="metric-value">🔴</div>
-          </div>
-        </div>
-
-        <div class="mini-panel">
-          <h3>Gasoline</h3>
-
-          <div class="metric-row">
-            <div class="metric-label">Price</div>
-            <div id="gasPrice" class="metric-value">$3.27</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Daily %</div>
-            <div id="gasDaily" class="metric-value">+1.9%</div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Signal</div>
-            <div id="gasSignal" class="metric-value">🔴</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXTRA SECTION -->
-    <section class="section">
-      <h2>Additional Market Panel</h2>
-      <div class="subnote">Use this for bonds, auctions, liquidity, repo, RRP, or anything else you want to feature.</div>
-      <div class="embed-shell">
-        Add another widget, Google Sheet iframe, or custom panel here
-      </div>
-    </section>
+    <div class="footer">
+      Stagflation Monitor | Live Macro Signals
+    </div>
 
   </div>
 
-  <script>
-    // Replace these with sheet-fed values later if you want.
-    // For now this keeps the page alive instead of blank.
-
-    window.laborSignal = "🟢";
-    window.consumerSignal = "🟡";
-    window.housingSignal = "🔴";
-    window.manufacturingSignal = "🟠";
-    window.inflationSignal = "🟠";
-    window.liquiditySignal = "🟡";
-    window.tradeSignal = "🔴";
-    window.financialConditionsSignal = "🟡";
-
-    document.getElementById("laborSignal").textContent = window.laborSignal;
-    document.getElementById("consumerSignal").textContent = window.consumerSignal;
-    document.getElementById("housingSignal").textContent = window.housingSignal;
-    document.getElementById("manufacturingSignal").textContent = window.manufacturingSignal;
-    document.getElementById("inflationSignal").textContent = window.inflationSignal;
-    document.getElementById("liquiditySignal").textContent = window.liquiditySignal;
-    document.getElementById("tradeSignal").textContent = window.tradeSignal;
-    document.getElementById("financialConditionsSignal").textContent = window.financialConditionsSignal;
-  </script>
 </body>
 </html>
