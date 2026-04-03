@@ -52,25 +52,22 @@
       border: 1px solid #232323;
       border-radius: 10px;
       padding: 16px;
-      min-height: 100px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
     .signal {
-      font-size: 34px;
+      font-size: 40px;
       line-height: 1;
-      margin-top: 10px;
+      margin-top: 12px;
+      text-align: center;
     }
 
     .widget-grid-2 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      align-items: start;
-    }
-
-    .widget-grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 560px 1fr;
       gap: 20px;
       align-items: start;
     }
@@ -80,17 +77,6 @@
       border: 1px solid #232323;
       border-radius: 10px;
       padding: 16px;
-      min-height: 220px;
-    }
-
-    .widget-box p.helper {
-      color: #9e9e9e;
-      font-size: 13px;
-      margin: 8px 0 0;
-    }
-
-    .tradingview-widget-container {
-      width: 100%;
     }
 
     .placeholder {
@@ -107,6 +93,10 @@
       background: #101010;
     }
 
+    .tradingview-widget-container {
+      width: 100%;
+    }
+
     .footer {
       text-align: center;
       color: #7f7f7f;
@@ -119,8 +109,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .widget-grid-2,
-      .widget-grid-3 {
+      .widget-grid-2 {
         grid-template-columns: 1fr;
       }
     }
@@ -139,6 +128,7 @@
 
 <body>
 
+  <!-- TOP TICKER -->
   <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
   <tv-ticker-tape
     symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:AAPL,NYSE:KO,NASDAQ:NVDA,NASDAQ:TSLA,NASDAQ:MSFT,NASDAQ:META,NASDAQ:AMZN,NASDAQ:GOOGL,NASDAQ:PLTR"
@@ -147,64 +137,67 @@
 
   <div class="container">
 
+    <!-- HERO -->
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
       <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
     </div>
 
+    <!-- LIVE SIGNAL SUMMARY -->
     <div class="section">
       <h2>Signal Summary</h2>
 
       <div class="summary-grid">
         <div class="summary-box">
           <h3>Labor</h3>
-          <div class="signal">🟠</div>
+          <div class="signal" id="sig-labor">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Consumer</h3>
-          <div class="signal">🔴</div>
+          <div class="signal" id="sig-consumer">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Housing</h3>
-          <div class="signal">🔴</div>
+          <div class="signal" id="sig-housing">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Manufacturing</h3>
-          <div class="signal">🟡</div>
+          <div class="signal" id="sig-manufacturing">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Inflation</h3>
-          <div class="signal">☠️</div>
+          <div class="signal" id="sig-inflation">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Liquidity</h3>
-          <div class="signal">🔴</div>
+          <div class="signal" id="sig-liquidity">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Trade</h3>
-          <div class="signal">☠️</div>
+          <div class="signal" id="sig-trade">...</div>
         </div>
 
         <div class="summary-box">
           <h3>Financial Conditions</h3>
-          <div class="signal">☠️</div>
+          <div class="signal" id="sig-financial">...</div>
         </div>
       </div>
     </div>
 
+    <!-- LOWER SECTION -->
     <div class="section">
       <div class="widget-grid-2">
 
+        <!-- KEEPING YOUR LIVE YIELD MONITOR -->
         <div class="widget-box">
           <h2>Yield Monitor</h2>
 
-          <!-- TradingView Widget BEGIN -->
           <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <div class="tradingview-widget-copyright">
@@ -258,61 +251,13 @@
             }
             </script>
           </div>
-          <!-- TradingView Widget END -->
         </div>
 
+        <!-- REPLACES MACRO NARRATIVE -->
         <div class="widget-box">
           <h2>Market Signals</h2>
           <div class="placeholder">
-            Paste your existing Market Signals widget or WEBData embed here.
-          </div>
-          <p class="helper">This replaces the old Macro Narrative panel.</p>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="widget-grid-2">
-
-        <div class="widget-box">
-          <h2>Dollar / VIX</h2>
-          <div class="placeholder">
-            Paste your live Dollar / VIX widget or WEBData block here.
-          </div>
-        </div>
-
-        <div class="widget-box">
-          <h2>Precious Metals</h2>
-          <div class="placeholder">
-            Paste your live Gold / Silver / metals widget or WEBData block here.
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="widget-grid-3">
-
-        <div class="widget-box">
-          <h2>Energy Pulse</h2>
-          <div class="placeholder">
-            Paste your live Energy Pulse widget or WEBData block here.
-          </div>
-        </div>
-
-        <div class="widget-box">
-          <h2>Liquidity</h2>
-          <div class="placeholder">
-            Optional section for RRP, Fed balance sheet, net liquidity, or repo.
-          </div>
-        </div>
-
-        <div class="widget-box">
-          <h2>Precious Metals Stress</h2>
-          <div class="placeholder">
-            Optional section for COMEX registered, eligible, EFP, or physical stress.
+            Paste your live Market Signals / WEBData widget here next.
           </div>
         </div>
 
@@ -324,6 +269,51 @@
     </div>
 
   </div>
+
+  <!-- LIVE SIGNAL SUMMARY SCRIPT -->
+  <script>
+    const SHEET_ID = "YOUR_SHEET_ID";
+    const WEBDATA_GID = "YOUR_WEBDATA_GID";
+
+    const signalMap = {
+      "Labor": "sig-labor",
+      "Consumer": "sig-consumer",
+      "Housing": "sig-housing",
+      "Manufacturing": "sig-manufacturing",
+      "Inflation": "sig-inflation",
+      "Liquidity": "sig-liquidity",
+      "Trade": "sig-trade",
+      "Financial Conditions": "sig-financial"
+    };
+
+    async function loadSignalSummary() {
+      const query = encodeURIComponent("select A, B where A is not null");
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${WEBDATA_GID}&tqx=out:json&tq=${query}`;
+
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = json.table.rows || [];
+
+        rows.forEach(row => {
+          const category = row.c[0] ? String(row.c[0].v).trim() : "";
+          const signal = row.c[1] ? String(row.c[1].v).trim() : "...";
+
+          const targetId = signalMap[category];
+          if (targetId) {
+            const el = document.getElementById(targetId);
+            if (el) el.textContent = signal;
+          }
+        });
+      } catch (error) {
+        console.error("Signal Summary load failed:", error);
+      }
+    }
+
+    loadSignalSummary();
+  </script>
 
 </body>
 </html>
