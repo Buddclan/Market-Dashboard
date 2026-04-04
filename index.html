@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stagflation Monitor</title>
 
   <style>
@@ -27,20 +27,6 @@
       margin-bottom: 20px;
     }
 
-    h1, h2, h3 {
-      margin-top: 0;
-    }
-
-    .hero h1 {
-      margin-bottom: 8px;
-      font-size: 32px;
-    }
-
-    .hero p {
-      margin: 0;
-      color: #b8b8b8;
-    }
-
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -52,24 +38,18 @@
       border: 1px solid #232323;
       border-radius: 10px;
       padding: 16px;
-      min-height: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
     }
 
     .signal {
       font-size: 42px;
-      line-height: 1;
-      margin-top: 12px;
       text-align: center;
+      margin-top: 10px;
     }
 
-    .widget-grid-2 {
+    .widget-grid {
       display: grid;
       grid-template-columns: 560px 1fr;
       gap: 20px;
-      align-items: start;
     }
 
     .widget-box {
@@ -79,226 +59,112 @@
       padding: 16px;
     }
 
-    .placeholder {
-      min-height: 180px;
-      border: 1px dashed #2f2f2f;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #7f7f7f;
-      font-size: 14px;
-      text-align: center;
-      padding: 20px;
-      background: #101010;
-    }
-
-    .tradingview-widget-container {
-      width: 100%;
-    }
-
     .footer {
       text-align: center;
       color: #7f7f7f;
-      font-size: 13px;
-      padding: 10px 0 30px;
-    }
-
-    @media (max-width: 1100px) {
-      .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .widget-grid-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 26px;
-      }
+      padding: 20px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP TICKER -->
-  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
-  <tv-ticker-tape
-    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:AAPL,NYSE:KO,NASDAQ:NVDA,NASDAQ:TSLA,NASDAQ:MSFT,NASDAQ:META,NASDAQ:AMZN,NASDAQ:GOOGL,NASDAQ:PLTR"
-    theme="dark">
-  </tv-ticker-tape>
+<!-- TOP TICKER -->
+<script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
+<tv-ticker-tape
+  symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,NASDAQ:TSLA,NASDAQ:NVDA,NASDAQ:MSFT"
+  theme="dark">
+</tv-ticker-tape>
 
-  <div class="container">
+<div class="container">
 
-    <!-- HERO -->
-    <div class="section hero">
-      <h1>📊 Stagflation Monitor</h1>
-      <p>Real-time macro signals across labor, inflation, housing, liquidity, and financial conditions.</p>
+  <div class="section">
+    <h1>📊 Stagflation Monitor</h1>
+  </div>
+
+  <!-- LIVE SIGNAL SUMMARY -->
+  <div class="section">
+    <h2>Signal Summary</h2>
+
+    <div class="summary-grid">
+      <div class="summary-box"><h3>Labor</h3><div id="sig-labor" class="signal">...</div></div>
+      <div class="summary-box"><h3>Consumer</h3><div id="sig-consumer" class="signal">...</div></div>
+      <div class="summary-box"><h3>Housing</h3><div id="sig-housing" class="signal">...</div></div>
+      <div class="summary-box"><h3>Manufacturing</h3><div id="sig-manufacturing" class="signal">...</div></div>
+      <div class="summary-box"><h3>Inflation</h3><div id="sig-inflation" class="signal">...</div></div>
+      <div class="summary-box"><h3>Liquidity</h3><div id="sig-liquidity" class="signal">...</div></div>
+      <div class="summary-box"><h3>Trade</h3><div id="sig-trade" class="signal">...</div></div>
+      <div class="summary-box"><h3>Financial</h3><div id="sig-financial" class="signal">...</div></div>
     </div>
+  </div>
 
-    <!-- LIVE SIGNAL SUMMARY -->
-    <div class="section">
-      <h2>Signal Summary</h2>
+  <!-- YIELDS -->
+  <div class="section widget-grid">
 
-      <div class="summary-grid">
-        <div class="summary-box">
-          <h3>Labor</h3>
-          <div class="signal" id="sig-labor">...</div>
-        </div>
+    <div class="widget-box">
+      <h2>Yield Monitor</h2>
 
-        <div class="summary-box">
-          <h3>Consumer</h3>
-          <div class="signal" id="sig-consumer">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Housing</h3>
-          <div class="signal" id="sig-housing">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Manufacturing</h3>
-          <div class="signal" id="sig-manufacturing">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Inflation</h3>
-          <div class="signal" id="sig-inflation">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Liquidity</h3>
-          <div class="signal" id="sig-liquidity">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Trade</h3>
-          <div class="signal" id="sig-trade">...</div>
-        </div>
-
-        <div class="summary-box">
-          <h3>Financial Conditions</h3>
-          <div class="signal" id="sig-financial">...</div>
-        </div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+        {
+          "colorTheme": "dark",
+          "symbolsGroups": [{
+            "name": "Bonds",
+            "symbols": [
+              {"name":"TVC:US10Y"},
+              {"name":"TVC:US02Y"},
+              {"name":"TVC:US30Y"}
+            ]
+          }]
+        }
+        </script>
       </div>
     </div>
 
-    <!-- LOWER SECTION -->
-    <div class="section">
-      <div class="widget-grid-2">
-
-        <!-- YIELD MONITOR -->
-        <div class="widget-box">
-          <h2>Yield Monitor</h2>
-
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <div class="tradingview-widget-copyright">
-              <a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank">
-                <span class="blue-text">Market summary</span>
-              </a>
-              <span class="trademark"> by TradingView</span>
-            </div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-            {
-              "colorTheme": "dark",
-              "locale": "en",
-              "largeChartUrl": "",
-              "isTransparent": false,
-              "showSymbolLogo": true,
-              "backgroundColor": "#0F0F0F",
-              "support_host": "https://www.tradingview.com",
-              "width": "100%",
-              "height": 550,
-              "symbolsGroups": [
-                {
-                  "name": "Bonds",
-                  "symbols": [
-                    { "name": "TVC:US10Y", "displayName": "10Y" },
-                    { "name": "TVC:US02Y", "displayName": "2Y" },
-                    { "name": "TVC:US30Y", "displayName": "30Y" },
-                    { "name": "TVC:US20Y", "displayName": "20Y" },
-                    { "name": "TVC:US05Y", "displayName": "5Y" },
-                    { "name": "TVC:US03M", "displayName": "3M" }
-                  ]
-                }
-              ]
-            }
-            </script>
-          </div>
-        </div>
-
-        <!-- MARKET SIGNALS -->
-        <div class="widget-box">
-          <h2>Market Signals</h2>
-          <div class="placeholder">
-            Paste your live Market Signals / WEBDATA widget here.
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="footer">
-      Stagflation Monitor | Live Macro Signals
+    <div class="widget-box">
+      <h2>Market Signals</h2>
+      <p style="color:#888;">(Next step – plug your WEBData widgets here)</p>
     </div>
 
   </div>
 
-  <!-- LIVE SIGNAL SUMMARY SCRIPT -->
-  <script>
-    const SHEET_ID = "YOUR_SHEET_ID";
-    const WEBDATA_GID = "YOUR_WEBDATA_GID";
+</div>
 
-    const signalMap = {
-      "labor_signal": "sig-labor",
-      "consumer_signal": "sig-consumer",
-      "housing_signal": "sig-housing",
-      "manufacturing_signal": "sig-manufacturing",
-      "inflation_signal": "sig-inflation",
-      "liquidity_signal": "sig-liquidity",
-      "trade_signal": "sig-trade",
-      "financial_signal": "sig-financial"
-    };
+<!-- LIVE DATA SCRIPT -->
+<script>
+const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
+const GID = "441516074";
 
-    async function loadSignalSummary() {
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${WEBDATA_GID}&tqx=out:json`;
+const map = {
+  "labor_signal": "sig-labor",
+  "consumer_signal": "sig-consumer",
+  "housing_signal": "sig-housing",
+  "manufacturing_signal": "sig-manufacturing",
+  "inflation_signal": "sig-inflation",
+  "liquidity_signal": "sig-liquidity",
+  "trade_signal": "sig-trade",
+  "financial_signal": "sig-financial"
+};
 
-      try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const json = JSON.parse(text.substring(47).slice(0, -2));
-        const rows = json.table.rows || [];
+fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tqx=out:json`)
+.then(res => res.text())
+.then(data => {
+  const json = JSON.parse(data.substring(47).slice(0,-2));
+  const rows = json.table.rows;
 
-        rows.forEach(row => {
-          const key = row.c[0] && row.c[0].v != null
-            ? String(row.c[0].v).trim().toLowerCase()
-            : "";
+  rows.forEach(r => {
+    const key = r.c[0]?.v?.toLowerCase().trim();
+    const val = r.c[1]?.v;
 
-          const signal = row.c[1] && row.c[1].v != null
-            ? String(row.c[1].v).trim()
-            : "";
-
-          const targetId = signalMap[key];
-          if (targetId && signal) {
-            const el = document.getElementById(targetId);
-            if (el) el.textContent = signal;
-          }
-        });
-      } catch (error) {
-        console.error("Signal Summary load failed:", error);
-      }
+    if(map[key]) {
+      document.getElementById(map[key]).innerHTML = val;
     }
-
-    loadSignalSummary();
-  </script>
+  });
+})
+.catch(err => console.error(err));
+</script>
 
 </body>
 </html>
+
