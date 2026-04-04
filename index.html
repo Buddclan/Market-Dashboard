@@ -88,6 +88,151 @@
       box-shadow: 0 0 10px rgba(255,120,0,0.24);
     }
 
+    .divider-line.alert {
+      background: linear-gradient(90deg, rgba(255,60,60,0.05) 0%, rgba(255,140,0,0.95) 50%, rgba(255,60,60,0.05) 100%);
+      box-shadow: 0 0 10px rgba(255,100,50,0.24);
+    }
+
+    .gauge-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .gauge-score-box {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 14px;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .gauge-score-label {
+      color: #9f9f9f;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .gauge-score-value {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .gauge-score-signal {
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .gauge-score-text {
+      color: #d7d7d7;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .gauge-bars-box {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .equalizer-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    .eq-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eq-meter {
+      width: 100%;
+      max-width: 85px;
+      height: 210px;
+      background: #050505;
+      border: 1px solid #171717;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .eq-meter::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to top,
+        transparent 0,
+        transparent 20px,
+        rgba(255,255,255,0.035) 21px
+      );
+      pointer-events: none;
+    }
+
+    .eq-fill {
+      width: 100%;
+      height: 0%;
+      border-radius: 0 0 13px 13px;
+      transition: height 0.9s ease, box-shadow 0.4s ease, background 0.4s ease;
+      background: linear-gradient(to top, #1aff66 0%, #7dffae 100%);
+      box-shadow: 0 0 14px rgba(26,255,102,0.12);
+    }
+
+    .eq-fill.yellow {
+      background: linear-gradient(to top, #ffd400 0%, #fff08a 100%);
+      box-shadow: 0 0 14px rgba(255,212,0,0.14);
+    }
+
+    .eq-fill.orange {
+      background: linear-gradient(to top, #ff8a00 0%, #ffbc66 100%);
+      box-shadow: 0 0 16px rgba(255,138,0,0.16);
+    }
+
+    .eq-fill.red {
+      background: linear-gradient(to top, #ff3232 0%, #ff7a7a 100%);
+      box-shadow: 0 0 18px rgba(255,50,50,0.18);
+    }
+
+    .eq-fill.skull {
+      background: linear-gradient(to top, #d9d9d9 0%, #ffffff 100%);
+      box-shadow: 0 0 18px rgba(255,255,255,0.16);
+    }
+
+    .eq-value {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .eq-label {
+      color: #b8b8b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.2;
+    }
+
     .signal-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -105,13 +250,6 @@
       align-items: center;
       padding: 12px 10px;
       text-align: center;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .signal-card:hover {
-      transform: translateY(-1px);
-      border-color: #242424;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset;
     }
 
     .signal-name {
@@ -134,30 +272,11 @@
       text-transform: uppercase;
     }
 
-    .signal-card.green {
-      border-color: rgba(0, 255, 120, 0.22);
-      box-shadow: 0 0 12px rgba(0, 255, 120, 0.06);
-    }
-
-    .signal-card.yellow {
-      border-color: rgba(255, 220, 0, 0.24);
-      box-shadow: 0 0 12px rgba(255, 220, 0, 0.06);
-    }
-
-    .signal-card.orange {
-      border-color: rgba(255, 145, 0, 0.24);
-      box-shadow: 0 0 12px rgba(255, 145, 0, 0.07);
-    }
-
-    .signal-card.red {
-      border-color: rgba(255, 60, 60, 0.24);
-      box-shadow: 0 0 12px rgba(255, 60, 60, 0.07);
-    }
-
-    .signal-card.skull {
-      border-color: rgba(220, 220, 220, 0.18);
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
-    }
+    .signal-card.green { border-color: rgba(0,255,120,0.22); box-shadow: 0 0 12px rgba(0,255,120,0.06); }
+    .signal-card.yellow { border-color: rgba(255,220,0,0.24); box-shadow: 0 0 12px rgba(255,220,0,0.06); }
+    .signal-card.orange { border-color: rgba(255,145,0,0.24); box-shadow: 0 0 12px rgba(255,145,0,0.07); }
+    .signal-card.red { border-color: rgba(255,60,60,0.24); box-shadow: 0 0 12px rgba(255,60,60,0.07); }
+    .signal-card.skull { border-color: rgba(220,220,220,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.04); }
 
     .top-grid {
       display: grid;
@@ -178,12 +297,6 @@
       border: 1px solid #111111;
       border-radius: 14px;
       padding: 16px;
-    }
-
-    .panel h2 {
-      margin: 0 0 14px 0;
-      font-size: 22px;
-      color: #ffffff;
     }
 
     .market-grid {
@@ -214,10 +327,6 @@
       letter-spacing: 0.06em;
     }
 
-    .tradingview-widget-container {
-      width: 100%;
-    }
-
     .footer {
       text-align: center;
       color: #6f6f6f;
@@ -227,8 +336,13 @@
     }
 
     @media (max-width: 1200px) {
+      .gauge-shell,
       .top-grid {
         grid-template-columns: 1fr;
+      }
+
+      .equalizer-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
       .signal-grid {
@@ -241,31 +355,20 @@
     }
 
     @media (max-width: 780px) {
-      .signal-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
+      .equalizer-grid,
       .market-grid,
-      .energy-grid {
+      .energy-grid,
+      .signal-grid {
         grid-template-columns: 1fr;
       }
 
       .hero h1 {
         font-size: 26px;
       }
-    }
 
-    @media (max-width: 520px) {
-      .signal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-header {
-        gap: 10px;
-      }
-
-      .section-header h2 {
-        font-size: 18px;
+      .eq-meter {
+        max-width: 100%;
+        height: 180px;
       }
     }
   </style>
@@ -288,6 +391,62 @@
 
     <div class="section">
       <div class="section-header">
+        <h2>Stagflation Gauge</h2>
+        <div class="divider-line alert"></div>
+      </div>
+
+      <div class="gauge-shell">
+        <div class="gauge-score-box">
+          <div class="gauge-score-label">Final Score</div>
+          <div id="gauge-score" class="gauge-score-value">--</div>
+          <div id="gauge-signal" class="gauge-score-signal">--</div>
+          <div id="gauge-label" class="gauge-score-text">Loading...</div>
+        </div>
+
+        <div class="gauge-bars-box">
+          <div class="equalizer-grid">
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-inflation" class="eq-fill"></div></div>
+              <div id="eq-inflation-value" class="eq-value">--</div>
+              <div class="eq-label">Inflation</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-growth" class="eq-fill"></div></div>
+              <div id="eq-growth-value" class="eq-value">--</div>
+              <div class="eq-label">Growth</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-labor" class="eq-fill"></div></div>
+              <div id="eq-labor-value" class="eq-value">--</div>
+              <div class="eq-label">Labor</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-demand" class="eq-fill"></div></div>
+              <div id="eq-demand-value" class="eq-value">--</div>
+              <div class="eq-label">Demand</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-liquidity" class="eq-fill"></div></div>
+              <div id="eq-liquidity-value" class="eq-value">--</div>
+              <div class="eq-label">Liquidity</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-financial" class="eq-fill"></div></div>
+              <div id="eq-financial-value" class="eq-value">--</div>
+              <div class="eq-label">Financial</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-energy" class="eq-fill"></div></div>
+              <div id="eq-energy-value" class="eq-value">--</div>
+              <div class="eq-label">Energy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
         <h2>Signal Summary</h2>
         <div class="divider-line gold"></div>
       </div>
@@ -301,7 +460,6 @@
     </div>
 
     <div class="top-grid">
-
       <div class="panel">
         <div class="section-header">
           <h2>Yield Monitor</h2>
@@ -346,7 +504,6 @@
         </div>
 
         <div class="market-grid">
-
           <div class="mini-widget">
             <div class="mini-widget-label">Dollar</div>
             <div class="tradingview-widget-container">
@@ -410,14 +567,11 @@
               </script>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
 
     <div class="bottom-grid">
-
       <div class="panel">
         <div class="section-header">
           <h2>Energy Watch</h2>
@@ -425,7 +579,6 @@
         </div>
 
         <div class="energy-grid">
-
           <div class="mini-widget">
             <div class="mini-widget-label">Crude Oil</div>
             <div class="tradingview-widget-container">
@@ -473,89 +626,18 @@
               </script>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
 
     <div class="footer">
       Stagflation Monitor | Live Macro Signals
     </div>
-
   </div>
 
   <script>
-    <script>
-  async function loadSignals() {
     const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-    const SHEET_NAME = "Stagflation_monitor";
-    const RANGE = "B1:B12";
-    const grid = document.getElementById("signal-grid");
+    const SIGNAL_TAB = "Stagflation_Monitor";
+    const SCORE_TAB = "Stagflation_Monitor2";
 
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&range=${encodeURIComponent(RANGE)}&tqx=out:json`;
-
-      function getSignalClass(emoji) {
-        if (emoji === "🟢") return "green";
-        if (emoji === "🟡") return "yellow";
-        if (emoji === "🟠") return "orange";
-        if (emoji === "🔴") return "red";
-        if (emoji === "☠️" || emoji === "☠") return "skull";
-        return "";
-      }
-
-      try {
-        const res = await fetch(url);
-        const text = await res.text();
-        const json = JSON.parse(text.substring(47).slice(0, -2));
-        const rows = json.table.rows || [];
-
-        grid.innerHTML = "";
-
-        rows.forEach(r => {
-          if (!r.c || !r.c[0]) return;
-
-          const value = String(r.c[0].v || "").trim();
-          if (!value) return;
-
-          const parts = value.split("\n");
-          const name = (parts[0] || "").trim();
-          const emoji = (parts[1] || "").trim();
-          const signalClass = getSignalClass(emoji);
-
-          const card = document.createElement("div");
-          card.className = `signal-card ${signalClass}`;
-
-          card.innerHTML = `
-            <div class="signal-name">${name}</div>
-            <div class="${emoji ? 'signal-emoji' : 'signal-empty'}">${emoji || 'No Signal'}</div>
-          `;
-
-          grid.appendChild(card);
-        });
-
-        if (!grid.innerHTML.trim()) {
-          grid.innerHTML = `
-            <div class="signal-card">
-              <div class="signal-name">No Data</div>
-              <div class="signal-empty">Check Sheet</div>
-            </div>
-          `;
-        }
-
-      } catch (err) {
-        console.error("Signal load error:", err);
-        grid.innerHTML = `
-          <div class="signal-card">
-            <div class="signal-name">Load Error</div>
-            <div class="signal-empty">Retry</div>
-          </div>
-        `;
-      }
-    }
-
-    loadSignals();
-  </script>
-
-</body>
-</html>
+    async function fetch
