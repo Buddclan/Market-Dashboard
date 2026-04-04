@@ -629,8 +629,8 @@
     const SIGNAL_TAB_GID = "1019546511";
     const SCORE_TAB_GID = "441516074";
 
-    const SIGNALS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SIGNAL_TAB_GID}&tqx=out:json`;
-    const SCORE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
+    const SIGNALS_HTML_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vTIduv9T5FOzYQZOrLJPRUO2ffR6Is0VMfdlEUXcMIeg3mDq-LyjRlDEi72pUutCcmdM5tYXu4Ck5AB/pubhtml?gid=${SIGNAL_TAB_GID}&single=true&widget=true&headers=false`;
+    const SCORE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
 
     const signalNames = [
       "Labor",
@@ -659,24 +659,24 @@
 
     const SIGNAL_REGEX = /🟢|🟡|🟠|🔴|☠️|☠/;
 
+    function normalizeText(value) {
+      return String(value ?? "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+    }
+
     function parseGviz(text) {
       const start = text.indexOf("{");
       const end = text.lastIndexOf("}");
       return JSON.parse(text.substring(start, end + 1));
     }
 
-    async function fetchSheet(url) {
-      const response = await fetch(url, { cache: "no-store" });
+    async function fetchScoreRows() {
+      const response = await fetch(SCORE_GVIZ_URL, { cache: "no-store" });
       const text = await response.text();
       const json = parseGviz(text);
       return json.table?.rows || [];
-    }
-
-    function normalizeText(value) {
-      return String(value ?? "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
     }
 
     function getRawCell(row, colIndex) {
@@ -700,6 +700,20 @@
         values.push(getBestCellText(row, i));
       }
       return values;
+    }
+
+    async function fetchSignalCellsFromPublishedHtml() {
+      const response = await fetch(SIGNALS_HTML_URL, { cache: "no-store" });
+      const html = await response.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const cells = [...doc.querySelectorAll("td")].map(td =>
+        td.innerText.replace(/\u00a0/g, " ").trim()
+      ).filter(Boolean);
+
+      return cells;
     }
 
     function signalClass(signal) {
@@ -734,37 +748,26 @@
       value.textContent = signal || "--";
     }
 
-    function findSignalAnywhere(rows, label) {
+    function findSignalFromPublishedCells(cells, label) {
       const wanted = normalizeText(label);
 
-      for (const row of rows) {
-        const cellTexts = getAllCellTexts(row);
-        if (!cellTexts.length) continue;
+      for (const cell of cells) {
+        const normalizedCell = normalizeText(cell);
 
-        for (const cellText of cellTexts) {
-          const normalized = normalizeText(cellText);
-
-          if (normalized.includes(wanted)) {
-            const match = cellText.match(SIGNAL_REGEX);
-            if (match) return match[0];
-          }
-        }
-
-        const wholeRow = normalizeText(cellTexts.join(" "));
-        if (wholeRow.includes(wanted)) {
-          const rowMatch = cellTexts.join(" ").match(SIGNAL_REGEX);
-          if (rowMatch) return rowMatch[0];
+        if (normalizedCell.includes(wanted)) {
+          const match = cell.match(SIGNAL_REGEX);
+          if (match) return match[0];
         }
       }
 
       return "--";
     }
 
-    function renderSignalGrid(signalRows) {
+    function renderSignalGrid(signalCells) {
       const container = document.getElementById("signal-grid");
 
       container.innerHTML = signalNames.map(name => {
-        const signal = findSignalAnywhere(signalRows, name);
+        const signal = findSignalFromPublishedCells(signalCells, name);
         const klass = signalClass(signal);
 
         return `
@@ -776,9 +779,9 @@
       }).join("");
     }
 
-    function renderGauge(signalRows) {
+    function renderGauge(signalCells) {
       gaugeLookup.forEach(item => {
-        const signal = findSignalAnywhere(signalRows, item.label);
+        const signal = findSignalFromPublishedCells(signalCells, item.label);
         setGaugeBar(item.id, signal);
       });
     }
@@ -845,13 +848,13 @@
 
     async function initDashboard() {
       try {
-        const [signalRows, scoreRows] = await Promise.all([
-          fetchSheet(SIGNALS_URL),
-          fetchSheet(SCORE_URL)
+        const [signalCells, scoreRows] = await Promise.all([
+          fetchSignalCellsFromPublishedHtml(),
+          fetchScoreRows()
         ]);
 
-        renderSignalGrid(signalRows);
-        renderGauge(signalRows);
+        renderSignalGrid(signalCells);
+        renderGauge(signalCells);
         renderFinalScore(scoreRows);
       } catch (error) {
         console.error("Dashboard load error:", error);
