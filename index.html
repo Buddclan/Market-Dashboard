@@ -686,21 +686,27 @@
     function renderSignalGrid(signalRows) {
       const container = document.getElementById("signal-grid");
 
-      const liveRows = signalRows
-        .map((row, index) => ({
-          name: getCell(signalRows, index, 0),
-          signal: getCell(signalRows, index, 1)
-        }))
-        .filter(item => item.name || item.signal)
-        .slice(0, 12);
+      const items = [
+        { name: getCell(signalRows, 0, 0) || "Labor", signal: getCell(signalRows, 0, 1) },
+        { name: getCell(signalRows, 1, 0) || "Consumer Demand", signal: getCell(signalRows, 1, 1) },
+        { name: getCell(signalRows, 2, 0) || "Housing", signal: getCell(signalRows, 2, 1) },
+        { name: getCell(signalRows, 3, 0) || "Manufacturing", signal: getCell(signalRows, 3, 1) },
+        { name: getCell(signalRows, 4, 0) || "Inflation", signal: getCell(signalRows, 4, 1) },
+        { name: getCell(signalRows, 5, 0) || "Liquidity", signal: getCell(signalRows, 5, 1) },
+        { name: getCell(signalRows, 6, 0) || "Trade", signal: getCell(signalRows, 6, 1) },
+        { name: getCell(signalRows, 7, 0) || "Financial", signal: getCell(signalRows, 7, 1) },
+        { name: getCell(signalRows, 8, 0) || "Energy", signal: getCell(signalRows, 8, 1) },
+        { name: getCell(signalRows, 9, 0) || "Growth", signal: getCell(signalRows, 9, 1) },
+        { name: getCell(signalRows, 11, 0) || "Inventories", signal: getCell(signalRows, 11, 1) }
+      ];
 
-      container.innerHTML = liveRows.map(item => {
+      container.innerHTML = items.map(item => {
         const signal = item.signal || "--";
         const klass = signalClass(signal);
 
         return `
           <div class="signal-card ${klass}">
-            <div class="signal-name">${item.name || "--"}</div>
+            <div class="signal-name">${item.name}</div>
             <div class="signal-emoji">${signal}</div>
           </div>
         `;
