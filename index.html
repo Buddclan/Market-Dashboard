@@ -1,61 +1,143 @@
-<section class="signal-summary-section">
-  <h2 class="signal-summary-title">Signal Summary</h2>
+<section class="signal-summary">
+  <div class="signal-summary-header">
+    <h2>Signal Summary</h2>
+  </div>
+
   <div id="signal-summary-grid" class="signal-summary-grid">
-    <div class="signal-card loading">Loading...</div>
+    <div class="signal-card loading">Loading signals...</div>
   </div>
 </section>
 
 <style>
-  .signal-summary-section {
-    margin: 28px 0;
+  .signal-summary {
+    margin: 32px 0 40px;
+    width: 100%;
   }
 
-  .signal-summary-title {
+  .signal-summary-header {
+    margin-bottom: 18px;
+  }
+
+  .signal-summary-header h2 {
+    margin: 0;
     color: #ffffff;
     font-size: 2rem;
     font-weight: 700;
-    margin: 0 0 18px 0;
+    letter-spacing: -0.02em;
   }
 
   .signal-summary-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(220px, 1fr));
-    gap: 16px;
+    gap: 18px;
   }
 
   .signal-card {
-    background: #0f0f0f;
-    border: 1px solid #1f1f1f;
-    border-radius: 14px;
-    min-height: 130px;
-    padding: 20px 18px;
+    position: relative;
+    min-height: 165px;
+    padding: 22px 22px 20px;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%),
+      #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.02) inset,
+      0 14px 30px rgba(0,0,0,0.28);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.02) inset;
+    overflow: hidden;
+  }
+
+  .signal-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 45%);
+    pointer-events: none;
   }
 
   .signal-card.loading,
   .signal-card.error {
-    color: #d0d0d0;
     align-items: center;
     justify-content: center;
+    color: #cfcfcf;
     font-size: 1rem;
+    text-align: center;
   }
 
   .signal-name {
+    position: relative;
+    z-index: 1;
     color: #ffffff;
-    font-size: 1.9rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 12px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .signal-status {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 72px;
   }
 
   .signal-emoji {
-    font-size: 2.25rem;
+    font-size: 2.35rem;
     line-height: 1;
-    text-align: center;
-    margin-top: auto;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.08));
+  }
+
+  .signal-empty {
+    font-size: 0.95rem;
+    color: #7f7f7f;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .signal-card.green {
+    border-color: rgba(38, 255, 89, 0.22);
+    box-shadow:
+      0 0 0 1px rgba(38, 255, 89, 0.07) inset,
+      0 14px 30px rgba(0,0,0,0.28),
+      0 0 24px rgba(38, 255, 89, 0.08);
+  }
+
+  .signal-card.yellow {
+    border-color: rgba(255, 214, 10, 0.24);
+    box-shadow:
+      0 0 0 1px rgba(255, 214, 10, 0.08) inset,
+      0 14px 30px rgba(0,0,0,0.28),
+      0 0 24px rgba(255, 214, 10, 0.09);
+  }
+
+  .signal-card.orange {
+    border-color: rgba(255, 153, 0, 0.24);
+    box-shadow:
+      0 0 0 1px rgba(255, 153, 0, 0.08) inset,
+      0 14px 30px rgba(0,0,0,0.28),
+      0 0 24px rgba(255, 153, 0, 0.10);
+  }
+
+  .signal-card.red {
+    border-color: rgba(255, 59, 48, 0.24);
+    box-shadow:
+      0 0 0 1px rgba(255, 59, 48, 0.08) inset,
+      0 14px 30px rgba(0,0,0,0.28),
+      0 0 24px rgba(255, 59, 48, 0.10);
+  }
+
+  .signal-card.skull {
+    border-color: rgba(255,255,255,0.18);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.05) inset,
+      0 14px 30px rgba(0,0,0,0.36),
+      0 0 24px rgba(255,255,255,0.05);
   }
 
   @media (max-width: 1200px) {
@@ -75,12 +157,12 @@
       grid-template-columns: 1fr;
     }
 
-    .signal-name {
-      font-size: 1.6rem;
+    .signal-card {
+      min-height: 145px;
     }
 
-    .signal-emoji {
-      font-size: 2rem;
+    .signal-name {
+      font-size: 1.4rem;
     }
   }
 </style>
@@ -89,46 +171,60 @@
   async function loadSignalSummary() {
     const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
     const SHEET_NAME = "stagflation_monitor";
+    const RANGE = "B1:B12";
     const grid = document.getElementById("signal-summary-grid");
 
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&range=B1:B12&tqx=out:json`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&range=${encodeURIComponent(RANGE)}&tqx=out:json`;
+
+    function getSignalClass(emoji) {
+      if (emoji === "🟢") return "green";
+      if (emoji === "🟡") return "yellow";
+      if (emoji === "🟠") return "orange";
+      if (emoji === "🔴") return "red";
+      if (emoji === "☠️" || emoji === "☠") return "skull";
+      return "";
+    }
 
     try {
       const response = await fetch(url);
       const text = await response.text();
-
       const jsonText = text.substring(47, text.length - 2);
       const data = JSON.parse(jsonText);
 
-      const rows = (data.table.rows || [])
-        .map(row => row.c && row.c[0] && row.c[0].v ? String(row.c[0].v).trim() : "")
-        .filter(Boolean);
-
-      if (!rows.length) {
-        grid.innerHTML = '<div class="signal-card error">No signal data found.</div>';
-        return;
-      }
+      const rows = (data.table.rows || []).map(row => {
+        const value = row.c && row.c[0] && row.c[0].v ? String(row.c[0].v) : "";
+        return value.trim();
+      });
 
       grid.innerHTML = "";
 
-      rows.forEach(item => {
-        const parts = item.split("\n");
-        const name = (parts[0] || "").trim();
-        const emoji = (parts[1] || "").trim();
+      rows.forEach(value => {
+        if (!value) return;
+
+        const [nameRaw = "", emojiRaw = ""] = value.split("\n");
+        const name = nameRaw.trim();
+        const emoji = emojiRaw.trim();
+        const signalClass = getSignalClass(emoji);
 
         const card = document.createElement("div");
-        card.className = "signal-card";
+        card.className = `signal-card ${signalClass}`;
 
         card.innerHTML = `
           <div class="signal-name">${name}</div>
-          <div class="signal-emoji">${emoji || "&nbsp;"}</div>
+          <div class="signal-status">
+            ${emoji ? `<div class="signal-emoji">${emoji}</div>` : `<div class="signal-empty">No Signal</div>`}
+          </div>
         `;
 
         grid.appendChild(card);
       });
+
+      if (!grid.innerHTML.trim()) {
+        grid.innerHTML = `<div class="signal-card error">No signal data found.</div>`;
+      }
     } catch (error) {
       console.error("Signal Summary load error:", error);
-      grid.innerHTML = '<div class="signal-card error">Unable to load signal summary.</div>';
+      grid.innerHTML = `<div class="signal-card error">Unable to load signal summary.</div>`;
     }
   }
 
