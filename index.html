@@ -6,9 +6,7 @@
   <title>Stagflation Monitor</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -31,9 +29,7 @@
       margin-bottom: 18px;
     }
 
-    h1, h2, h3 {
-      margin-top: 0;
-    }
+    h1, h2, h3 { margin-top: 0; }
 
     .hero {
       padding: 20px 18px;
@@ -377,7 +373,6 @@
   </tv-ticker-tape>
 
   <div class="container">
-
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
       <p>Live macro signals across labor, inflation, housing, liquidity, trade, energy, growth, and financial conditions.</p>
@@ -692,19 +687,6 @@
       return row.c[colIndex].f ?? row.c[colIndex].v ?? "";
     }
 
-    function buildRowLookup(rows) {
-      const map = new Map();
-
-      rows.forEach(row => {
-        const key = normalizeText(getDisplayCell(row, 0) || getRawCell(row, 0));
-        if (key) {
-          map.set(key, row);
-        }
-      });
-
-      return map;
-    }
-
     function signalClass(signal) {
       if (signal === "🟢") return "green";
       if (signal === "🟡") return "yellow";
@@ -737,41 +719,83 @@
       value.textContent = signal || "--";
     }
 
-    function renderSignalGrid(signalLookup) {
+    function findSignalInSingleColumn(rows, label) {
+      const wanted = normalizeText(label);
+
+      for (const row of rows) {
+        const textA = normalizeText(getDisplayCell(row, 0) || getRawCell(row, 0));
+        const textB = normalizeText(getDisplayCell(row, 1) || getRawCell(row, 1));
+        const textC = normalizeText(getDisplayCell(row, 2) || getRawCell(row, 2));
+
+        const rowText = [textA, textB, textC].filter(Boolean).join(" ");
+
+        if (rowText.includes(wanted)) {
+          const rawA = String(getDisplayCell(row, 0) || getRawCell(row, 0) || "").trim();
+          const rawB = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "").trim();
+          const rawC = String(getDisplayCell(row, 2) || getRawCell(row, 2) || "").trim();
+
+          const candidates = [rawA, rawB, rawC].join(" ");
+
+          const match = candidates.match(/🟢|🟡|🟠|🔴|☠️|☠/);
+          if (match) return match[0];
+        }
+      }
+
+      return "--";
+    }
+
+    function renderSignalGrid(signalRows) {
       const container = document.getElementById("signal-grid");
 
       container.innerHTML = signalNames.map(name => {
-        const row = signalLookup.get(normalizeText(name));
-        const signal = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "--").trim();
+        const signal = findSignalInSingleColumn(signalRows, name);
         const klass = signalClass(signal);
 
         return `
           <div class="signal-card ${klass}">
             <div class="signal-name">${name}</div>
-            <div class="signal-emoji">${signal || "--"}</div>
+            <div class="signal-emoji">${signal}</div>
           </div>
         `;
       }).join("");
     }
 
-    function renderGauge(signalLookup) {
+    function renderGauge(signalRows) {
       gaugeLookup.forEach(item => {
-        const row = signalLookup.get(normalizeText(item.label));
-        const signal = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "--").trim();
+        const signal = findSignalInSingleColumn(signalRows, item.label);
         setGaugeBar(item.id, signal);
       });
     }
 
-    function renderFinalScore(scoreLookup) {
-      const finalRow = scoreLookup.get(normalizeText("Final Score"));
+    function findFinalScoreRow(scoreRows) {
+      for (const row of scoreRows) {
+        const textB = normalizeText(getDisplayCell(row, 1) || getRawCell(row, 1));
+        const textC = normalizeText(getDisplayCell(row, 2) || getRawCell(row, 2));
 
-      const finalSignal = String(getDisplayCell(finalRow, 1) || getRawCell(finalRow, 1) || "--").trim();
-      const finalScore = String(getDisplayCell(finalRow, 2) || getRawCell(finalRow, 2) || "--").trim();
-      const finalNarrative = String(getDisplayCell(finalRow, 3) || getRawCell(finalRow, 3) || "No narrative").trim();
+        if (textB === "final score" || textC === "final score") {
+          return row;
+        }
+      }
+      return null;
+    }
 
-      document.getElementById("gauge-score").textContent = finalScore || "--";
-      document.getElementById("gauge-signal").textContent = finalSignal || "--";
-      document.getElementById("gauge-label").textContent = finalNarrative || "No narrative";
+    function renderFinalScore(scoreRows) {
+      const row = findFinalScoreRow(scoreRows);
+
+      if (!row) {
+        document.getElementById("gauge-score").textContent = "--";
+        document.getElementById("gauge-signal").textContent = "--";
+        document.getElementById("gauge-label").textContent = "Final Score row not found";
+        return;
+      }
+
+      const scoreValue = String(getDisplayCell(row, 2) || getRawCell(row, 2) || "--").trim();   // C
+      const scoreSignal = String(getDisplayCell(row, 3) || getRawCell(row, 3) || "--").trim();  // D
+      const scoreText = String(getDisplayCell(row, 4) || getRawCell(row, 4) || "No narrative").trim(); // E
+
+      document.getElementById("gauge-score").textContent = scoreValue || "--";
+      document.getElementById("gauge-signal").textContent = scoreSignal || "--";
+      document.getElementById("gauge-label").textContent = scoreText || "No narrative";
     }
 
     async function initDashboard() {
@@ -781,12 +805,9 @@
           fetchSheet(SCORE_URL)
         ]);
 
-        const signalLookup = buildRowLookup(signalRows);
-        const scoreLookup = buildRowLookup(scoreRows);
-
-        renderSignalGrid(signalLookup);
-        renderGauge(signalLookup);
-        renderFinalScore(scoreLookup);
+        renderSignalGrid(signalRows);
+        renderGauge(signalRows);
+        renderFinalScore(scoreRows);
       } catch (error) {
         console.error("Dashboard load error:", error);
 
