@@ -18,7 +18,7 @@
     }
 
     .container {
-      max-width: 1500px;
+      max-width: 1550px;
       margin: 0 auto;
       padding: 18px;
     }
@@ -81,6 +81,11 @@
     .divider-line.silver {
       background: linear-gradient(90deg, rgba(192,192,192,0.05) 0%, rgba(214,214,214,0.95) 50%, rgba(192,192,192,0.05) 100%);
       box-shadow: 0 0 10px rgba(210,210,210,0.22);
+    }
+
+    .divider-line.energy {
+      background: linear-gradient(90deg, rgba(255,120,0,0.05) 0%, rgba(255,120,0,0.95) 50%, rgba(255,120,0,0.05) 100%);
+      box-shadow: 0 0 10px rgba(255,120,0,0.24);
     }
 
     .signal-grid {
@@ -154,11 +159,18 @@
       box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
     }
 
-    .dual-grid {
+    .top-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 18px;
       align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
     }
 
     .panel {
@@ -174,14 +186,15 @@
       color: #ffffff;
     }
 
-    .market-stack {
+    .market-grid {
       display: grid;
-      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .quote-row {
+    .energy-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
 
@@ -213,13 +226,17 @@
       letter-spacing: 0.04em;
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1200px) {
+      .top-grid {
+        grid-template-columns: 1fr;
+      }
+
       .signal-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .dual-grid {
-        grid-template-columns: 1fr;
+      .energy-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -228,7 +245,8 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .quote-row {
+      .market-grid,
+      .energy-grid {
         grid-template-columns: 1fr;
       }
 
@@ -257,7 +275,7 @@
 
   <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
   <tv-ticker-tape
-    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,TVC:SILVER,TVC:US10Y,TVC:US30Y,PEPPERSTONE:VIX,CAPITALCOM:DXY"
+    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,TVC:SILVER,TVC:US10Y,TVC:US30Y,PEPPERSTONE:VIX,CAPITALCOM:DXY,TVC:USOIL,TICKMILL:BRENT,FX:GASOLINEF"
     theme="dark">
   </tv-ticker-tape>
 
@@ -265,7 +283,7 @@
 
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
-      <p>Live macro signals across labor, inflation, housing, liquidity, trade, growth, and financial conditions.</p>
+      <p>Live macro signals across labor, inflation, housing, liquidity, trade, energy, growth, and financial conditions.</p>
     </div>
 
     <div class="section">
@@ -282,7 +300,7 @@
       </div>
     </div>
 
-    <div class="dual-grid">
+    <div class="top-grid">
 
       <div class="panel">
         <div class="section-header">
@@ -327,73 +345,132 @@
           <div class="divider-line gold"></div>
         </div>
 
-        <div class="market-stack">
+        <div class="market-grid">
 
-          <div class="quote-row">
-            <div class="mini-widget">
-              <div class="mini-widget-label">Dollar</div>
-              <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                  "symbol": "CAPITALCOM:DXY",
-                  "colorTheme": "dark",
-                  "isTransparent": false,
-                  "locale": "en",
-                  "width": "100%"
-                }
-                </script>
-              </div>
-            </div>
-
-            <div class="mini-widget">
-              <div class="mini-widget-label">VIX</div>
-              <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                  "symbol": "PEPPERSTONE:VIX",
-                  "colorTheme": "dark",
-                  "isTransparent": false,
-                  "locale": "en",
-                  "width": "100%"
-                }
-                </script>
-              </div>
+          <div class="mini-widget">
+            <div class="mini-widget-label">Dollar</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "CAPITALCOM:DXY",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
             </div>
           </div>
 
-          <div class="quote-row">
-            <div class="mini-widget">
-              <div class="mini-widget-label">Gold</div>
-              <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                  "symbol": "TVC:GOLD",
-                  "colorTheme": "dark",
-                  "isTransparent": false,
-                  "locale": "en",
-                  "width": "100%"
-                }
-                </script>
-              </div>
+          <div class="mini-widget">
+            <div class="mini-widget-label">VIX</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "PEPPERSTONE:VIX",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
             </div>
+          </div>
 
-            <div class="mini-widget">
-              <div class="mini-widget-label">Silver</div>
-              <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                  "symbol": "TVC:SILVER",
-                  "colorTheme": "dark",
-                  "isTransparent": false,
-                  "locale": "en",
-                  "width": "100%"
-                }
-                </script>
-              </div>
+          <div class="mini-widget">
+            <div class="mini-widget-label">Gold</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:GOLD",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Silver</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:SILVER",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-grid">
+
+      <div class="panel">
+        <div class="section-header">
+          <h2>Energy Watch</h2>
+          <div class="divider-line energy"></div>
+        </div>
+
+        <div class="energy-grid">
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Crude Oil</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:USOIL",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Brent</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TICKMILL:BRENT",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Gas</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "FX:GASOLINEF",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
             </div>
           </div>
 
