@@ -1,36 +1,767 @@
-<script>
-async function initDashboard() {
-  try {
-    const [signalRows, scoreRows] = await Promise.all([
-      fetchRows(SIGNAL_GVIZ_URL),
-      fetchRows(SCORE_GVIZ_URL)
-    ]);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stagflation Monitor</title>
 
-    console.log(
-      "SIGNAL ROWS",
-      signalRows.map((row, index) => ({
-        index: index,
-        colA: getCell(signalRows, index, 0),
-        colB: getCell(signalRows, index, 1)
-      }))
-    );
+  <style>
+    * { box-sizing: border-box; }
 
-    renderSignalGrid(signalRows);
-    renderGauge(scoreRows);
-    renderFinalScore(scoreRows);
-  } catch (error) {
-    console.error("Dashboard load error:", error);
+    body {
+      margin: 0;
+      background: #000000;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
 
-    document.getElementById("gauge-score").textContent = "--";
-    document.getElementById("gauge-signal").textContent = "--";
-    document.getElementById("gauge-label").textContent = "Data load failed";
+    .container {
+      max-width: 1550px;
+      margin: 0 auto;
+      padding: 18px;
+    }
 
-    document.getElementById("signal-grid").innerHTML = `
-      <div class="signal-card red">
-        <div class="signal-name">Data Error</div>
-        <div class="signal-emoji">⚠️</div>
+    .section {
+      background: #000000;
+      border: 1px solid #111111;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin-top: 0; }
+
+    .hero {
+      padding: 20px 18px;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+      font-size: 30px;
+      color: #ffffff;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #9a9a9a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .divider-line {
+      height: 2px;
+      flex: 1;
+      border-radius: 999px;
+      opacity: 0.95;
+    }
+
+    .divider-line.gold {
+      background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, rgba(255,215,0,0.95) 50%, rgba(255,215,0,0.05) 100%);
+      box-shadow: 0 0 10px rgba(255,215,0,0.28);
+    }
+
+    .divider-line.silver {
+      background: linear-gradient(90deg, rgba(192,192,192,0.05) 0%, rgba(214,214,214,0.95) 50%, rgba(192,192,192,0.05) 100%);
+      box-shadow: 0 0 10px rgba(210,210,210,0.22);
+    }
+
+    .divider-line.energy {
+      background: linear-gradient(90deg, rgba(255,120,0,0.05) 0%, rgba(255,120,0,0.95) 50%, rgba(255,120,0,0.05) 100%);
+      box-shadow: 0 0 10px rgba(255,120,0,0.24);
+    }
+
+    .divider-line.alert {
+      background: linear-gradient(90deg, rgba(255,60,60,0.05) 0%, rgba(255,140,0,0.95) 50%, rgba(255,60,60,0.05) 100%);
+      box-shadow: 0 0 10px rgba(255,100,50,0.24);
+    }
+
+    .gauge-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .gauge-score-box {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 14px;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .gauge-score-label {
+      color: #9f9f9f;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .gauge-score-value {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .gauge-score-signal {
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .gauge-score-text {
+      color: #d7d7d7;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .gauge-bars-box {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .equalizer-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    .eq-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eq-meter {
+      width: 100%;
+      max-width: 85px;
+      height: 210px;
+      background: #050505;
+      border: 1px solid #171717;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .eq-meter::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to top,
+        transparent 0,
+        transparent 20px,
+        rgba(255,255,255,0.035) 21px
+      );
+      pointer-events: none;
+    }
+
+    .eq-fill {
+      width: 100%;
+      height: 0%;
+      border-radius: 0 0 13px 13px;
+      transition: height 0.9s ease, box-shadow 0.4s ease, background 0.4s ease;
+      background: linear-gradient(to top, #1aff66 0%, #7dffae 100%);
+      box-shadow: 0 0 14px rgba(26,255,102,0.12);
+    }
+
+    .eq-fill.yellow {
+      background: linear-gradient(to top, #ffd400 0%, #fff08a 100%);
+      box-shadow: 0 0 14px rgba(255,212,0,0.14);
+    }
+
+    .eq-fill.orange {
+      background: linear-gradient(to top, #ff8a00 0%, #ffbc66 100%);
+      box-shadow: 0 0 16px rgba(255,138,0,0.16);
+    }
+
+    .eq-fill.red {
+      background: linear-gradient(to top, #ff3232 0%, #ff7a7a 100%);
+      box-shadow: 0 0 18px rgba(255,50,50,0.18);
+    }
+
+    .eq-fill.skull {
+      background: linear-gradient(to top, #d9d9d9 0%, #ffffff 100%);
+      box-shadow: 0 0 18px rgba(255,255,255,0.16);
+    }
+
+    .eq-value {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .eq-label {
+      color: #b8b8b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .signal-card {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 12px;
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .signal-name {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .signal-emoji {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .signal-card.green { border-color: rgba(0,255,120,0.22); box-shadow: 0 0 12px rgba(0,255,120,0.06); }
+    .signal-card.yellow { border-color: rgba(255,220,0,0.24); box-shadow: 0 0 12px rgba(255,220,0,0.06); }
+    .signal-card.orange { border-color: rgba(255,145,0,0.24); box-shadow: 0 0 12px rgba(255,145,0,0.07); }
+    .signal-card.red { border-color: rgba(255,60,60,0.24); box-shadow: 0 0 12px rgba(255,60,60,0.07); }
+    .signal-card.skull { border-color: rgba(220,220,220,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.04); }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: #000000;
+      border: 1px solid #111111;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .energy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-widget {
+      background: #000000;
+      border: 1px solid #141414;
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 120px;
+    }
+
+    .mini-widget-label {
+      font-size: 12px;
+      color: #b0b0b0;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .footer {
+      text-align: center;
+      color: #6f6f6f;
+      font-size: 12px;
+      padding: 4px 0 24px;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 1200px) {
+      .gauge-shell,
+      .top-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .equalizer-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .signal-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .energy-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 780px) {
+      .equalizer-grid,
+      .market-grid,
+      .energy-grid,
+      .signal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .eq-meter {
+        max-width: 100%;
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
+  <tv-ticker-tape
+    symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,CMCMARKETS:GOLD,TVC:SILVER,TVC:US10Y,TVC:US30Y,PEPPERSTONE:VIX,CAPITALCOM:DXY,TVC:USOIL,TICKMILL:BRENT,FX:GASOLINEF"
+    theme="dark">
+  </tv-ticker-tape>
+
+  <div class="container">
+    <div class="section hero">
+      <h1>📊 Stagflation Monitor</h1>
+      <p>Live macro signals across labor, inflation, housing, liquidity, trade, energy, growth, and financial conditions.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>Stagflation Gauge</h2>
+        <div class="divider-line alert"></div>
       </div>
-    `;
-  }
-}
-</script>
+
+      <div class="gauge-shell">
+        <div class="gauge-score-box">
+          <div class="gauge-score-label">Final Score</div>
+          <div id="gauge-score" class="gauge-score-value">--</div>
+          <div id="gauge-signal" class="gauge-score-signal">--</div>
+          <div id="gauge-label" class="gauge-score-text">Loading...</div>
+        </div>
+
+        <div class="gauge-bars-box">
+          <div class="equalizer-grid">
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-inflation" class="eq-fill"></div></div>
+              <div id="eq-inflation-value" class="eq-value">--</div>
+              <div class="eq-label">Inflation</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-growth" class="eq-fill"></div></div>
+              <div id="eq-growth-value" class="eq-value">--</div>
+              <div class="eq-label">Growth</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-labor" class="eq-fill"></div></div>
+              <div id="eq-labor-value" class="eq-value">--</div>
+              <div class="eq-label">Labor</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-demand" class="eq-fill"></div></div>
+              <div id="eq-demand-value" class="eq-value">--</div>
+              <div class="eq-label">Demand</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-liquidity" class="eq-fill"></div></div>
+              <div id="eq-liquidity-value" class="eq-value">--</div>
+              <div class="eq-label">Liquidity</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-financial" class="eq-fill"></div></div>
+              <div id="eq-financial-value" class="eq-value">--</div>
+              <div class="eq-label">Financial</div>
+            </div>
+            <div class="eq-col">
+              <div class="eq-meter"><div id="eq-energy" class="eq-fill"></div></div>
+              <div id="eq-energy-value" class="eq-value">--</div>
+              <div class="eq-label">Energy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>Signal Summary</h2>
+        <div class="divider-line gold"></div>
+      </div>
+
+      <div id="signal-grid" class="signal-grid">
+        <div class="signal-card">
+          <div class="signal-name">Loading</div>
+          <div class="signal-emoji">…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-grid">
+      <div class="panel">
+        <div class="section-header">
+          <h2>Yield Monitor</h2>
+          <div class="divider-line silver"></div>
+        </div>
+
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+          {
+            "colorTheme": "dark",
+            "locale": "en",
+            "largeChartUrl": "",
+            "isTransparent": false,
+            "showSymbolLogo": true,
+            "backgroundColor": "#000000",
+            "support_host": "https://www.tradingview.com",
+            "width": "100%",
+            "height": 550,
+            "symbolsGroups": [
+              {
+                "name": "Bonds",
+                "symbols": [
+                  { "name": "TVC:US10Y", "displayName": "10Y" },
+                  { "name": "TVC:US02Y", "displayName": "2Y" },
+                  { "name": "TVC:US30Y", "displayName": "30Y" },
+                  { "name": "TVC:US20Y", "displayName": "20Y" },
+                  { "name": "TVC:US05Y", "displayName": "5Y" },
+                  { "name": "TVC:US03M", "displayName": "3M" }
+                ]
+              }
+            ]
+          }
+          </script>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="section-header">
+          <h2>Market Watch</h2>
+          <div class="divider-line gold"></div>
+        </div>
+
+        <div class="market-grid">
+          <div class="mini-widget">
+            <div class="mini-widget-label">Dollar</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "CAPITALCOM:DXY",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">VIX</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "PEPPERSTONE:VIX",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Gold</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:GOLD",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Silver</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:SILVER",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="panel">
+        <div class="section-header">
+          <h2>Energy Watch</h2>
+          <div class="divider-line energy"></div>
+        </div>
+
+        <div class="energy-grid">
+          <div class="mini-widget">
+            <div class="mini-widget-label">Crude Oil</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TVC:USOIL",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Brent</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "TICKMILL:BRENT",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+
+          <div class="mini-widget">
+            <div class="mini-widget-label">Gas</div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+              {
+                "symbol": "FX:GASOLINEF",
+                "colorTheme": "dark",
+                "isTransparent": false,
+                "locale": "en",
+                "width": "100%"
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Stagflation Monitor | Live Macro Signals
+    </div>
+  </div>
+
+  <script>
+    const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
+    const SIGNAL_TAB_GID = "1019546511";
+    const SCORE_TAB_GID = "441516074";
+
+    const SIGNAL_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SIGNAL_TAB_GID}&tqx=out:json`;
+    const SCORE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
+
+    function parseGviz(text) {
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf("}");
+      return JSON.parse(text.substring(start, end + 1));
+    }
+
+    async function fetchRows(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      const text = await response.text();
+      const json = parseGviz(text);
+      return json.table?.rows || [];
+    }
+
+    function getCell(rows, rowIndex, colIndex) {
+      const row = rows[rowIndex];
+      if (!row || !row.c || !row.c[colIndex]) return "";
+      return String(row.c[colIndex].f ?? row.c[colIndex].v ?? "").trim();
+    }
+
+    function signalClass(signal) {
+      if (signal === "🟢") return "green";
+      if (signal === "🟡") return "yellow";
+      if (signal === "🟠") return "orange";
+      if (signal === "🔴") return "red";
+      if (signal === "☠️" || signal === "☠") return "skull";
+      return "";
+    }
+
+    function signalHeight(signal) {
+      if (signal === "🟢") return 18;
+      if (signal === "🟡") return 38;
+      if (signal === "🟠") return 68;
+      if (signal === "🔴") return 86;
+      if (signal === "☠️" || signal === "☠") return 100;
+      return 8;
+    }
+
+    function setGaugeBar(id, signal) {
+      const fill = document.getElementById(`eq-${id}`);
+      const value = document.getElementById(`eq-${id}-value`);
+
+      if (!fill || !value) return;
+
+      fill.className = "eq-fill";
+      const klass = signalClass(signal);
+      if (klass) fill.classList.add(klass);
+
+      fill.style.height = `${signalHeight(signal)}%`;
+      value.textContent = signal || "--";
+    }
+
+    function renderSignalGrid(signalRows) {
+      const container = document.getElementById("signal-grid");
+
+      const items = [
+        { name: getCell(signalRows, 0, 0) || "Labor", signal: getCell(signalRows, 0, 1) },
+        { name: getCell(signalRows, 1, 0) || "Consumer Demand", signal: getCell(signalRows, 1, 1) },
+        { name: getCell(signalRows, 2, 0) || "Housing", signal: getCell(signalRows, 2, 1) },
+        { name: getCell(signalRows, 3, 0) || "Manufacturing", signal: getCell(signalRows, 3, 1) },
+        { name: getCell(signalRows, 4, 0) || "Inflation", signal: getCell(signalRows, 4, 1) },
+        { name: getCell(signalRows, 5, 0) || "Liquidity", signal: getCell(signalRows, 5, 1) },
+        { name: getCell(signalRows, 6, 0) || "Trade", signal: getCell(signalRows, 6, 1) },
+        { name: getCell(signalRows, 7, 0) || "Financial", signal: getCell(signalRows, 7, 1) },
+        { name: getCell(signalRows, 8, 0) || "Energy", signal: getCell(signalRows, 8, 1) },
+        { name: getCell(signalRows, 9, 0) || "Growth", signal: getCell(signalRows, 9, 1) },
+        { name: getCell(signalRows, 11, 0) || "Inventories", signal: getCell(signalRows, 11, 1) }
+      ];
+
+      container.innerHTML = items.map(item => {
+        const signal = item.signal || "--";
+        const klass = signalClass(signal);
+
+        return `
+          <div class="signal-card ${klass}">
+            <div class="signal-name">${item.name}</div>
+            <div class="signal-emoji">${signal}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderGauge(scoreRows) {
+      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
+      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
+      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
+      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
+      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
+      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
+      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
+    }
+
+    function renderFinalScore(scoreRows) {
+      const finalScore = getCell(scoreRows, 27, 1) || "--";    // B28
+      const finalSignal = getCell(scoreRows, 27, 2) || "--";   // C28
+      const finalText = getCell(scoreRows, 27, 3) || "Normal"; // D28
+
+      document.getElementById("gauge-score").textContent = finalScore;
+      document.getElementById("gauge-signal").textContent = finalSignal;
+      document.getElementById("gauge-label").textContent = finalText;
+    }
+
+    async function initDashboard() {
+      try {
+        const [signalRows, scoreRows] = await Promise.all([
+          fetchRows(SIGNAL_GVIZ_URL),
+          fetchRows(SCORE_GVIZ_URL)
+        ]);
+
+        renderSignalGrid(signalRows);
+        renderGauge(scoreRows);
+        renderFinalScore(scoreRows);
+      } catch (error) {
+        console.error("Dashboard load error:", error);
+
+        document.getElementById("gauge-score").textContent = "--";
+        document.getElementById("gauge-signal").textContent = "--";
+        document.getElementById("gauge-label").textContent = "Data load failed";
+
+        document.getElementById("signal-grid").innerHTML = `
+          <div class="signal-card red">
+            <div class="signal-name">Data Error</div>
+            <div class="signal-emoji">⚠️</div>
+          </div>
+        `;
+      }
+    }
+
+    initDashboard();
+    setInterval(initDashboard, 300000);
+  </script>
+</body>
+</html>
+
