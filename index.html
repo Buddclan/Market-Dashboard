@@ -59,7 +59,7 @@
     }
 
     .signal {
-      font-size: 40px;
+      font-size: 42px;
       line-height: 1;
       margin-top: 12px;
       text-align: center;
@@ -194,7 +194,7 @@
     <div class="section">
       <div class="widget-grid-2">
 
-        <!-- KEEPING YOUR LIVE YIELD MONITOR -->
+        <!-- YIELD MONITOR -->
         <div class="widget-box">
           <h2>Yield Monitor</h2>
 
@@ -221,30 +221,12 @@
                 {
                   "name": "Bonds",
                   "symbols": [
-                    {
-                      "name": "TVC:US10Y",
-                      "displayName": "10Y"
-                    },
-                    {
-                      "name": "TVC:US02Y",
-                      "displayName": "2Y"
-                    },
-                    {
-                      "name": "TVC:US30Y",
-                      "displayName": "30Y"
-                    },
-                    {
-                      "name": "TVC:US20Y",
-                      "displayName": "20Y"
-                    },
-                    {
-                      "name": "TVC:US05Y",
-                      "displayName": "5Y"
-                    },
-                    {
-                      "name": "TVC:US03M",
-                      "displayName": "3M"
-                    }
+                    { "name": "TVC:US10Y", "displayName": "10Y" },
+                    { "name": "TVC:US02Y", "displayName": "2Y" },
+                    { "name": "TVC:US30Y", "displayName": "30Y" },
+                    { "name": "TVC:US20Y", "displayName": "20Y" },
+                    { "name": "TVC:US05Y", "displayName": "5Y" },
+                    { "name": "TVC:US03M", "displayName": "3M" }
                   ]
                 }
               ]
@@ -253,11 +235,11 @@
           </div>
         </div>
 
-        <!-- REPLACES MACRO NARRATIVE -->
+        <!-- MARKET SIGNALS -->
         <div class="widget-box">
           <h2>Market Signals</h2>
           <div class="placeholder">
-            Paste your live Market Signals / WEBData widget here next.
+            Paste your live Market Signals / WEBDATA widget here.
           </div>
         </div>
 
@@ -276,33 +258,36 @@
     const WEBDATA_GID = "YOUR_WEBDATA_GID";
 
     const signalMap = {
-      "Labor": "sig-labor",
-      "Consumer": "sig-consumer",
-      "Housing": "sig-housing",
-      "Manufacturing": "sig-manufacturing",
-      "Inflation": "sig-inflation",
-      "Liquidity": "sig-liquidity",
-      "Trade": "sig-trade",
-      "Financial Conditions": "sig-financial"
+      "labor_signal": "sig-labor",
+      "consumer_signal": "sig-consumer",
+      "housing_signal": "sig-housing",
+      "manufacturing_signal": "sig-manufacturing",
+      "inflation_signal": "sig-inflation",
+      "liquidity_signal": "sig-liquidity",
+      "trade_signal": "sig-trade",
+      "financial_signal": "sig-financial"
     };
 
     async function loadSignalSummary() {
-      const query = encodeURIComponent("select A, B where A is not null");
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${WEBDATA_GID}&tqx=out:json&tq=${query}`;
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${WEBDATA_GID}&tqx=out:json`;
 
       try {
         const response = await fetch(url);
         const text = await response.text();
-
         const json = JSON.parse(text.substring(47).slice(0, -2));
         const rows = json.table.rows || [];
 
         rows.forEach(row => {
-          const category = row.c[0] ? String(row.c[0].v).trim() : "";
-          const signal = row.c[1] ? String(row.c[1].v).trim() : "...";
+          const key = row.c[0] && row.c[0].v != null
+            ? String(row.c[0].v).trim().toLowerCase()
+            : "";
 
-          const targetId = signalMap[category];
-          if (targetId) {
+          const signal = row.c[1] && row.c[1].v != null
+            ? String(row.c[1].v).trim()
+            : "";
+
+          const targetId = signalMap[key];
+          if (targetId && signal) {
             const el = document.getElementById(targetId);
             if (el) el.textContent = signal;
           }
