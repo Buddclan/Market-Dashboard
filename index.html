@@ -631,62 +631,78 @@
 
   <script>
     const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-
-    const SIGNAL_TAB_GID = "1019546511";   // change if needed
-    const SCORE_TAB_GID = "441516074";     // change if needed
+    const SIGNAL_TAB_GID = "1019546511";
+    const SCORE_TAB_GID = "441516074";
 
     const SIGNALS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SIGNAL_TAB_GID}&tqx=out:json`;
     const SCORE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
 
-    const signalRows = [
-      { name: "Labor", row: 1 },
-      { name: "Consumer", row: 2 },
-      { name: "Housing", row: 3 },
-      { name: "Manufacturing", row: 4 },
-      { name: "Inflation", row: 5 },
-      { name: "Liquidity", row: 6 },
-      { name: "Trade", row: 7 },
-      { name: "Financial", row: 8 },
-      { name: "Energy", row: 9 },
-      { name: "Growth", row: 10 },
-      { name: "Automotive", row: 11 },
-      { name: "Inventories", row: 12 }
+    const signalNames = [
+      "Labor",
+      "Consumer",
+      "Housing",
+      "Manufacturing",
+      "Inflation",
+      "Liquidity",
+      "Trade",
+      "Financial",
+      "Energy",
+      "Growth",
+      "Automotive",
+      "Inventories"
     ];
 
-    const gaugeMap = [
-      { id: "inflation", row: 5 },
-      { id: "growth", row: 10 },
-      { id: "labor", row: 1 },
-      { id: "demand", row: 2 },      // Consumer drives Demand bar
-      { id: "liquidity", row: 6 },
-      { id: "financial", row: 8 },
-      { id: "energy", row: 9 }
+    const gaugeLookup = [
+      { id: "inflation", label: "Inflation" },
+      { id: "growth", label: "Growth" },
+      { id: "labor", label: "Labor" },
+      { id: "demand", label: "Consumer" },
+      { id: "liquidity", label: "Liquidity" },
+      { id: "financial", label: "Financial" },
+      { id: "energy", label: "Energy" }
     ];
 
     function parseGviz(text) {
-      const jsonText = text.substring(47).slice(0, -2);
-      return JSON.parse(jsonText);
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf("}");
+      return JSON.parse(text.substring(start, end + 1));
     }
 
     async function fetchSheet(url) {
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: "no-store" });
       const text = await response.text();
       const json = parseGviz(text);
-      return json.table.rows || [];
+      return json.table?.rows || [];
     }
 
-    function getCell(rows, rowIndex, colIndex) {
-      if (!rows[rowIndex]) return "";
-      if (!rows[rowIndex].c) return "";
-      if (!rows[rowIndex].c[colIndex]) return "";
-      return rows[rowIndex].c[colIndex].v ?? "";
+    function normalizeText(value) {
+      return String(value ?? "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
     }
 
-    function getDisplayCell(rows, rowIndex, colIndex) {
-      if (!rows[rowIndex]) return "";
-      if (!rows[rowIndex].c) return "";
-      if (!rows[rowIndex].c[colIndex]) return "";
-      return rows[rowIndex].c[colIndex].f ?? rows[rowIndex].c[colIndex].v ?? "";
+    function getRawCell(row, colIndex) {
+      if (!row || !row.c || !row.c[colIndex]) return "";
+      return row.c[colIndex].v ?? "";
+    }
+
+    function getDisplayCell(row, colIndex) {
+      if (!row || !row.c || !row.c[colIndex]) return "";
+      return row.c[colIndex].f ?? row.c[colIndex].v ?? "";
+    }
+
+    function buildRowLookup(rows) {
+      const map = new Map();
+
+      rows.forEach(row => {
+        const key = normalizeText(getDisplayCell(row, 0) || getRawCell(row, 0));
+        if (key) {
+          map.set(key, row);
+        }
+      });
+
+      return map;
     }
 
     function signalClass(signal) {
@@ -699,8 +715,8 @@
     }
 
     function signalHeight(signal) {
-      if (signal === "🟢") return 28;
-      if (signal === "🟡") return 48;
+      if (signal === "🟢") return 18;
+      if (signal === "🟡") return 38;
       if (signal === "🟠") return 68;
       if (signal === "🔴") return 86;
       if (signal === "☠️" || signal === "☠") return 100;
@@ -721,49 +737,56 @@
       value.textContent = signal || "--";
     }
 
-    function renderSignalGrid(rows) {
+    function renderSignalGrid(signalLookup) {
       const container = document.getElementById("signal-grid");
 
-      container.innerHTML = signalRows.map(item => {
-        const signal = String(getDisplayCell(rows, item.row, 1) || "--").trim(); // column B
+      container.innerHTML = signalNames.map(name => {
+        const row = signalLookup.get(normalizeText(name));
+        const signal = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "--").trim();
         const klass = signalClass(signal);
 
         return `
           <div class="signal-card ${klass}">
-            <div class="signal-name">${item.name}</div>
+            <div class="signal-name">${name}</div>
             <div class="signal-emoji">${signal || "--"}</div>
           </div>
         `;
       }).join("");
     }
 
-    function renderGaugeFromSignals(rows) {
-      gaugeMap.forEach(item => {
-        const signal = String(getDisplayCell(rows, item.row, 1) || "--").trim(); // column B
+    function renderGauge(signalLookup) {
+      gaugeLookup.forEach(item => {
+        const row = signalLookup.get(normalizeText(item.label));
+        const signal = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "--").trim();
         setGaugeBar(item.id, signal);
       });
     }
 
-    function renderFinalScore(rows) {
-      const scoreSignal = String(getDisplayCell(rows, 27, 1) || "--").trim(); // B28
-      const scoreValue = String(getDisplayCell(rows, 27, 2) || "--").trim();  // C28
-      const scoreText = String(getDisplayCell(rows, 27, 3) || "--").trim();   // D28
+    function renderFinalScore(scoreLookup) {
+      const finalRow = scoreLookup.get(normalizeText("Final Score"));
 
-      document.getElementById("gauge-score").textContent = scoreValue || "--";
-      document.getElementById("gauge-signal").textContent = scoreSignal || "--";
-      document.getElementById("gauge-label").textContent = scoreText || "No narrative";
+      const finalSignal = String(getDisplayCell(finalRow, 1) || getRawCell(finalRow, 1) || "--").trim();
+      const finalScore = String(getDisplayCell(finalRow, 2) || getRawCell(finalRow, 2) || "--").trim();
+      const finalNarrative = String(getDisplayCell(finalRow, 3) || getRawCell(finalRow, 3) || "No narrative").trim();
+
+      document.getElementById("gauge-score").textContent = finalScore || "--";
+      document.getElementById("gauge-signal").textContent = finalSignal || "--";
+      document.getElementById("gauge-label").textContent = finalNarrative || "No narrative";
     }
 
     async function initDashboard() {
       try {
-        const [signalData, scoreData] = await Promise.all([
+        const [signalRows, scoreRows] = await Promise.all([
           fetchSheet(SIGNALS_URL),
           fetchSheet(SCORE_URL)
         ]);
 
-        renderSignalGrid(signalData);
-        renderGaugeFromSignals(signalData);
-        renderFinalScore(scoreData);
+        const signalLookup = buildRowLookup(signalRows);
+        const scoreLookup = buildRowLookup(scoreRows);
+
+        renderSignalGrid(signalLookup);
+        renderGauge(signalLookup);
+        renderFinalScore(scoreLookup);
       } catch (error) {
         console.error("Dashboard load error:", error);
 
