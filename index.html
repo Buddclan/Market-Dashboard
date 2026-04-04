@@ -657,6 +657,8 @@
       { id: "energy", label: "Energy" }
     ];
 
+    const SIGNAL_REGEX = /🟢|🟡|🟠|🔴|☠️|☠/;
+
     function parseGviz(text) {
       const start = text.indexOf("{");
       const end = text.lastIndexOf("}");
@@ -685,6 +687,19 @@
     function getDisplayCell(row, colIndex) {
       if (!row || !row.c || !row.c[colIndex]) return "";
       return row.c[colIndex].f ?? row.c[colIndex].v ?? "";
+    }
+
+    function getBestCellText(row, colIndex) {
+      return String(getDisplayCell(row, colIndex) || getRawCell(row, colIndex) || "").trim();
+    }
+
+    function getAllCellTexts(row) {
+      if (!row || !row.c) return [];
+      const values = [];
+      for (let i = 0; i < row.c.length; i++) {
+        values.push(getBestCellText(row, i));
+      }
+      return values;
     }
 
     function signalClass(signal) {
@@ -719,25 +734,26 @@
       value.textContent = signal || "--";
     }
 
-    function findSignalInSingleColumn(rows, label) {
+    function findSignalAnywhere(rows, label) {
       const wanted = normalizeText(label);
 
       for (const row of rows) {
-        const textA = normalizeText(getDisplayCell(row, 0) || getRawCell(row, 0));
-        const textB = normalizeText(getDisplayCell(row, 1) || getRawCell(row, 1));
-        const textC = normalizeText(getDisplayCell(row, 2) || getRawCell(row, 2));
+        const cellTexts = getAllCellTexts(row);
+        if (!cellTexts.length) continue;
 
-        const rowText = [textA, textB, textC].filter(Boolean).join(" ");
+        for (const cellText of cellTexts) {
+          const normalized = normalizeText(cellText);
 
-        if (rowText.includes(wanted)) {
-          const rawA = String(getDisplayCell(row, 0) || getRawCell(row, 0) || "").trim();
-          const rawB = String(getDisplayCell(row, 1) || getRawCell(row, 1) || "").trim();
-          const rawC = String(getDisplayCell(row, 2) || getRawCell(row, 2) || "").trim();
+          if (normalized.includes(wanted)) {
+            const match = cellText.match(SIGNAL_REGEX);
+            if (match) return match[0];
+          }
+        }
 
-          const candidates = [rawA, rawB, rawC].join(" ");
-
-          const match = candidates.match(/🟢|🟡|🟠|🔴|☠️|☠/);
-          if (match) return match[0];
+        const wholeRow = normalizeText(cellTexts.join(" "));
+        if (wholeRow.includes(wanted)) {
+          const rowMatch = cellTexts.join(" ").match(SIGNAL_REGEX);
+          if (rowMatch) return rowMatch[0];
         }
       }
 
@@ -748,7 +764,7 @@
       const container = document.getElementById("signal-grid");
 
       container.innerHTML = signalNames.map(name => {
-        const signal = findSignalInSingleColumn(signalRows, name);
+        const signal = findSignalAnywhere(signalRows, name);
         const klass = signalClass(signal);
 
         return `
@@ -762,40 +778,69 @@
 
     function renderGauge(signalRows) {
       gaugeLookup.forEach(item => {
-        const signal = findSignalInSingleColumn(signalRows, item.label);
+        const signal = findSignalAnywhere(signalRows, item.label);
         setGaugeBar(item.id, signal);
       });
     }
 
-    function findFinalScoreRow(scoreRows) {
+    function findFinalScoreData(scoreRows) {
       for (const row of scoreRows) {
-        const textB = normalizeText(getDisplayCell(row, 1) || getRawCell(row, 1));
-        const textC = normalizeText(getDisplayCell(row, 2) || getRawCell(row, 2));
+        const cellTexts = getAllCellTexts(row);
+        if (!cellTexts.length) continue;
 
-        if (textB === "final score" || textC === "final score") {
-          return row;
+        const normalizedRow = normalizeText(cellTexts.join(" "));
+
+        if (normalizedRow.includes("final score")) {
+          let scoreValue = "--";
+          let scoreSignal = "--";
+          let scoreText = "No narrative";
+
+          for (const text of cellTexts) {
+            const trimmed = String(text || "").trim();
+            if (!trimmed) continue;
+
+            if (SIGNAL_REGEX.test(trimmed)) {
+              const match = trimmed.match(SIGNAL_REGEX);
+              if (match) scoreSignal = match[0];
+              continue;
+            }
+
+            const numericCheck = trimmed.replace(/,/g, "");
+            if (scoreValue === "--" && numericCheck !== "" && !isNaN(numericCheck)) {
+              scoreValue = trimmed;
+              continue;
+            }
+
+            const norm = normalizeText(trimmed);
+            if (norm !== "final score") {
+              scoreText = trimmed;
+            }
+          }
+
+          return {
+            scoreValue,
+            scoreSignal,
+            scoreText
+          };
         }
       }
+
       return null;
     }
 
     function renderFinalScore(scoreRows) {
-      const row = findFinalScoreRow(scoreRows);
+      const finalData = findFinalScoreData(scoreRows);
 
-      if (!row) {
+      if (!finalData) {
         document.getElementById("gauge-score").textContent = "--";
         document.getElementById("gauge-signal").textContent = "--";
         document.getElementById("gauge-label").textContent = "Final Score row not found";
         return;
       }
 
-      const scoreValue = String(getDisplayCell(row, 2) || getRawCell(row, 2) || "--").trim();   // C
-      const scoreSignal = String(getDisplayCell(row, 3) || getRawCell(row, 3) || "--").trim();  // D
-      const scoreText = String(getDisplayCell(row, 4) || getRawCell(row, 4) || "No narrative").trim(); // E
-
-      document.getElementById("gauge-score").textContent = scoreValue || "--";
-      document.getElementById("gauge-signal").textContent = scoreSignal || "--";
-      document.getElementById("gauge-label").textContent = scoreText || "No narrative";
+      document.getElementById("gauge-score").textContent = finalData.scoreValue || "--";
+      document.getElementById("gauge-signal").textContent = finalData.scoreSignal || "--";
+      document.getElementById("gauge-label").textContent = finalData.scoreText || "No narrative";
     }
 
     async function initDashboard() {
