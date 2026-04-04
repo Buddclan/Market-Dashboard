@@ -1,102 +1,76 @@
-<section class="signal-summary">
-  <h2 class="signal-title">Signal Summary</h2>
+<section style="background:#000; padding:20px;">
 
-  <div id="signal-grid" class="signal-grid">
-    <div class="signal-card">Loading...</div>
+  <h2 style="color:#fff; margin-bottom:12px;">Signal Summary</h2>
+
+  <div id="signal-grid" style="
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  ">
+    <div style="color:#fff;">Loading...</div>
   </div>
+
 </section>
 
-<style>
-  .signal-summary {
-    margin: 20px 0 30px;
-    width: 100%;
-  }
-
-  .signal-title {
-    color: #ffffff;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  .signal-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-
-  .signal-card {
-    background: #000000;
-    border: 1px solid #1a1a1a;
-    border-radius: 12px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .signal-name {
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 6px;
-    text-align: center;
-  }
-
-  .signal-emoji {
-    font-size: 1.8rem;
-  }
-
-  @media (max-width: 900px) {
-    .signal-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-</style>
-
 <script>
-  async function loadSignals() {
-    const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-    const SHEET_NAME = "stagflation_monitor";
-    const grid = document.getElementById("signal-grid");
+async function loadSignals() {
 
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_NAME}&range=B1:B12&tqx=out:json`;
+  const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
+  const SHEET_NAME = "stagflation_monitor";
 
-    try {
-      const res = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.substring(47).slice(0, -2));
+  const grid = document.getElementById("signal-grid");
 
-      const rows = json.table.rows;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_NAME}&range=B1:B12&tqx=out:json`;
 
-      grid.innerHTML = "";
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
 
-      rows.forEach(r => {
-        if (!r.c || !r.c[0]) return;
+    const json = JSON.parse(text.substring(47).slice(0,-2));
 
-        const value = r.c[0].v || "";
-        const parts = value.split("\n");
+    const rows = json.table.rows;
 
-        const name = parts[0] || "";
-        const emoji = parts[1] || "";
+    grid.innerHTML = "";
 
-        const card = document.createElement("div");
-        card.className = "signal-card";
+    rows.forEach(r => {
+      if (!r.c || !r.c[0]) return;
 
-        card.innerHTML = `
-          <div class="signal-name">${name}</div>
-          <div class="signal-emoji">${emoji}</div>
-        `;
+      const value = r.c[0].v || "";
+      const parts = value.split("\n");
 
-        grid.appendChild(card);
-      });
+      const name = parts[0] || "";
+      const emoji = parts[1] || "";
 
-    } catch (e) {
-      grid.innerHTML = "<div class='signal-card'>Error loading</div>";
-      console.error(e);
-    }
+      const card = document.createElement("div");
+
+      card.style = `
+        background:#000;
+        border:1px solid #111;
+        border-radius:10px;
+        height:90px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+      `;
+
+      card.innerHTML = `
+        <div style="color:#fff; font-size:14px; margin-bottom:6px; text-align:center;">
+          ${name}
+        </div>
+        <div style="font-size:26px;">
+          ${emoji}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+  } catch (err) {
+    grid.innerHTML = "<div style='color:red;'>Error loading</div>";
+    console.error(err);
   }
+}
 
-  loadSignals();
+loadSignals();
 </script>
