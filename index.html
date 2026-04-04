@@ -739,7 +739,14 @@
           fetchRows(SIGNAL_GVIZ_URL),
           fetchRows(SCORE_GVIZ_URL)
         ]);
-
+console.log(
+  "SIGNAL ROWS",
+  signalRows.map((row, index) => ({
+    index: index,
+    colA: getCell(signalRows, index, 0),
+    colB: getCell(signalRows, index, 1)
+  }))
+);
         renderSignalGrid(signalRows);
         renderGauge(scoreRows);
         renderFinalScore(scoreRows);
