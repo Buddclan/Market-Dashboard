@@ -486,11 +486,12 @@
   </div>
 
   <script>
-    async function loadSignals() {
-      const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-      const SHEET_NAME = "stagflation_monitor";
-      const RANGE = "B1:B12";
-      const grid = document.getElementById("signal-grid");
+    <script>
+  async function loadSignals() {
+    const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
+    const SHEET_NAME = "Stagflation_monitor";
+    const RANGE = "B1:B12";
+    const grid = document.getElementById("signal-grid");
 
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&range=${encodeURIComponent(RANGE)}&tqx=out:json`;
 
