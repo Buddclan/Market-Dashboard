@@ -634,7 +634,7 @@
 
     const signalNames = [
       "Labor",
-      "Consumer",
+      "Consumer Demand",
       "Housing",
       "Manufacturing",
       "Inflation",
@@ -646,25 +646,6 @@
       "Automotive",
       "Inventories"
     ];
-
-    const gaugeLookup = [
-      { id: "inflation", label: "Inflation" },
-      { id: "growth", label: "Growth" },
-      { id: "labor", label: "Labor" },
-      { id: "demand", label: "Consumer" },
-      { id: "liquidity", label: "Liquidity" },
-      { id: "financial", label: "Financial" },
-      { id: "energy", label: "Energy" }
-    ];
-
-    const SIGNAL_REGEX = /🟢|🟡|🟠|🔴|☠️|☠/;
-
-    function normalizeText(value) {
-      return String(value ?? "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-    }
 
     function parseGviz(text) {
       const start = text.indexOf("{");
@@ -679,24 +660,10 @@
       return json.table?.rows || [];
     }
 
-    function getCellDisplay(row, colIndex) {
+    function getCell(rows, rowIndex, colIndex) {
+      const row = rows[rowIndex];
       if (!row || !row.c || !row.c[colIndex]) return "";
       return String(row.c[colIndex].f ?? row.c[colIndex].v ?? "").trim();
-    }
-
-    function getMatrix(rows) {
-      return rows.map(row => {
-        const cols = row.c || [];
-        return cols.map(cell => {
-          if (!cell) return "";
-          return String(cell.f ?? cell.v ?? "").trim();
-        });
-      });
-    }
-
-    function readMatrixCell(matrix, rowIndex, colIndex) {
-      if (!matrix[rowIndex]) return "";
-      return String(matrix[rowIndex][colIndex] ?? "").trim();
     }
 
     function signalClass(signal) {
@@ -731,62 +698,51 @@
       value.textContent = signal || "--";
     }
 
-    function parseSignalCell(text) {
-      const raw = String(text || "").replace(/\u00a0/g, " ").trim();
-      const match = raw.match(SIGNAL_REGEX);
-      const signal = match ? match[0] : "--";
-      const label = raw.replace(SIGNAL_REGEX, "").replace(/\s+/g, " ").trim();
-
-      return {
-        raw,
-        label,
-        signal
-      };
-    }
-
-    function buildSignalMap(signalMatrix) {
-      const map = {};
-
-      for (let r = 0; r < signalMatrix.length; r++) {
-        const cellText = readMatrixCell(signalMatrix, r, 1); // Column B
-        if (!cellText) continue;
-
-        const parsed = parseSignalCell(cellText);
-        if (!parsed.label) continue;
-
-        map[normalizeText(parsed.label)] = parsed.signal;
-      }
-
-      return map;
-    }
-
-    function renderSignalGrid(signalMap) {
+    function renderSignalGrid(signalRows) {
       const container = document.getElementById("signal-grid");
 
-      container.innerHTML = signalNames.map(name => {
-        const signal = signalMap[normalizeText(name)] || "--";
+      const items = [
+        { name: getCell(signalRows, 0, 0) || "Labor", signal: getCell(signalRows, 0, 1) },   // A1 / B1
+        { name: getCell(signalRows, 1, 0) || "Consumer Demand", signal: getCell(signalRows, 1, 1) }, // A2 / B2
+        { name: getCell(signalRows, 2, 0) || "Housing", signal: getCell(signalRows, 2, 1) }, // A3 / B3
+        { name: getCell(signalRows, 3, 0) || "Manufacturing", signal: getCell(signalRows, 3, 1) }, // A4 / B4
+        { name: getCell(signalRows, 4, 0) || "Inflation", signal: getCell(signalRows, 4, 1) }, // A5 / B5
+        { name: getCell(signalRows, 5, 0) || "Liquidity", signal: getCell(signalRows, 5, 1) }, // A6 / B6
+        { name: getCell(signalRows, 6, 0) || "Trade", signal: getCell(signalRows, 6, 1) }, // A7 / B7
+        { name: getCell(signalRows, 7, 0) || "Financial", signal: getCell(signalRows, 7, 1) }, // A8 / B8
+        { name: getCell(signalRows, 8, 0) || "Energy", signal: getCell(signalRows, 8, 1) }, // A9 / B9
+        { name: getCell(signalRows, 9, 0) || "Growth", signal: getCell(signalRows, 9, 1) }, // A10 / B10
+        { name: getCell(signalRows, 10, 0) || "Automotive", signal: getCell(signalRows, 10, 1) }, // A11 / B11
+        { name: getCell(signalRows, 11, 0) || "Inventories", signal: getCell(signalRows, 11, 1) } // A12 / B12
+      ];
+
+      container.innerHTML = items.map(item => {
+        const signal = item.signal || "--";
         const klass = signalClass(signal);
 
         return `
           <div class="signal-card ${klass}">
-            <div class="signal-name">${name}</div>
+            <div class="signal-name">${item.name}</div>
             <div class="signal-emoji">${signal}</div>
           </div>
         `;
       }).join("");
     }
 
-    function renderGauge(signalMap) {
-      gaugeLookup.forEach(item => {
-        const signal = signalMap[normalizeText(item.label)] || "--";
-        setGaugeBar(item.id, signal);
-      });
+    function renderGauge(scoreRows) {
+      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
+      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
+      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
+      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
+      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
+      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
+      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
     }
 
-    function renderFinalScore(scoreMatrix) {
-      const finalSignal = readMatrixCell(scoreMatrix, 27, 1) || "--"; // B28
-      const finalScore = readMatrixCell(scoreMatrix, 27, 2) || "--";  // C28
-      const finalText = readMatrixCell(scoreMatrix, 27, 3) || "No narrative"; // D28
+    function renderFinalScore(scoreRows) {
+      const finalScore = getCell(scoreRows, 27, 1) || "--";   // B28
+      const finalSignal = getCell(scoreRows, 27, 2) || "--";  // C28
+      const finalText = getCell(scoreRows, 27, 3) || "Normal"; // D28
 
       document.getElementById("gauge-score").textContent = finalScore;
       document.getElementById("gauge-signal").textContent = finalSignal;
@@ -800,15 +756,9 @@
           fetchRows(SCORE_GVIZ_URL)
         ]);
 
-        const signalMatrix = getMatrix(signalRows);
-        const scoreMatrix = getMatrix(scoreRows);
-
-        const signalMap = buildSignalMap(signalMatrix);
-
-        renderSignalGrid(signalMap);
-        renderGauge(signalMap);
-        renderFinalScore(scoreMatrix);
-
+        renderSignalGrid(signalRows);
+        renderGauge(scoreRows);
+        renderFinalScore(scoreRows);
       } catch (error) {
         console.error("Dashboard load error:", error);
 
