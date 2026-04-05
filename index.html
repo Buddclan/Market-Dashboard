@@ -232,7 +232,7 @@
 
     .stag-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
     }
 
@@ -445,6 +445,15 @@
         <div id="stag-widget-2"></div>
         <div id="stag-widget-3"></div>
         <div id="stag-widget-4"></div>
+        <div id="stag-widget-5"></div>
+        <div id="stag-widget-6"></div>
+        <div id="stag-widget-7"></div>
+        <div id="stag-widget-8"></div>
+        <div id="stag-widget-9"></div>
+        <div id="stag-widget-10"></div>
+        <div id="stag-widget-11"></div>
+        <div id="stag-widget-12"></div>
+        <div id="stag-widget-13"></div>
       </div>
     </div>
 
@@ -519,237 +528,4 @@
             <div class="mini-widget-label">Silver</div>
             <div class="tradingview-widget-container">
               <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TVC:SILVER",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-grid">
-      <div class="panel">
-        <div class="section-header">
-          <h2>Energy Watch</h2>
-          <div class="divider-line energy"></div>
-        </div>
-
-        <div class="energy-grid">
-          <div class="mini-widget">
-            <div class="mini-widget-label">Crude Oil</div>
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TVC:USOIL",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
-          </div>
-
-          <div class="mini-widget">
-            <div class="mini-widget-label">Brent</div>
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "TICKMILL:BRENT",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
-          </div>
-
-          <div class="mini-widget">
-            <div class="mini-widget-label">Gas</div>
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-              {
-                "symbol": "FX:GASOLINEF",
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "locale": "en",
-                "width": "100%"
-              }
-              </script>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      Stagflation Monitor | Live Macro Signals
-    </div>
-  </div>
-
-  <script>
-    const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-    const SCORE_TAB_GID = "441516074";
-    const STAG_TAB_GID = "1019546511";
-
-    const SCORE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
-    const STAG_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${STAG_TAB_GID}&tqx=out:json`;
-
-    function parseGviz(text) {
-      const start = text.indexOf("{");
-      const end = text.lastIndexOf("}");
-      if (start === -1 || end === -1) {
-        throw new Error("GVIZ parse failed");
-      }
-      return JSON.parse(text.substring(start, end + 1));
-    }
-
-    async function fetchRows(url) {
-      const response = await fetch(url, { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(`Fetch failed: ${response.status}`);
-      }
-      const text = await response.text();
-      const json = parseGviz(text);
-      return json.table?.rows || [];
-    }
-
-    function getCell(rows, rowIndex, colIndex) {
-      const row = rows[rowIndex];
-      if (!row || !row.c || !row.c[colIndex]) return "";
-      return String(row.c[colIndex].f ?? row.c[colIndex].v ?? "").trim();
-    }
-
-    function normalizeSignal(signal) {
-      const value = String(signal || "").trim();
-
-      if (value === "🟢") return "🟢";
-      if (value === "🟡") return "🟡";
-      if (value === "🟠") return "🟠";
-      if (value === "🔴") return "🔴";
-      if (value === "☠" || value === "☠️") return "☠️";
-
-      return "";
-    }
-
-    function signalClass(signal) {
-      const value = normalizeSignal(signal);
-
-      if (value === "🟢") return "green";
-      if (value === "🟡") return "yellow";
-      if (value === "🟠") return "orange";
-      if (value === "🔴") return "red";
-      if (value === "☠️") return "skull";
-      return "";
-    }
-
-    function signalHeight(signal) {
-      const value = normalizeSignal(signal);
-
-      if (value === "🟢") return 18;
-      if (value === "🟡") return 38;
-      if (value === "🟠") return 68;
-      if (value === "🔴") return 86;
-      if (value === "☠️") return 100;
-      return 8;
-    }
-
-    function setGaugeBar(id, signal) {
-      const fill = document.getElementById(`eq-${id}`);
-      const value = document.getElementById(`eq-${id}-value`);
-
-      if (!fill || !value) return;
-
-      const cleanSignal = normalizeSignal(signal);
-
-      fill.className = "eq-fill";
-      const klass = signalClass(cleanSignal);
-      if (klass) fill.classList.add(klass);
-
-      fill.style.height = `${signalHeight(cleanSignal)}%`;
-      value.textContent = cleanSignal || "--";
-    }
-
-    function renderGauge(scoreRows) {
-      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
-      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
-      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
-      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
-      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
-      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
-      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
-    }
-
-    function renderFinalScore(scoreRows) {
-      const finalScore = getCell(scoreRows, 27, 1) || "--";
-      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--";
-      const finalText = getCell(scoreRows, 27, 3) || "Normal";
-
-      document.getElementById("gauge-score").textContent = finalScore;
-      document.getElementById("gauge-signal").textContent = finalSignal;
-      document.getElementById("gauge-label").textContent = finalText;
-    }
-
-    function renderStagWidget(elementId, name, signal) {
-      const container = document.getElementById(elementId);
-      if (!container) return;
-
-      const cleanSignal = normalizeSignal(signal) || "--";
-      const klass = signalClass(cleanSignal);
-
-      container.innerHTML = `
-        <div class="stag-widget ${klass}">
-          <div class="stag-widget-name">${name || "—"}</div>
-          <div class="stag-widget-signal">${cleanSignal}</div>
-        </div>
-      `;
-    }
-
-    function renderEmptyStagWidgets() {
-      renderStagWidget("stag-widget-1", "Ready", "--");
-      renderStagWidget("stag-widget-2", "", "");
-      renderStagWidget("stag-widget-3", "", "");
-      renderStagWidget("stag-widget-4", "", "");
-    }
-
-    function showGaugeError() {
-      document.getElementById("gauge-score").textContent = "--";
-      document.getElementById("gauge-signal").textContent = "--";
-      document.getElementById("gauge-label").textContent = "Gauge data failed";
-    }
-
-    async function loadGauge() {
-      try {
-        const scoreRows = await fetchRows(SCORE_GVIZ_URL);
-        renderGauge(scoreRows);
-        renderFinalScore(scoreRows);
-      } catch (error) {
-        console.error("Gauge load error:", error);
-        showGaugeError();
-      }
-    }
-
-    async function initDashboard() {
-      renderEmptyStagWidgets();
-
-      await Promise.allSettled([
-        loadGauge()
-      ]);
-    }
-
-    initDashboard();
-    setInterval(initDashboard, 300000);
-  </script>
-</body>
-</html>
+              <script type="text/javascript" src="
