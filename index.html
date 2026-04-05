@@ -625,21 +625,37 @@
       return String(row.c[colIndex].f ?? row.c[colIndex].v ?? "").trim();
     }
 
+    function normalizeSignal(signal) {
+      const value = String(signal || "").trim();
+
+      if (value === "🟢") return "🟢";
+      if (value === "🟡") return "🟡";
+      if (value === "🟠") return "🟠";
+      if (value === "🔴") return "🔴";
+      if (value === "☠️" || value === "☠") return "☠️";
+
+      return value;
+    }
+
     function signalClass(signal) {
-      if (signal === "🟢") return "green";
-      if (signal === "🟡") return "yellow";
-      if (signal === "🟠") return "orange";
-      if (signal === "🔴") return "red";
-      if (signal === "☠️" || signal === "☠") return "skull";
+      const value = normalizeSignal(signal);
+
+      if (value === "🟢") return "green";
+      if (value === "🟡") return "yellow";
+      if (value === "🟠") return "orange";
+      if (value === "🔴") return "red";
+      if (value === "☠️") return "skull";
       return "";
     }
 
     function signalHeight(signal) {
-      if (signal === "🟢") return 18;
-      if (signal === "🟡") return 38;
-      if (signal === "🟠") return 68;
-      if (signal === "🔴") return 86;
-      if (signal === "☠️" || signal === "☠") return 100;
+      const value = normalizeSignal(signal);
+
+      if (value === "🟢") return 18;
+      if (value === "🟡") return 38;
+      if (value === "🟠") return 68;
+      if (value === "🔴") return 86;
+      if (value === "☠️") return 100;
       return 8;
     }
 
@@ -649,41 +665,50 @@
 
       if (!fill || !value) return;
 
+      const cleanSignal = normalizeSignal(signal);
+
       fill.className = "eq-fill";
-      const klass = signalClass(signal);
+      const klass = signalClass(cleanSignal);
       if (klass) fill.classList.add(klass);
 
-      fill.style.height = `${signalHeight(signal)}%`;
-      value.textContent = signal || "--";
+      fill.style.height = `${signalHeight(cleanSignal)}%`;
+      value.textContent = cleanSignal || "--";
     }
 
     function renderSignalGrid(signalRows) {
       const container = document.getElementById("signal-grid");
 
-      const items = [
-        { name: "Labor", signal: getCell(signalRows, 0, 1) || "--" },
-        { name: "Consumer Demand", signal: getCell(signalRows, 1, 1) || "--" },
-        { name: "Housing", signal: getCell(signalRows, 2, 1) || "--" },
-        { name: "Manufacturing", signal: getCell(signalRows, 3, 1) || "--" },
-        { name: "Inflation", signal: getCell(signalRows, 4, 1) || "--" },
-        { name: "Liquidity", signal: getCell(signalRows, 5, 1) || "--" },
-        { name: "Trade", signal: getCell(signalRows, 6, 1) || "--" },
-        { name: "Financial", signal: getCell(signalRows, 7, 1) || "--" },
-        { name: "Energy", signal: getCell(signalRows, 8, 1) || "--" },
-        { name: "Growth", signal: getCell(signalRows, 9, 1) || "--" },
-        { name: "Automotive", signal: getCell(signalRows, 10, 1) || "--" },
-        { name: "Inventories", signal: getCell(signalRows, 11, 1) || "--" },
-        { name: "Consumer", signal: getCell(signalRows, 12, 1) || "--" }
-      ];
+      const items = signalRows
+        .map((row, index) => {
+          const name = getCell(signalRows, index, 0);
+          const signal = normalizeSignal(getCell(signalRows, index, 1));
+
+          if (!name) return null;
+
+          return {
+            name: name,
+            signal: signal || "--"
+          };
+        })
+        .filter(Boolean);
+
+      if (!items.length) {
+        container.innerHTML = `
+          <div class="signal-card red">
+            <div class="signal-name">No Data</div>
+            <div class="signal-emoji">⚠️</div>
+          </div>
+        `;
+        return;
+      }
 
       container.innerHTML = items.map(item => {
-        const signal = item.signal || "--";
-        const klass = signalClass(signal);
+        const klass = signalClass(item.signal);
 
         return `
           <div class="signal-card ${klass}">
             <div class="signal-name">${item.name}</div>
-            <div class="signal-emoji">${signal}</div>
+            <div class="signal-emoji">${item.signal}</div>
           </div>
         `;
       }).join("");
@@ -701,7 +726,7 @@
 
     function renderFinalScore(scoreRows) {
       const finalScore = getCell(scoreRows, 27, 1) || "--";    // B28
-      const finalSignal = getCell(scoreRows, 27, 2) || "--";   // C28
+      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--";   // C28
       const finalText = getCell(scoreRows, 27, 3) || "Normal"; // D28
 
       document.getElementById("gauge-score").textContent = finalScore;
