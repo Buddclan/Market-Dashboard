@@ -230,7 +230,13 @@
       line-height: 1.2;
     }
 
-    .signal-card {
+    .stag-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stag-widget {
       background: #000000;
       border: 1px solid #141414;
       border-radius: 12px;
@@ -241,11 +247,9 @@
       align-items: center;
       padding: 12px 10px;
       text-align: center;
-      max-width: 260px;
-      margin: 0 auto;
     }
 
-    .signal-name {
+    .stag-widget-name {
       color: #ffffff;
       font-size: 14px;
       font-weight: 600;
@@ -253,16 +257,16 @@
       line-height: 1.2;
     }
 
-    .signal-emoji {
+    .stag-widget-signal {
       font-size: 28px;
       line-height: 1;
     }
 
-    .signal-card.green { border-color: rgba(0,255,120,0.22); box-shadow: 0 0 12px rgba(0,255,120,0.06); }
-    .signal-card.yellow { border-color: rgba(255,220,0,0.24); box-shadow: 0 0 12px rgba(255,220,0,0.06); }
-    .signal-card.orange { border-color: rgba(255,145,0,0.24); box-shadow: 0 0 12px rgba(255,145,0,0.07); }
-    .signal-card.red { border-color: rgba(255,60,60,0.24); box-shadow: 0 0 12px rgba(255,60,60,0.07); }
-    .signal-card.skull { border-color: rgba(220,220,220,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.04); }
+    .stag-widget.green { border-color: rgba(0,255,120,0.22); box-shadow: 0 0 12px rgba(0,255,120,0.06); }
+    .stag-widget.yellow { border-color: rgba(255,220,0,0.24); box-shadow: 0 0 12px rgba(255,220,0,0.06); }
+    .stag-widget.orange { border-color: rgba(255,145,0,0.24); box-shadow: 0 0 12px rgba(255,145,0,0.07); }
+    .stag-widget.red { border-color: rgba(255,60,60,0.24); box-shadow: 0 0 12px rgba(255,60,60,0.07); }
+    .stag-widget.skull { border-color: rgba(220,220,220,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.04); }
 
     .top-grid {
       display: grid;
@@ -331,6 +335,10 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
+      .stag-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
       .energy-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -339,7 +347,8 @@
     @media (max-width: 780px) {
       .equalizer-grid,
       .market-grid,
-      .energy-grid {
+      .energy-grid,
+      .stag-grid {
         grid-template-columns: 1fr;
       }
 
@@ -431,8 +440,11 @@
         <div class="divider-line gold"></div>
       </div>
 
-      <div id="stagflation-monitor-section" style="padding:20px; text-align:center; color:#777;">
-        Loading...
+      <div id="stagflation-monitor-section" class="stag-grid">
+        <div id="stag-widget-1"></div>
+        <div id="stag-widget-2"></div>
+        <div id="stag-widget-3"></div>
+        <div id="stag-widget-4"></div>
       </div>
     </div>
 
@@ -689,34 +701,32 @@
       document.getElementById("gauge-label").textContent = finalText;
     }
 
-    function renderStagflationMonitor(rows) {
-      const container = document.getElementById("stagflation-monitor-section");
+    function renderStagWidget(elementId, name, signal) {
+      const container = document.getElementById(elementId);
+      if (!container) return;
 
-      const name = getCell(rows, 0, 0) || "—";
-      const signal = normalizeSignal(getCell(rows, 0, 1)) || "--";
-      const klass = signalClass(signal);
+      const cleanSignal = normalizeSignal(signal) || "--";
+      const klass = signalClass(cleanSignal);
 
       container.innerHTML = `
-        <div class="signal-card ${klass}">
-          <div class="signal-name">${name}</div>
-          <div class="signal-emoji">${signal}</div>
+        <div class="stag-widget ${klass}">
+          <div class="stag-widget-name">${name || "—"}</div>
+          <div class="stag-widget-signal">${cleanSignal}</div>
         </div>
       `;
+    }
+
+    function renderEmptyStagWidgets() {
+      renderStagWidget("stag-widget-1", "Ready", "--");
+      renderStagWidget("stag-widget-2", "", "");
+      renderStagWidget("stag-widget-3", "", "");
+      renderStagWidget("stag-widget-4", "", "");
     }
 
     function showGaugeError() {
       document.getElementById("gauge-score").textContent = "--";
       document.getElementById("gauge-signal").textContent = "--";
       document.getElementById("gauge-label").textContent = "Gauge data failed";
-    }
-
-    function showStagflationMonitorError() {
-      document.getElementById("stagflation-monitor-section").innerHTML = `
-        <div class="signal-card red">
-          <div class="signal-name">Data Error</div>
-          <div class="signal-emoji">⚠️</div>
-        </div>
-      `;
     }
 
     async function loadGauge() {
@@ -730,20 +740,11 @@
       }
     }
 
-    async function loadStagflationMonitor() {
-      try {
-        const rows = await fetchRows(STAG_GVIZ_URL);
-        renderStagflationMonitor(rows);
-      } catch (error) {
-        console.error("Stag Monitor error:", error);
-        showStagflationMonitorError();
-      }
-    }
-
     async function initDashboard() {
+      renderEmptyStagWidgets();
+
       await Promise.allSettled([
-        loadGauge(),
-        loadStagflationMonitor()
+        loadGauge()
       ]);
     }
 
