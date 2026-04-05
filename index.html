@@ -606,6 +606,22 @@
     const SIGNAL_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SIGNAL_TAB_GID}&tqx=out:json`;
     const SCORE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
 
+    const SIGNAL_ORDER = [
+      "Labor",
+      "Consumer Demand",
+      "Housing",
+      "Manufacturing",
+      "Inflation",
+      "Liquidity",
+      "Trade",
+      "Financial Conditions",
+      "Energy",
+      "Growth",
+      "Automotive",
+      "Inventories",
+      "Consumer"
+    ];
+
     function parseGviz(text) {
       const start = text.indexOf("{");
       const end = text.lastIndexOf("}");
@@ -632,9 +648,33 @@
       if (value === "🟡") return "🟡";
       if (value === "🟠") return "🟠";
       if (value === "🔴") return "🔴";
-      if (value === "☠️" || value === "☠") return "☠️";
+      if (value === "☠" || value === "☠️") return "☠️";
 
-      return value;
+      return "";
+    }
+
+    function normalizeName(name) {
+      const value = String(name || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+
+      if (value === "labor") return "Labor";
+      if (value === "consumer demand") return "Consumer Demand";
+      if (value === "housing") return "Housing";
+      if (value === "manufacturing") return "Manufacturing";
+      if (value === "inflation") return "Inflation";
+      if (value === "liquidity") return "Liquidity";
+      if (value === "trade") return "Trade";
+      if (value === "financial") return "Financial Conditions";
+      if (value === "financial conditions") return "Financial Conditions";
+      if (value === "energy") return "Energy";
+      if (value === "growth") return "Growth";
+      if (value === "automotive") return "Automotive";
+      if (value === "inventories") return "Inventories";
+      if (value === "consumer") return "Consumer";
+
+      return "";
     }
 
     function signalClass(signal) {
@@ -666,102 +706,3 @@
       if (!fill || !value) return;
 
       const cleanSignal = normalizeSignal(signal);
-
-      fill.className = "eq-fill";
-      const klass = signalClass(cleanSignal);
-      if (klass) fill.classList.add(klass);
-
-      fill.style.height = `${signalHeight(cleanSignal)}%`;
-      value.textContent = cleanSignal || "--";
-    }
-
-    function renderSignalGrid(signalRows) {
-      const container = document.getElementById("signal-grid");
-
-      const items = signalRows
-        .map((row, index) => {
-          const name = getCell(signalRows, index, 0);
-          const signal = normalizeSignal(getCell(signalRows, index, 1));
-
-          if (!name) return null;
-
-          return {
-            name: name,
-            signal: signal || "--"
-          };
-        })
-        .filter(Boolean);
-
-      if (!items.length) {
-        container.innerHTML = `
-          <div class="signal-card red">
-            <div class="signal-name">No Data</div>
-            <div class="signal-emoji">⚠️</div>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = items.map(item => {
-        const klass = signalClass(item.signal);
-
-        return `
-          <div class="signal-card ${klass}">
-            <div class="signal-name">${item.name}</div>
-            <div class="signal-emoji">${item.signal}</div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderGauge(scoreRows) {
-      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
-      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
-      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
-      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
-      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
-      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
-      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
-    }
-
-    function renderFinalScore(scoreRows) {
-      const finalScore = getCell(scoreRows, 27, 1) || "--";    // B28
-      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--";   // C28
-      const finalText = getCell(scoreRows, 27, 3) || "Normal"; // D28
-
-      document.getElementById("gauge-score").textContent = finalScore;
-      document.getElementById("gauge-signal").textContent = finalSignal;
-      document.getElementById("gauge-label").textContent = finalText;
-    }
-
-    async function initDashboard() {
-      try {
-        const [signalRows, scoreRows] = await Promise.all([
-          fetchRows(SIGNAL_GVIZ_URL),
-          fetchRows(SCORE_GVIZ_URL)
-        ]);
-
-        renderSignalGrid(signalRows);
-        renderGauge(scoreRows);
-        renderFinalScore(scoreRows);
-      } catch (error) {
-        console.error("Dashboard load error:", error);
-
-        document.getElementById("gauge-score").textContent = "--";
-        document.getElementById("gauge-signal").textContent = "--";
-        document.getElementById("gauge-label").textContent = "Data load failed";
-
-        document.getElementById("signal-grid").innerHTML = `
-          <div class="signal-card red">
-            <div class="signal-name">Data Error</div>
-            <div class="signal-emoji">⚠️</div>
-          </div>
-        `;
-      }
-    }
-
-    initDashboard();
-    setInterval(initDashboard, 300000);
-  </script>
-</body>
-</html>
