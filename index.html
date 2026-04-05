@@ -625,11 +625,17 @@
     function parseGviz(text) {
       const start = text.indexOf("{");
       const end = text.lastIndexOf("}");
+      if (start === -1 || end === -1) {
+        throw new Error("GVIZ parse failed");
+      }
       return JSON.parse(text.substring(start, end + 1));
     }
 
     async function fetchRows(url) {
       const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Fetch failed: ${response.status}`);
+      }
       const text = await response.text();
       const json = parseGviz(text);
       return json.table?.rows || [];
@@ -706,3 +712,116 @@
       if (!fill || !value) return;
 
       const cleanSignal = normalizeSignal(signal);
+
+      fill.className = "eq-fill";
+      const klass = signalClass(cleanSignal);
+      if (klass) fill.classList.add(klass);
+
+      fill.style.height = `${signalHeight(cleanSignal)}%`;
+      value.textContent = cleanSignal || "--";
+    }
+
+    function renderSignalGrid(signalRows) {
+      const container = document.getElementById("signal-grid");
+      const signalMap = {};
+
+      for (let i = 0; i < signalRows.length; i++) {
+        const rawName = getCell(signalRows, i, 0);
+        const rawSignal = getCell(signalRows, i, 1);
+
+        const cleanName = normalizeName(rawName);
+        const cleanSignal = normalizeSignal(rawSignal);
+
+        if (!cleanName) continue;
+        if (!cleanSignal) continue;
+
+        signalMap[cleanName] = cleanSignal;
+      }
+
+      const items = SIGNAL_ORDER.map(name => {
+        return {
+          name,
+          signal: signalMap[name] || "--"
+        };
+      });
+
+      container.innerHTML = items.map(item => {
+        const klass = signalClass(item.signal);
+
+        return `
+          <div class="signal-card ${klass}">
+            <div class="signal-name">${item.name}</div>
+            <div class="signal-emoji">${item.signal}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderGauge(scoreRows) {
+      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
+      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
+      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
+      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
+      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
+      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
+      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
+    }
+
+    function renderFinalScore(scoreRows) {
+      const finalScore = getCell(scoreRows, 27, 1) || "--";        // B28
+      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--"; // C28
+      const finalText = getCell(scoreRows, 27, 3) || "Normal";     // D28
+
+      document.getElementById("gauge-score").textContent = finalScore;
+      document.getElementById("gauge-signal").textContent = finalSignal;
+      document.getElementById("gauge-label").textContent = finalText;
+    }
+
+    function showSignalError() {
+      document.getElementById("signal-grid").innerHTML = `
+        <div class="signal-card red">
+          <div class="signal-name">Signal Data Error</div>
+          <div class="signal-emoji">⚠️</div>
+        </div>
+      `;
+    }
+
+    function showGaugeError() {
+      document.getElementById("gauge-score").textContent = "--";
+      document.getElementById("gauge-signal").textContent = "--";
+      document.getElementById("gauge-label").textContent = "Gauge data failed";
+    }
+
+    async function loadSignalSummary() {
+      try {
+        const signalRows = await fetchRows(SIGNAL_GVIZ_URL);
+        renderSignalGrid(signalRows);
+      } catch (error) {
+        console.error("Signal Summary load error:", error);
+        showSignalError();
+      }
+    }
+
+    async function loadGauge() {
+      try {
+        const scoreRows = await fetchRows(SCORE_GVIZ_URL);
+        renderGauge(scoreRows);
+        renderFinalScore(scoreRows);
+      } catch (error) {
+        console.error("Gauge load error:", error);
+        showGaugeError();
+      }
+    }
+
+    async function initDashboard() {
+      await Promise.allSettled([
+        loadSignalSummary(),
+        loadGauge()
+      ]);
+    }
+
+    initDashboard();
+    setInterval(initDashboard, 300000);
+  </script>
+</body>
+</html>
