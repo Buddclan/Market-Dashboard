@@ -230,44 +230,6 @@
       line-height: 1.2;
     }
 
-    .signal-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .signal-card {
-      background: #000000;
-      border: 1px solid #141414;
-      border-radius: 12px;
-      min-height: 92px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 12px 10px;
-      text-align: center;
-    }
-
-    .signal-name {
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      line-height: 1.2;
-    }
-
-    .signal-emoji {
-      font-size: 28px;
-      line-height: 1;
-    }
-
-    .signal-card.green { border-color: rgba(0,255,120,0.22); box-shadow: 0 0 12px rgba(0,255,120,0.06); }
-    .signal-card.yellow { border-color: rgba(255,220,0,0.24); box-shadow: 0 0 12px rgba(255,220,0,0.06); }
-    .signal-card.orange { border-color: rgba(255,145,0,0.24); box-shadow: 0 0 12px rgba(255,145,0,0.07); }
-    .signal-card.red { border-color: rgba(255,60,60,0.24); box-shadow: 0 0 12px rgba(255,60,60,0.07); }
-    .signal-card.skull { border-color: rgba(220,220,220,0.18); box-shadow: 0 0 12px rgba(255,255,255,0.04); }
-
     .top-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
@@ -335,10 +297,6 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
-      .signal-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
       .energy-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -347,8 +305,7 @@
     @media (max-width: 780px) {
       .equalizer-grid,
       .market-grid,
-      .energy-grid,
-      .signal-grid {
+      .energy-grid {
         grid-template-columns: 1fr;
       }
 
@@ -430,20 +387,6 @@
               <div class="eq-label">Energy</div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <h2>Signal Summary</h2>
-        <div class="divider-line gold"></div>
-      </div>
-
-      <div id="signal-grid" class="signal-grid">
-        <div class="signal-card">
-          <div class="signal-name">Loading</div>
-          <div class="signal-emoji">…</div>
         </div>
       </div>
     </div>
@@ -600,27 +543,9 @@
 
   <script>
     const SHEET_ID = "1p0oEpOFIF5fY-3sJJTgRWLMkjMT2i6uNMRtFR-g9y44";
-    const SIGNAL_TAB_GID = "1019546511";
     const SCORE_TAB_GID = "441516074";
 
-    const SIGNAL_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SIGNAL_TAB_GID}&tqx=out:json`;
     const SCORE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SCORE_TAB_GID}&tqx=out:json`;
-
-    const SIGNAL_ORDER = [
-      "Labor",
-      "Consumer Demand",
-      "Housing",
-      "Manufacturing",
-      "Inflation",
-      "Liquidity",
-      "Trade",
-      "Financial Conditions",
-      "Energy",
-      "Growth",
-      "Automotive",
-      "Inventories",
-      "Consumer"
-    ];
 
     function parseGviz(text) {
       const start = text.indexOf("{");
@@ -655,30 +580,6 @@
       if (value === "🟠") return "🟠";
       if (value === "🔴") return "🔴";
       if (value === "☠" || value === "☠️") return "☠️";
-
-      return "";
-    }
-
-    function normalizeName(name) {
-      const value = String(name || "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-
-      if (value === "labor") return "Labor";
-      if (value === "consumer demand") return "Consumer Demand";
-      if (value === "housing") return "Housing";
-      if (value === "manufacturing") return "Manufacturing";
-      if (value === "inflation") return "Inflation";
-      if (value === "liquidity") return "Liquidity";
-      if (value === "trade") return "Trade";
-      if (value === "financial") return "Financial Conditions";
-      if (value === "financial conditions") return "Financial Conditions";
-      if (value === "energy") return "Energy";
-      if (value === "growth") return "Growth";
-      if (value === "automotive") return "Automotive";
-      if (value === "inventories") return "Inventories";
-      if (value === "consumer") return "Consumer";
 
       return "";
     }
@@ -721,42 +622,6 @@
       value.textContent = cleanSignal || "--";
     }
 
-    function renderSignalGrid(signalRows) {
-      const container = document.getElementById("signal-grid");
-      const signalMap = {};
-
-      for (let i = 0; i < signalRows.length; i++) {
-        const rawName = getCell(signalRows, i, 0);
-        const rawSignal = getCell(signalRows, i, 1);
-
-        const cleanName = normalizeName(rawName);
-        const cleanSignal = normalizeSignal(rawSignal);
-
-        if (!cleanName) continue;
-        if (!cleanSignal) continue;
-
-        signalMap[cleanName] = cleanSignal;
-      }
-
-      const items = SIGNAL_ORDER.map(name => {
-        return {
-          name,
-          signal: signalMap[name] || "--"
-        };
-      });
-
-      container.innerHTML = items.map(item => {
-        const klass = signalClass(item.signal);
-
-        return `
-          <div class="signal-card ${klass}">
-            <div class="signal-name">${item.name}</div>
-            <div class="signal-emoji">${item.signal}</div>
-          </div>
-        `;
-      }).join("");
-    }
-
     function renderGauge(scoreRows) {
       setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
       setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
@@ -768,38 +633,19 @@
     }
 
     function renderFinalScore(scoreRows) {
-      const finalScore = getCell(scoreRows, 27, 1) || "--";        // B28
-      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--"; // C28
-      const finalText = getCell(scoreRows, 27, 3) || "Normal";     // D28
+      const finalScore = getCell(scoreRows, 27, 1) || "--"; 
+      const finalSignal = normalizeSignal(getCell(scoreRows, 27, 2)) || "--";
+      const finalText = getCell(scoreRows, 27, 3) || "Normal";
 
       document.getElementById("gauge-score").textContent = finalScore;
       document.getElementById("gauge-signal").textContent = finalSignal;
       document.getElementById("gauge-label").textContent = finalText;
     }
 
-    function showSignalError() {
-      document.getElementById("signal-grid").innerHTML = `
-        <div class="signal-card red">
-          <div class="signal-name">Signal Data Error</div>
-          <div class="signal-emoji">⚠️</div>
-        </div>
-      `;
-    }
-
     function showGaugeError() {
       document.getElementById("gauge-score").textContent = "--";
       document.getElementById("gauge-signal").textContent = "--";
       document.getElementById("gauge-label").textContent = "Gauge data failed";
-    }
-
-    async function loadSignalSummary() {
-      try {
-        const signalRows = await fetchRows(SIGNAL_GVIZ_URL);
-        renderSignalGrid(signalRows);
-      } catch (error) {
-        console.error("Signal Summary load error:", error);
-        showSignalError();
-      }
     }
 
     async function loadGauge() {
@@ -813,15 +659,8 @@
       }
     }
 
-    async function initDashboard() {
-      await Promise.allSettled([
-        loadSignalSummary(),
-        loadGauge()
-      ]);
-    }
-
-    initDashboard();
-    setInterval(initDashboard, 300000);
+    loadGauge();
+    setInterval(loadGauge, 300000);
   </script>
 </body>
 </html>
