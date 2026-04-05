@@ -737,18 +737,35 @@
       renderStagWidget("stag-widget-11", "", "");
     }
 
+    // ===== Widget 1 of 13 (A1 / B1) =====
     async function loadStagWidget1() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
 
         renderStagWidget(
           "stag-widget-1",
-          getCell(stagRows, 0, 0),
-          getCell(stagRows, 0, 1)
+          getCell(stagRows, 0, 0), // A1
+          getCell(stagRows, 0, 1)  // B1
         );
       } catch (error) {
         console.error("Stag widget 1 load error:", error);
         renderStagWidget("stag-widget-1", "Data Error", "🔴");
+      }
+    }
+
+    // ===== Widget 2 of 13 (A2 / B2) =====
+    async function loadStagWidget2() {
+      try {
+        const stagRows = await fetchRows(STAG_GVIZ_URL);
+
+        renderStagWidget(
+          "stag-widget-2",
+          getCell(stagRows, 1, 0), // A2
+          getCell(stagRows, 1, 1)  // B2
+        );
+      } catch (error) {
+        console.error("Stag widget 2 load error:", error);
+        renderStagWidget("stag-widget-2", "Data Error", "🔴");
       }
     }
 
@@ -774,7 +791,8 @@
 
       await Promise.allSettled([
         loadGauge(),
-        loadStagWidget1()
+        loadStagWidget1(),
+        loadStagWidget2()
       ]);
     }
 
