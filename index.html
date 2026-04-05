@@ -452,8 +452,6 @@
         <div id="stag-widget-9"></div>
         <div id="stag-widget-10"></div>
         <div id="stag-widget-11"></div>
-        <div id="stag-widget-12"></div>
-        <div id="stag-widget-13"></div>
       </div>
     </div>
 
@@ -691,13 +689,13 @@
     }
 
     function renderGauge(scoreRows) {
-      setGaugeBar("inflation", getCell(scoreRows, 0, 4));   // E1
-      setGaugeBar("growth", getCell(scoreRows, 4, 4));      // E5
-      setGaugeBar("labor", getCell(scoreRows, 8, 4));       // E9
-      setGaugeBar("demand", getCell(scoreRows, 11, 4));     // E12
-      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));  // E19
-      setGaugeBar("financial", getCell(scoreRows, 21, 4));  // E22
-      setGaugeBar("energy", getCell(scoreRows, 24, 4));     // E25
+      setGaugeBar("inflation", getCell(scoreRows, 0, 4));
+      setGaugeBar("growth", getCell(scoreRows, 4, 4));
+      setGaugeBar("labor", getCell(scoreRows, 8, 4));
+      setGaugeBar("demand", getCell(scoreRows, 11, 4));
+      setGaugeBar("liquidity", getCell(scoreRows, 18, 4));
+      setGaugeBar("financial", getCell(scoreRows, 21, 4));
+      setGaugeBar("energy", getCell(scoreRows, 24, 4));
     }
 
     function renderFinalScore(scoreRows) {
@@ -737,21 +735,37 @@
       renderStagWidget("stag-widget-9", "", "");
       renderStagWidget("stag-widget-10", "", "");
       renderStagWidget("stag-widget-11", "", "");
-      renderStagWidget("stag-widget-12", "", "");
-      renderStagWidget("stag-widget-13", "", "");
     }
 
-    async function loadStagWidget1() {
+    async function loadAllStagWidgets() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
 
-        const name = getCell(stagRows, 0, 0);   // A1
-        const signal = getCell(stagRows, 0, 1); // B1
+        const mapping = [
+          { id: "stag-widget-1", row: 0 },
+          { id: "stag-widget-2", row: 1 },
+          { id: "stag-widget-3", row: 2 },
+          { id: "stag-widget-4", row: 3 },
+          { id: "stag-widget-5", row: 4 },
+          { id: "stag-widget-6", row: 5 },
+          { id: "stag-widget-7", row: 6 },
+          { id: "stag-widget-8", row: 7 },
+          { id: "stag-widget-9", row: 8 },
+          { id: "stag-widget-10", row: 9 },
+          { id: "stag-widget-11", row: 10 }
+        ];
 
-        renderStagWidget("stag-widget-1", name, signal);
+        mapping.forEach(item => {
+          const name = getCell(stagRows, item.row, 0);
+          const signal = getCell(stagRows, item.row, 1);
+          renderStagWidget(item.id, name, signal);
+        });
       } catch (error) {
-        console.error("Stag widget 1 load error:", error);
-        renderStagWidget("stag-widget-1", "Data Error", "🔴");
+        console.error("Stag widgets load error:", error);
+
+        for (let i = 1; i <= 11; i++) {
+          renderStagWidget(`stag-widget-${i}`, "Data Error", "🔴");
+        }
       }
     }
 
@@ -777,7 +791,7 @@
 
       await Promise.allSettled([
         loadGauge(),
-        loadStagWidget1()
+        loadAllStagWidgets()
       ]);
     }
 
