@@ -754,20 +754,21 @@
     }
 
     // ===== Widget 2 of 13 (A2 / B2) =====
-    async function loadStagWidget2() {
-      try {
-        const stagRows = await fetchRows(STAG_GVIZ_URL);
+   // ===== Widget 2 of 13 (A2 / B2) =====
+async function loadStagWidget2() {
+  try {
+    const stagRows = await fetchRows(STAG_GVIZ_URL);
 
-        renderStagWidget(
-          "stag-widget-2",
-          getCell(stagRows, 1, 0), // A2
-          getCell(stagRows, 1, 1)  // B2
-        );
-      } catch (error) {
-        console.error("Stag widget 2 load error:", error);
-        renderStagWidget("stag-widget-2", "Data Error", "🔴");
-      }
-    }
+    renderStagWidget(
+      "stag-widget-2",
+      getCell(stagRows, 1, 0), // A2
+      getCell(stagRows, 1, 1)  // B2
+    );
+  } catch (error) {
+    console.error("Stag widget 2 load error:", error);
+    renderStagWidget("stag-widget-2", "Data Error", "🔴");
+  }
+}
 
     function showGaugeError() {
       document.getElementById("gauge-score").textContent = "--";
