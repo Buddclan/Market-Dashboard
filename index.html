@@ -375,7 +375,7 @@
   <div class="container">
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
-      <p>Live macro signals across labor, inflation, housing, manufacturing, liquidity, trade, energy, growth, and financial conditions.</p>
+      <p>Live macro signals across labor, consumer demand, housing, manufacturing, inflation, liquidity, trade, energy, growth, and financial conditions.</p>
     </div>
 
     <div class="section">
@@ -737,67 +737,53 @@
       renderStagWidget("stag-widget-11", "", "");
     }
 
-    // ===== Widget 1 of 13 (A1 / B1) =====
     async function loadStagWidget1() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
-
-        renderStagWidget(
-          "stag-widget-1",
-          getCell(stagRows, 0, 0), // A1
-          getCell(stagRows, 0, 1)  // B1
-        );
+        renderStagWidget("stag-widget-1", getCell(stagRows, 0, 0), getCell(stagRows, 0, 1));
       } catch (error) {
         console.error("Stag widget 1 load error:", error);
         renderStagWidget("stag-widget-1", "Data Error", "🔴");
       }
     }
 
-    // ===== Widget 2 of 13 (A2 / B2) =====
     async function loadStagWidget2() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
-
-        renderStagWidget(
-          "stag-widget-2",
-          getCell(stagRows, 1, 0), // A2
-          getCell(stagRows, 1, 1)  // B2
-        );
+        renderStagWidget("stag-widget-2", getCell(stagRows, 1, 0), getCell(stagRows, 1, 1));
       } catch (error) {
         console.error("Stag widget 2 load error:", error);
         renderStagWidget("stag-widget-2", "Data Error", "🔴");
       }
     }
 
-    // ===== Widget 3 of 13 (A3 / B3) =====
     async function loadStagWidget3() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
-
-        renderStagWidget(
-          "stag-widget-3",
-          getCell(stagRows, 2, 0), // A3
-          getCell(stagRows, 2, 1)  // B3
-        );
+        renderStagWidget("stag-widget-3", getCell(stagRows, 2, 0), getCell(stagRows, 2, 1));
       } catch (error) {
         console.error("Stag widget 3 load error:", error);
         renderStagWidget("stag-widget-3", "Data Error", "🔴");
       }
     }
 
-    // ===== Widget 4 of 13 (A4 / B4) =====
     async function loadStagWidget4() {
       try {
         const stagRows = await fetchRows(STAG_GVIZ_URL);
-
-        renderStagWidget(
-          "stag-widget-4",
-          getCell(stagRows, 3, 0), // A4
-          getCell(stagRows, 3, 1)  // B4
-        );
+        renderStagWidget("stag-widget-4", getCell(stagRows, 3, 0), getCell(stagRows, 3, 1));
       } catch (error) {
         console.error("Stag widget 4 load error:", error);
         renderStagWidget("stag-widget-4", "Data Error", "🔴");
+      }
+    }
+
+    async function loadStagWidget5() {
+      try {
+        const stagRows = await fetchRows(STAG_GVIZ_URL);
+        renderStagWidget("stag-widget-5", getCell(stagRows, 4, 0), getCell(stagRows, 4, 1));
+      } catch (error) {
+        console.error("Stag widget 5 load error:", error);
+        renderStagWidget("stag-widget-5", "Data Error", "🔴");
       }
     }
 
@@ -826,7 +812,8 @@
         loadStagWidget1(),
         loadStagWidget2(),
         loadStagWidget3(),
-        loadStagWidget4()
+        loadStagWidget4(),
+        loadStagWidget5()
       ]);
     }
 
