@@ -375,7 +375,7 @@
   <div class="container">
     <div class="section hero">
       <h1>📊 Stagflation Monitor</h1>
-      <p>Live macro signals across labor, inflation, housing, liquidity, trade, energy, growth, and financial conditions.</p>
+      <p>Live macro signals across labor, inflation, housing, manufacturing, liquidity, trade, energy, growth, and financial conditions.</p>
     </div>
 
     <div class="section">
@@ -785,6 +785,22 @@
       }
     }
 
+    // ===== Widget 4 of 13 (A4 / B4) =====
+    async function loadStagWidget4() {
+      try {
+        const stagRows = await fetchRows(STAG_GVIZ_URL);
+
+        renderStagWidget(
+          "stag-widget-4",
+          getCell(stagRows, 3, 0), // A4
+          getCell(stagRows, 3, 1)  // B4
+        );
+      } catch (error) {
+        console.error("Stag widget 4 load error:", error);
+        renderStagWidget("stag-widget-4", "Data Error", "🔴");
+      }
+    }
+
     function showGaugeError() {
       document.getElementById("gauge-score").textContent = "--";
       document.getElementById("gauge-signal").textContent = "--";
@@ -809,7 +825,8 @@
         loadGauge(),
         loadStagWidget1(),
         loadStagWidget2(),
-        loadStagWidget3()
+        loadStagWidget3(),
+        loadStagWidget4()
       ]);
     }
 
